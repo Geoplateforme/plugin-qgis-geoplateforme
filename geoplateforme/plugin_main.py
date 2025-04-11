@@ -7,19 +7,18 @@ Main plugin module.
 # standard
 from functools import partial
 from pathlib import Path
+from typing import Optional
 
 # PyQGIS
 from qgis.core import QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
 from qgis.PyQt.Qt import QUrl
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction, QToolBar
 
 # project
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT, __title__, __uri_homepage__
-from geoplateforme.api.client import NetworkRequestsManager
-from geoplateforme.api.custom_exceptions import InvalidToken
 from geoplateforme.gui.dashboard.dlg_dashboard import DashboardDialog
 from geoplateforme.gui.dlg_authentication import AuthenticationDialog
 from geoplateforme.gui.dlg_settings import PlgOptionsFactory
@@ -29,7 +28,6 @@ from geoplateforme.gui.publication_creation.wzd_publication_creation import (
 from geoplateforme.gui.storage.dlg_storage_report import StorageReportDialog
 from geoplateforme.gui.tile_creation.wzd_tile_creation import TileCreationWizard
 from geoplateforme.gui.upload_creation.wzd_upload_creation import UploadCreationWizard
-from geoplateforme.gui.user.dlg_user import UserDialog
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.toolbelt import PlgLogger, PlgOptionsManager
 
@@ -86,6 +84,8 @@ class GeoplateformePlugin:
         self.tile_creation_wizard = None
         self.publication_wizard = None
 
+        self.dlg_auth: Optional[AuthenticationDialog] = None
+
     def initGui(self):
         """Set up plugin UI elements."""
 
@@ -103,7 +103,6 @@ class GeoplateformePlugin:
         self.action_authentication.triggered.connect(self.authentication)
 
         # Dashboard
-        self.dlg_dashboard = DashboardDialog(self.iface.mainWindow())
         self.action_dashboard = QAction(
             QIcon(
                 str(
@@ -120,7 +119,6 @@ class GeoplateformePlugin:
         self.action_dashboard.triggered.connect(self.display_dashboard)
 
         # Storage report
-        self.dlg_storage_report = StorageReportDialog(self.iface.mainWindow())
         self.action_storage_report = QAction(
             QIcon(QgsApplication.iconPath("mIconAuxiliaryStorage.svg")),
             self.tr("Storage report"),
@@ -301,26 +299,31 @@ class GeoplateformePlugin:
             self.publication_wizard = None
 
     def authentication(self) -> None:
-        """Open authentication dialog."""
+        """Display authentication dialog to initiate log-in pairing on GitLab."""
+        if self.dlg_auth is None:
+            self.dlg_auth = AuthenticationDialog()
 
-        # Check connection by getting an API token
-        connection_valid = False
-        if len(self.plg_settings.get_plg_settings().qgis_auth_id):
-            try:
-                network_manager = NetworkRequestsManager()
-                network_manager.get_api_token()
-                connection_valid = True
-            except InvalidToken:
-                # Disconnect if invalid token
-                self.plg_settings.disconnect()
+        self.dlg_auth.finished.connect(self._update_actions_availability)
+        self.dlg_auth.show()
 
-        if not connection_valid:
-            dlg_authentication = AuthenticationDialog(self.iface.mainWindow())
-            dlg_authentication.exec()
-        else:
-            dlg_user = UserDialog(self.iface.mainWindow())
-            dlg_user.exec()
-        self._update_actions_availability()
+        # # Check connection by getting an API token
+        # connection_valid = False
+        # if len(self.plg_settings.get_plg_settings().qgis_auth_id):
+        #     try:
+        #         network_manager = NetworkRequestsManager()
+        #         network_manager.get_api_token()
+        #         connection_valid = True
+        #     except InvalidToken:
+        #         # Disconnect if invalid token
+        #         self.plg_settings.disconnect()
+
+        # if not connection_valid:
+        #     dlg_authentication = AuthenticationDialog(self.iface.mainWindow())
+        #     dlg_authentication.exec()
+        # else:
+        #     dlg_user = UserDialog(self.iface.mainWindow())
+        #     dlg_user.exec()
+        # self._update_actions_availability()
 
     def _update_actions_availability(self) -> None:
         """
@@ -341,15 +344,19 @@ class GeoplateformePlugin:
         Display dashboard dialog
 
         """
-        if self.dlg_dashboard is not None:
-            self.dlg_dashboard.refresh()
-            self.dlg_dashboard.show()
+        if self.dlg_dashboard is None:
+            self.dlg_dashboard = DashboardDialog(self.iface.mainWindow())
+
+        self.dlg_dashboard.refresh()
+        self.dlg_dashboard.show()
 
     def display_storage_report(self) -> None:
         """
         Display storage report dialog
 
         """
-        if self.dlg_storage_report is not None:
-            self.dlg_storage_report.refresh()
-            self.dlg_storage_report.show()
+        if self.dlg_storage_report is None:
+            self.dlg_storage_report = StorageReportDialog(self.iface.mainWindow())
+
+        self.dlg_storage_report.refresh()
+        self.dlg_storage_report.show()

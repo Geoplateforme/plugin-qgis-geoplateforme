@@ -11,7 +11,7 @@ def qgs_blocking_get_request(
     ntwk_requester_blk: QgsBlockingNetworkRequest,
     req: QNetworkRequest,
     exception_type: type,
-    expected_type: str = "application/json; charset=utf-8",
+    expected_type: str = "application/json",
 ) -> QgsNetworkReplyContent:
     """
     Send GET request with QgsBlockingNetworkRequest and check for expected type

@@ -9,7 +9,7 @@ from dataclasses import dataclass
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
 from qgis.PyQt.Qt import QUrl
-from qgis.PyQt.QtCore import QCoreApplication, Qt
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 # project
@@ -85,6 +85,11 @@ class User:
         Returns: User
 
         """
+        print(data)
+        if "first_name" not in data:
+            data["first_name"] = None
+        if "last_name" not in data:
+            data["last_name"] = None
         res = cls(
             _id=data["_id"],
             first_name=data["first_name"],
@@ -137,7 +142,9 @@ class UserRequestsManager:
         req = QNetworkRequest(QUrl(f"{self.get_base_url()}/me"))
 
         # headers
-        req.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
+        req.setHeader(
+            QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json"
+        )
 
         # send request
         resp = self.ntwk_requester_blk.get(req, forceRefresh=True)
@@ -150,17 +157,14 @@ class UserRequestsManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
+        if not req_reply.rawHeader(b"Content-Type") == "application/json":
             raise UnavailableUserException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
+                "Response mime-type is '{}' not 'application/json' as required.".format(
                     req_reply.rawHeader(b"Content-type")
                 )
             )
 
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         return User.from_json(data)
 
     def tr(self, message: str) -> str:

@@ -1,0 +1,15 @@
+{
+    "accessMethod": 0,
+    "grantFlow": 0,
+    "configType": 1,
+    "clientId": null,
+    "clientSecret": null,
+    "requestUrl": "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/auth",
+    "tokenUrl": "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/token",
+    "redirectPort": 7070,
+    "redirectUrl": "callback",
+    "persistToken": false,
+    "requestTimeout": 30,
+    "version": 1,
+    "scope": ""
+}

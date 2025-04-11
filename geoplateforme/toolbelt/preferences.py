@@ -6,13 +6,15 @@ Plugin settings.
 
 # standard
 from dataclasses import asdict, dataclass, fields
+from typing import Optional
 
 # PyQGIS
-from qgis.core import QgsApplication, QgsAuthMethodConfig, QgsSettings
+from qgis.core import Qgis, QgsApplication, QgsAuthMethodConfig, QgsSettings
 
 # package
 import geoplateforme.toolbelt.log_handler as log_hdlr
 from geoplateforme.__about__ import __title__, __version__
+from geoplateforme.datamodels import oauth2_configuration
 from geoplateforme.toolbelt.env_var_parser import EnvVarParser
 
 # ############################################################################
@@ -54,13 +56,13 @@ class PlgSettingsStructure:
     version: str = __version__
 
     # network and authentication
-    url_geoplateforme: str = "https://portail-gpf-beta.ign.fr/"
-    url_api_entrepot: str = "https://gpf-beta.ign.fr/geoplateforme/"
-    url_api_appendices: str = "https://gpf-beta.ign.fr/geoplateforme/annexes/"
-    url_service_vt: str = "https://vt-gpf-beta.ign.fr/"
-    url_auth: str = "https://compte-gpf-beta.ign.fr/"
-    auth_realm: str = "demo"
-    auth_client_id: str = "geoplateforme-qgis-plugin"
+    url_geoplateforme: str = "https://cartes.gouv.fr/"
+    url_api_entrepot: str = "https://data.geopf.fr/api"
+    url_api_appendices: str = ""
+    url_service_vt: str = ""
+    url_auth: str = ""
+    auth_realm: str = ""
+    auth_client_id: str = ""
     qgis_auth_id: str = None
 
     # status check sleep (in seconds)
@@ -79,7 +81,7 @@ class PlgSettingsStructure:
     @property
     def base_url_api_entrepot(self) -> str:
         """Return the URL for API entrepot"""
-        return f"{self.url_api_entrepot}api/v1"
+        return f"{self.url_api_entrepot}"
 
     @property
     def url_forgotten_password(self) -> str:
@@ -101,53 +103,46 @@ class PlgSettingsStructure:
         # return f"{self.url_auth}auth/realms/{self.auth_realm}/login-actions/authenticate?client_id={self.auth_client_id}"
         return f"{self.url_geoplateforme}login"
 
-    def create_auth_config(self, username: str, password: str) -> QgsAuthMethodConfig:
+    def create_auth_config(self) -> Optional[QgsAuthMethodConfig]:
+        """Create QgsAuthMethodConfig for OAuth2 authentification.
+
+        :return: created configuration. Warning: config must be added to QgsApplication.authManager() before use
+        :rtype: Optional[QgsAuthMethodConfig]
         """
-        Create QgsAuthMethodConfig for OAuth2 authentification
+        new_auth_config = QgsAuthMethodConfig(method="OAuth2", version=1)
+        new_auth_config.setId(QgsApplication.authManager().uniqueConfigId())
+        new_auth_config.setName(CFG_AUTH_NAME)
 
-        Args:
-            username: (str) username
-            password: (str) password
-
-        Returns: QgsAuthMethodConfig (warning : config must be added to QgsApplication.authManager() before use
-
-        """
-        newAU = QgsAuthMethodConfig()
-
-        newAU.setId(QgsApplication.authManager().uniqueConfigId())
-        newAU.setName(CFG_AUTH_NAME)
-        newAU.setMethod("OAuth2")
-
-        # Create config map for oauth2config
-        # Integer index match enum defined in QgsAuthOAuth2Config (not available in python binding)
-        configured_map = {
-            "accessMethod": 0,  # QgsAuthOAuth2Config.AccessMethod.Header
-            "grantFlow": 2,  # QgsAuthOAuth2Config.GrantFlow.ResourceOwner
-            "configType": 1,  # QgsAuthOAuth2Config.ConfigType.Custom
-            "tokenUrl": self.url_authentication_token,
-            "clientId": self.auth_client_id,
-            "username": username,
-            "password": password,
-            "redirectPort": 7070,
-            "persistToken": False,
-            "requestTimeout": 30,
-            "version": 1,
-        }
+        # load OAuth2 configuration from JSON file
+        auth_config_obj = oauth2_configuration.OAuth2Configuration.from_json()
+        if not isinstance(auth_config_obj, oauth2_configuration.OAuth2Configuration):
+            log_hdlr.PlgLogger.log(
+                message="Error while loading authentication configuration.",
+                log_level=Qgis.MessageLevel.Critical,
+                push=True,
+            )
+            return
 
         # We need to use a string for config_map
-        config_str = str(configured_map)
+        auth_config_as_str = auth_config_obj.as_qgis_str_config_map()
+        config_map = {"oauth2config": auth_config_as_str}
+        new_auth_config.setConfigMap(config_map)
 
-        # ' not supported by pyqgis, replace by "
-        config_str = config_str.replace("'", '"')
+        if not new_auth_config.isValid():
+            log_hdlr.PlgLogger.log(
+                message="Error while creating authentication configuration NOT VALID.",
+                log_level=Qgis.MessageLevel.Critical,
+                push=True,
+            )
+            return
 
-        # replace also boolean str
-        config_str = config_str.replace("False", "false")
-        config_str = config_str.replace("True", "true")
+        log_hdlr.PlgLogger.log(
+            message=f"Authentication configuration created with ID: {new_auth_config.id()} "
+            f"({new_auth_config.name()})",
+            log_level=Qgis.MessageLevel.Success,
+        )
 
-        config_map = {"oauth2config": config_str}
-        newAU.setConfigMap(config_map)
-
-        return newAU
+        return new_auth_config
 
 
 class PlgOptionsManager:

@@ -6,30 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>250</height>
+    <width>849</width>
+    <height>300</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>250</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>500</height>
+    <width>1000</width>
+    <height>300</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Authentication</string>
-  </property>
-  <property name="windowOpacity">
-   <double>0.950000000000000</double>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">font: 75 10pt &quot;Ubuntu Condensed&quot;;</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -37,252 +31,128 @@
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="1" colspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="lbl_explanation">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0" colspan="4">
-    <widget class="QLabel" name="lbl_user_password">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 15pt &quot;Ubuntu Condensed&quot;;</string>
+     <property name="cursor">
+      <cursorShape>IBeamCursor</cursorShape>
      </property>
      <property name="text">
-      <string>Password</string>
+      <string>To connect to cartes.gouv.fr please select your identity provider</string>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="4">
-    <widget class="QLineEdit" name="lne_user_email">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhEmailCharactersOnly</set>
-     </property>
-     <property name="text">
-      <string notr="true"/>
-     </property>
-     <property name="dragEnabled">
-      <bool>false</bool>
-     </property>
-     <property name="placeholderText">
-      <string>firstname.name@gis-is-what-i-do.com</string>
-     </property>
-     <property name="clearButtonEnabled">
+     <property name="scaledContents">
       <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="4">
-    <widget class="QLabel" name="lbl_user_email">
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 15pt &quot;Ubuntu Condensed&quot;;</string>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhHiddenText</set>
-     </property>
-     <property name="text">
-      <string>Username or email</string>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QCheckBox" name="chb_memory">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Do not ask for my credentials for the next 30 minutes</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 13pt &quot;Ubuntu Condensed&quot;;
-color: rgb(52, 101, 164);</string>
-     </property>
-     <property name="text">
-      <string>Remember me</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="4">
+   <item>
     <widget class="QPushButton" name="btn_log_in">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>25</height>
+       <height>35</height>
       </size>
      </property>
-     <property name="maximumSize">
+     <property name="baseSize">
       <size>
-       <width>16777215</width>
-       <height>50</height>
+       <width>2</width>
+       <height>2</height>
       </size>
      </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="contextMenuPolicy">
-      <enum>Qt::PreventContextMenu</enum>
+      <enum>Qt::DefaultContextMenu</enum>
      </property>
      <property name="toolTip">
-      <string notr="true"/>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(114, 159, 207);
-font: 75 15pt &quot;Ubuntu Condensed&quot;;</string>
+      <string>Open https://git.oslandia.net in your default web browser to authorize the plugin.</string>
      </property>
      <property name="text">
-      <string>Log in</string>
+      <string>Authenticate the plugin using your cartes.gouv.fr account</string>
      </property>
-     <property name="checkable">
-      <bool>false</bool>
+     <property name="shortcut">
+      <string notr="true"/>
      </property>
      <property name="default">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="3">
-    <widget class="QPushButton" name="btn_forgotten_password">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 13pt &quot;Ubuntu Condensed&quot;;
-font: italic 11pt &quot;Ubuntu Condensed&quot;;
-color: rgb(52, 101, 164);</string>
-     </property>
+   <item>
+    <widget class="QPushButton" name="btn_log_in_fc">
      <property name="text">
-      <string>Forgotten password</string>
+      <string>Authenticate the plugin using your FranceConnect account</string>
      </property>
-     <property name="icon">
-      <iconset theme="link">
-       <normaloff>../toolbelt</normaloff>../toolbelt</iconset>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_log_in_pc">
+     <property name="text">
+      <string>Authenticate the plugin using your ProConnect account</string>
      </property>
-     <property name="flat">
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QgsCollapsibleGroupBox" name="qgrp_requirements">
+     <property name="title">
+      <string>Requirements</string>
+     </property>
+     <property name="collapsed">
       <bool>true</bool>
      </property>
+     <property name="scrollOnExpand">
+      <bool>false</bool>
+     </property>
+     <property name="saveCollapsedState">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="lbl_requirements">
+        <property name="cursor">
+         <cursorShape>IBeamCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>- network access to &lt;https://sso.geopf.fr&gt; over port 443 - **mandatory** for support service
+- available ports  `7070` on `localhost`/`127.0.0.1` - **mandatory** for support service (oAuth2 token callback)
+
+</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::MarkdownText</enum>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::LinksAccessibleByMouse</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="4">
-    <widget class="QgsPasswordLineEdit" name="ple_user_password">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="4">
-    <widget class="QPushButton" name="btn_sign_in">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 13pt &quot;Ubuntu Condensed&quot;;
-font: italic 11pt &quot;Ubuntu Condensed&quot;;
-color: rgb(52, 101, 164);</string>
-     </property>
-     <property name="text">
-      <string>New here? Don't have an account yet? Click me to sign-in!</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="4">
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -292,23 +162,32 @@ color: rgb(52, 101, 164);</string>
      </property>
     </spacer>
    </item>
+   <item>
+    <widget class="QgsMessageBar" name="msg_bar" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QgsPasswordLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>qgspasswordlineedit.h</header>
+   <class>QgsCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>qgscollapsiblegroupbox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QgsMessageBar</class>
+   <extends>QWidget</extends>
+   <header location="global">qgis.gui</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>lne_user_email</tabstop>
-  <tabstop>ple_user_password</tabstop>
-  <tabstop>btn_log_in</tabstop>
-  <tabstop>chb_memory</tabstop>
-  <tabstop>btn_forgotten_password</tabstop>
-  <tabstop>btn_sign_in</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
