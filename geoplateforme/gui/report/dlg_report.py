@@ -47,7 +47,9 @@ class ReportDialog(QDialog):
 
         self.mdl_stored_data_details = StoredDataDetailsModel(self)
         self.tbv_details.setModel(self.mdl_stored_data_details)
-        self.tbv_details.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.tbv_details.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
         self.tbv_details.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self.mdl_table_relation = TableRelationTreeModel(self)
@@ -55,8 +57,12 @@ class ReportDialog(QDialog):
         self.trv_table_relation.setModel(self.mdl_table_relation)
         self.trv_table_relation.setSortingEnabled(True)
 
-        self.trv_table_relation.header().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-        self.trv_table_relation.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.trv_table_relation.header().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
+        self.trv_table_relation.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers
+        )
 
         self.btn_add_extent_layer.pressed.connect(self._add_extent_layer)
 

@@ -259,16 +259,7 @@ class StoredDataRequestManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise ReadStoredDataException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         stored_datas_id = [val["_id"] for val in data]
 
         return [
@@ -307,16 +298,6 @@ class StoredDataRequestManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise ReadStoredDataException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-
         content_range = req_reply.rawHeader(b"Content-Range").data().decode("utf-8")
         match = re.match(
             r"(?P<min>\d+)\s?-\s?(?P<max>\d+)?\s?\/?\s?(?P<nb_val>\d+|\*)?",
@@ -397,17 +378,7 @@ class StoredDataRequestManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise ReadStoredDataException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-
-        return json.loads(req_reply.content().data().decode("utf-8"))
+        return json.loads(req_reply.content().data())
 
     def delete(self, datastore: str, stored_data: str) -> None:
         """

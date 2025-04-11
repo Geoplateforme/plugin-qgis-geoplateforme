@@ -287,17 +287,7 @@ class UploadRequestManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise UnavailableUploadException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         exec_list = []
 
         try:
@@ -366,17 +356,7 @@ class UploadRequestManager:
             )
         # check response type
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise UploadCreationException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         return self._upload_from_json(data, datastore)
 
     @staticmethod

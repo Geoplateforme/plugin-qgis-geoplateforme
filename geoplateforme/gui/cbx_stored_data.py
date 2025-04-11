@@ -107,4 +107,6 @@ class StoredDataComboBox(QComboBox):
         """
         index = self.currentIndex()
         model = self.model()
-        return model.data(model.index(index, StoredDataListModel.NAME_COL), Qt.ItemDataRole.UserRole)
+        return model.data(
+            model.index(index, StoredDataListModel.NAME_COL), Qt.ItemDataRole.UserRole
+        )

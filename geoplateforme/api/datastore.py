@@ -100,10 +100,10 @@ class DatastoreRequestManager:
             self.ntwk_requester_blk,
             req,
             UnavailableDatastoreException,
-            expected_type="application/json; charset=utf-8",
+            expected_type="application/json",
         )
 
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         result = Datastore(
             id=data["_id"],
             name=data["name"],
@@ -133,10 +133,10 @@ class DatastoreRequestManager:
             self.ntwk_requester_blk,
             req,
             UnavailableEndpointException,
-            expected_type="application/json; charset=utf-8",
+            expected_type="application/json",
         )
 
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         for i in range(0, len(data["endpoints"])):
             if data["endpoints"][i]["endpoint"]["type"] == data_type:
                 data = data["endpoints"][i]["endpoint"]["_id"]

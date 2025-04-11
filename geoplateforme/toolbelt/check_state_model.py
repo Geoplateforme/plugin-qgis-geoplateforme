@@ -29,7 +29,10 @@ class CheckStateModel(QStandardItemModel):
         return flags
 
     def setData(
-        self, index: QModelIndex, value: typing.Any, role: int = Qt.ItemDataRole.DisplayRole
+        self,
+        index: QModelIndex,
+        value: typing.Any,
+        role: int = Qt.ItemDataRole.DisplayRole,
     ) -> bool:
         """
         Override QStandardItemModel setData for child and parent CheckStateRole synchronization.
@@ -80,7 +83,9 @@ class CheckStateModel(QStandardItemModel):
         for i in range(0, self.rowCount(parent)):
             index = self.index(i, 0, parent)
             if index.isValid():
-                check_state = Qt.CheckState.Checked if checked else Qt.CheckState.Unchecked
+                check_state = (
+                    Qt.CheckState.Checked if checked else Qt.CheckState.Unchecked
+                )
                 self.setData(index, check_state, Qt.ItemDataRole.CheckStateRole)
 
     def childrenCheckState(self, parent: QModelIndex) -> Qt.CheckState:

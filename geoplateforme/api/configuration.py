@@ -158,17 +158,7 @@ class ConfigurationRequestManager:
             )
         # check response type
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise ConfigurationCreationException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         return data["_id"]
 
     def get_configurations_id(self, datastore: str, stored_data: str) -> list:
@@ -313,15 +303,6 @@ class ConfigurationRequestManager:
             )
         # check response type
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise OfferingCreationException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
 
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        data = json.loads(req_reply.content().data())
         return data["urls"]

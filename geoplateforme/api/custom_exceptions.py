@@ -100,3 +100,11 @@ class UploadClosingException(Exception):
 
 class UploadCreationException(Exception):
     pass
+
+
+class InvalidOAuthPort(ValueError):
+    pass
+
+
+class UnavailablePortException(ConnectionError):
+    pass

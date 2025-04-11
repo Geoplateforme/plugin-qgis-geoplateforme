@@ -115,7 +115,9 @@ class ProcessingRequestManager:
         req_post = QNetworkRequest(QUrl(f"{self.get_base_url(datastore)}/executions"))
 
         # headers
-        req_post.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
+        req_post.setHeader(
+            QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json"
+        )
 
         # encode data
         data = QByteArray()
@@ -132,16 +134,7 @@ class ProcessingRequestManager:
 
         # check response
         req_reply = self.ntwk_requester_blk.reply()
-        if (
-            not req_reply.rawHeader(b"Content-Type")
-            == "application/json; charset=utf-8"
-        ):
-            raise CreateProcessingException(
-                "Response mime-type is '{}' not 'application/json; charset=utf-8' as required.".format(
-                    req_reply.rawHeader(b"Content-type")
-                )
-            )
-        res = json.loads(req_reply.content().data().decode("utf-8"))
+        res = json.loads(req_reply.content().data())
         return res
 
     def launch_execution(self, datastore: str, exec_id: str) -> None:
@@ -162,7 +155,9 @@ class ProcessingRequestManager:
         )
 
         # headers
-        req_post.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
+        req_post.setHeader(
+            QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json"
+        )
 
         # send request
         resp = self.ntwk_requester_blk.post(

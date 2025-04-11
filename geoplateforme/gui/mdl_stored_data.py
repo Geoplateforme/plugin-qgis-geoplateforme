@@ -114,7 +114,9 @@ class StoredDataListModel(QStandardItemModel):
                         / filename
                     )
                     result = QPixmap(filepath).scaled(
-                        QSize(32, 32), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
+                        QSize(32, 32),
+                        Qt.AspectRatioMode.KeepAspectRatio,
+                        Qt.TransformationMode.SmoothTransformation,
                     )
             elif index.column() == self.DELETE_COL:
                 result = QIcon(QgsApplication.iconPath("mActionRemove.svg"))
@@ -169,7 +171,9 @@ class StoredDataListModel(QStandardItemModel):
         self.insertRow(row)
 
         self.setData(self.index(row, self.NAME_COL), stored_data.name)
-        self.setData(self.index(row, self.NAME_COL), stored_data, Qt.ItemDataRole.UserRole)
+        self.setData(
+            self.index(row, self.NAME_COL), stored_data, Qt.ItemDataRole.UserRole
+        )
         self.setData(
             self.index(row, self.DATE_COL),
             as_datetime(stored_data.get_last_event_date()),
