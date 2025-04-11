@@ -15,7 +15,7 @@ import logging
 # PyQGIS
 from qgis.core import QgsApplication, QgsAuthMethodConfig, QgsBlockingNetworkRequest
 from qgis.PyQt.Qt import QByteArray, QUrl
-from qgis.PyQt.QtCore import QCoreApplication, Qt
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 # project
@@ -97,7 +97,8 @@ class NetworkRequestsManager:
 
         # headers
         qreq.setHeader(
-            QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/x-www-form-urlencoded"
+            QNetworkRequest.KnownHeaders.ContentTypeHeader,
+            "application/x-www-form-urlencoded",
         )
 
         # encode data

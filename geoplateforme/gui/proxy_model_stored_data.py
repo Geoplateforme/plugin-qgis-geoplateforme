@@ -78,7 +78,9 @@ class StoredDataProxyModel(QSortFilterProxyModel):
             type_index = self.sourceModel().index(
                 source_row, StoredDataListModel.TYPE_COL, source_parent
             )
-            type_value = self.sourceModel().data(type_index, Qt.ItemDataRole.DisplayRole)
+            type_value = self.sourceModel().data(
+                type_index, Qt.ItemDataRole.DisplayRole
+            )
 
             result = type_value in self.filter_type
 
@@ -87,7 +89,9 @@ class StoredDataProxyModel(QSortFilterProxyModel):
             status_index = self.sourceModel().index(
                 source_row, StoredDataListModel.STATUS_COL, source_parent
             )
-            status_value = self.sourceModel().data(status_index, Qt.ItemDataRole.DisplayRole)
+            status_value = self.sourceModel().data(
+                status_index, Qt.ItemDataRole.DisplayRole
+            )
             if status_value:
                 status = StoredDataStatus[status_value]
                 if len(self.invisible_status):

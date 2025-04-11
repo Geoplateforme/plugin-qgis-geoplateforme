@@ -82,7 +82,9 @@ class GuiCommonUtils:
         target_qlabel.setToolTip(
             self.tr("Double-click me to copy my content into the clipboard.")
         )
-        target_qlabel.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        target_qlabel.setTextInteractionFlags(
+            Qt.TextInteractionFlag.TextSelectableByMouse
+        )
         target_qlabel.setCursor(QCursor(Qt.CursorShape.IBeamCursor))
 
         # connect event filter
