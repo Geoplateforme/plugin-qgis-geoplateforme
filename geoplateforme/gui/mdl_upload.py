@@ -8,7 +8,12 @@ from qgis.PyQt.QtGui import QIcon, QPixmap, QStandardItemModel
 
 # plugin
 from geoplateforme.api.custom_exceptions import ReadUploadException
-from geoplateforme.api.upload import Upload, UploadRequestManager, UploadStatus
+from geoplateforme.api.upload import (
+    Upload,
+    UploadField,
+    UploadRequestManager,
+    UploadStatus,
+)
 from geoplateforme.api.utils import as_datetime
 from geoplateforme.toolbelt import PlgLogger
 
@@ -16,9 +21,7 @@ from geoplateforme.toolbelt import PlgLogger
 class UploadListModel(QStandardItemModel):
     NAME_COL = 0
     DATE_COL = 1
-    ID_COL = 2
-    STATUS_COL = 3
-    DELETE_COL = 4
+    STATUS_COL = 2
 
     def __init__(self, parent: QObject = None):
         """QStandardItemModel for upload list display
@@ -32,9 +35,7 @@ class UploadListModel(QStandardItemModel):
             [
                 self.tr("Name"),
                 self.tr("Date"),
-                self.tr("id"),
                 self.tr("Status"),
-                self.tr("Delete"),
             ]
         )
 
@@ -49,7 +50,10 @@ class UploadListModel(QStandardItemModel):
         """
         result = -1
         for row in range(0, self.rowCount()):
-            if self.data(self.index(row, self.ID_COL)) == upload_id:
+            if (
+                self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole).id
+                == upload_id
+            ):
                 result = row
                 break
         return result
@@ -73,8 +77,6 @@ class UploadListModel(QStandardItemModel):
             if index.column() == self.STATUS_COL:
                 status_value = self.data(index, QtCore.Qt.DisplayRole)
                 result = self._get_status_icon(status_value)
-            elif index.column() == self.DELETE_COL:
-                result = QIcon(QgsApplication.iconPath("mActionRemove.svg"))
 
         return result
 
@@ -127,9 +129,24 @@ class UploadListModel(QStandardItemModel):
         try:
             if dataset_name:
                 tags = {"datasheet_name": dataset_name}
-                uploads = manager.get_upload_list(datastore_id, tags)
+                uploads = manager.get_upload_list(
+                    datastore_id=datastore_id,
+                    with_fields=[
+                        UploadField.NAME,
+                        UploadField.LASTEVENT,
+                        UploadField.STATUS,
+                    ],
+                    tags=tags,
+                )
             else:
-                uploads = manager.get_upload_list(datastore_id)
+                uploads = manager.get_upload_list(
+                    datastore_id=datastore_id,
+                    with_fields=[
+                        UploadField.NAME,
+                        UploadField.LASTEVENT,
+                        UploadField.STATUS,
+                    ],
+                )
             for upload in uploads:
                 self.insert_upload(upload)
         except ReadUploadException as exc:
@@ -154,5 +171,4 @@ class UploadListModel(QStandardItemModel):
             self.index(row, self.DATE_COL),
             as_datetime(upload.get_last_event_date()),
         )
-        self.setData(self.index(row, self.ID_COL), upload._id)
-        self.setData(self.index(row, self.STATUS_COL), upload.status)
+        self.setData(self.index(row, self.STATUS_COL), upload.status.value)

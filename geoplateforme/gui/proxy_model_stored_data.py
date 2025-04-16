@@ -77,7 +77,7 @@ class StoredDataProxyModel(QSortFilterProxyModel):
         # Check stored_data type
         if len(self.filter_type):
             type_index = self.sourceModel().index(
-                source_row, StoredDataListModel.TYPE_COL, source_parent
+                source_row, StoredDataListModel.NAME_COL, source_parent
             )
             stored_data = self.sourceModel().data(type_index, Qt.ItemDataRole.UserRole)
             if stored_data:

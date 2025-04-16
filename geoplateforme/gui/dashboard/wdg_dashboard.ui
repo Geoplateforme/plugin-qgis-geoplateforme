@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>980</width>
-    <height>400</height>
+    <height>862</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -32,18 +32,6 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="5" column="0" colspan="2">
-    <widget class="QgsCollapsibleGroupBox" name="gbp_publicated_tiles">
-     <property name="title">
-      <string>Publicated tiles</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QTableView" name="tbl_publicated_tiles"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="lbl_dataset">
      <property name="sizePolicy">
@@ -82,34 +70,375 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QgsCollapsibleGroupBox" name="gpb_actions_to_finish">
-     <property name="title">
-      <string>Actions to finish</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QTableView" name="tbv_actions_to_finish"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="4" column="0" colspan="2">
-    <widget class="QgsCollapsibleGroupBox" name="gbb_running_actions">
-     <property name="title">
-      <string>Running actions</string>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
-       <widget class="QTableView" name="tbl_running_actions"/>
-      </item>
-     </layout>
+     <widget class="QWidget" name="tab_metadata">
+      <attribute name="title">
+       <string>Metadatas</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>942</width>
+            <height>802</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_description">
+             <property name="title">
+              <string>Description</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="lineEdit">
+                <property name="toolTip">
+                 <string>Characteristic and often unique name by which the resource is known</string>
+                </property>
+                <property name="inputMask">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lbl_context">
+                <property name="toolTip">
+                 <string>Datastore Id</string>
+                </property>
+                <property name="text">
+                 <string>Context</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="lbl_thematic">
+                <property name="text">
+                 <string>Thematics</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="lbl_inspire_kw">
+                <property name="text">
+                 <string>INSPIRE Keywords</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lbl_description">
+                <property name="toolTip">
+                 <string>Brief narrative summary of the resource content</string>
+                </property>
+                <property name="text">
+                 <string>Description</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="lbl_unique_id">
+                <property name="toolTip">
+                 <string>Value uniquely identifying the resource in the catalog</string>
+                </property>
+                <property name="text">
+                 <string>Unique Id</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="lbl_title">
+                <property name="toolTip">
+                 <string>Characteristic and often unique name by which the resource is known</string>
+                </property>
+                <property name="text">
+                 <string>Title</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QTextEdit" name="textEdit">
+                <property name="toolTip">
+                 <string>Brief narrative summary of the resource content</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="lbl_kw">
+                <property name="text">
+                 <string>Keywords</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="lineEdit_2">
+                <property name="toolTip">
+                 <string>Datastore Id</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLineEdit" name="lineEdit_3">
+                <property name="toolTip">
+                 <string>Value uniquely identifying the resource in the catalog</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLineEdit" name="lineEdit_4"/>
+              </item>
+              <item row="5" column="2">
+               <widget class="QLineEdit" name="lineEdit_5"/>
+              </item>
+              <item row="6" column="2">
+               <widget class="QLineEdit" name="lineEdit_6"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_bbox">
+             <property name="title">
+              <string>Bounding Box</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_quality">
+             <property name="title">
+              <string>Quality</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_temporal">
+             <property name="title">
+              <string>Temporal References</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_contact">
+             <property name="title">
+              <string>Contacts</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_property">
+             <property name="title">
+              <string>Property</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_access">
+             <property name="title">
+              <string>Access</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_style">
+             <property name="title">
+              <string>Style Files</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_capabilities">
+             <property name="title">
+              <string>GetCapabilities</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_document">
+             <property name="title">
+              <string>Documents</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QgsCollapsibleGroupBox" name="gbp_info">
+             <property name="title">
+              <string>Metadata Informations</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_dataset">
+      <attribute name="title">
+       <string>Datasets</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>882</width>
+             <height>708</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QgsCollapsibleGroupBox" name="gpb_upload">
+              <property name="title">
+               <string>Uploads</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QTableView" name="tbv_upload">
+                 <property name="sizeAdjustPolicy">
+                  <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QgsCollapsibleGroupBox" name="gbp_vector_db">
+              <property name="title">
+               <string>Vector DB</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_3">
+               <item row="0" column="0">
+                <widget class="QTableView" name="tbv_vector_db">
+                 <property name="horizontalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QgsCollapsibleGroupBox" name="gbp_pyramid_vector">
+              <property name="title">
+               <string>Pyramids Vector</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="0">
+                <widget class="QTableView" name="tbv_pyramid_vector">
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QgsCollapsibleGroupBox" name="gbp_pyramid_raster">
+              <property name="title">
+               <string>Pyramids Raster</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="0" column="0">
+                <widget class="QTableView" name="tbv_pyramid_raster">
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::SingleSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QScrollArea" name="scrollArea_3">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="detail_widget">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>68</width>
+             <height>708</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_service">
+      <attribute name="title">
+       <string>Services</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QTableView" name="tableView"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_document">
+      <attribute name="title">
+       <string>Documents</string>
+      </attribute>
+     </widget>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="DatastoreComboBox" name="cbx_datastore"/>
-   </item>
-   <item row="2" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="btn_refresh">
@@ -122,13 +451,6 @@
       <widget class="QPushButton" name="btn_create">
        <property name="text">
         <string>Create</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_update">
-       <property name="text">
-        <string>Update</string>
        </property>
       </widget>
      </item>
@@ -149,6 +471,9 @@
    </item>
    <item row="1" column="1">
     <widget class="DatasetComboBox" name="cbx_dataset"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="DatastoreComboBox" name="cbx_datastore"/>
    </item>
   </layout>
  </widget>

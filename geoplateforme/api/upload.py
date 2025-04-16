@@ -271,6 +271,11 @@ class Upload:
         self.is_detailed = True
 
     def get_last_event_date(self) -> str:
+        """Returns the upload last_event date.
+
+        :return: upload last_event date
+        :rtype: str
+        """
         result = ""
         if self.last_event and "date" in self.last_event:
             result = self.last_event["date"]
@@ -382,7 +387,7 @@ class UploadRequestManager:
         :rtype: List[Upload]
         """
         self.log(f"{__name__}.get_upload_list(datastore:{datastore_id})")
-        nb_value = self._get_nb_available_upload(datastore_id)
+        nb_value = self._get_nb_available_upload(datastore_id, tags)
         nb_request = math.ceil(nb_value / self.MAX_LIMIT)
         result = []
         for page in range(0, nb_request):
