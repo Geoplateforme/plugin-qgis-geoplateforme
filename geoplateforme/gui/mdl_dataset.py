@@ -56,11 +56,14 @@ class DatasetListModel(QStandardItemModel):
                 if self.datastore_id:
                     manager = StoredDataRequestManager()
                     stored_datas = manager.get_stored_data_list(
-                        self.datastore_id, [StoredDataField.TAGS]
+                        datastore_id=self.datastore_id,
+                        with_fields=[StoredDataField.TAGS],
                     )
 
                     for stored_data in stored_datas:
-                        for key, value in dict.items(stored_data.tags):
+                        # Here we call stored_data._tags because we already request TAGS
+                        # (call stored_data.tags will generate unecessary requests on untag stored data)
+                        for key, value in dict.items(stored_data._tags):
                             if (
                                 key == "datasheet_name"
                                 and self.get_dataset_row(value) == -1

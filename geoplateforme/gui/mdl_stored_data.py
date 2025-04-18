@@ -1,17 +1,17 @@
 from typing import Optional
 
-from qgis.core import QgsApplication
 from qgis.PyQt import QtCore
 from qgis.PyQt.QtCore import QObject, QSize, Qt, QVariant
-from qgis.PyQt.QtGui import QIcon, QPixmap, QStandardItemModel
+from qgis.PyQt.QtGui import QPixmap, QStandardItemModel
 
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT
 from geoplateforme.api.custom_exceptions import ReadStoredDataException
 from geoplateforme.api.stored_data import (
     StoredData,
+    StoredDataField,
     StoredDataRequestManager,
     StoredDataStatus,
-    StoredDataStep,
+    StoredDataType,
 )
 from geoplateforme.api.utils import as_datetime
 from geoplateforme.toolbelt import PlgLogger
@@ -20,13 +20,7 @@ from geoplateforme.toolbelt import PlgLogger
 class StoredDataListModel(QStandardItemModel):
     NAME_COL = 0
     DATE_COL = 1
-    ID_COL = 2
-    TYPE_COL = 3
-    STATUS_COL = 4
-    ACTION_COL = 5
-    DELETE_COL = 6
-    REPORT_COL = 7
-    OTHER_ACTIONS_COL = 8
+    STATUS_COL = 2
 
     def __init__(self, parent: QObject = None):
         """QStandardItemModel for stored data list display
@@ -40,13 +34,7 @@ class StoredDataListModel(QStandardItemModel):
             [
                 self.tr("Name"),
                 self.tr("Date"),
-                self.tr("id"),
-                self.tr("Type"),
                 self.tr("Status"),
-                self.tr("Action"),
-                self.tr("Delete"),
-                self.tr("Report"),
-                self.tr("Other actions"),
             ]
         )
 
@@ -61,7 +49,10 @@ class StoredDataListModel(QStandardItemModel):
         """
         result = -1
         for row in range(0, self.rowCount()):
-            if self.data(self.index(row, self.ID_COL)) == stored_data_id:
+            if (
+                self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole).id
+                == stored_data_id
+            ):
                 result = row
                 break
         return result
@@ -83,9 +74,11 @@ class StoredDataListModel(QStandardItemModel):
         result = super().data(index, role)
         if role == QtCore.Qt.DecorationRole:
             if index.column() == self.NAME_COL:
-                type_ = self.data(
-                    self.index(index.row(), self.TYPE_COL), QtCore.Qt.DisplayRole
+                stored_data = self.data(
+                    self.index(index.row(), self.NAME_COL), Qt.ItemDataRole.UserRole
                 )
+                type_ = stored_data.type
+
                 status_value = self.data(
                     self.index(index.row(), self.STATUS_COL), QtCore.Qt.DisplayRole
                 )
@@ -100,9 +93,9 @@ class StoredDataListModel(QStandardItemModel):
                 filename = ""
                 if status == StoredDataStatus.GENERATING:
                     filename = "generating.png"
-                elif type_ == "VECTOR-DB":
+                elif type_ == StoredDataType("VECTOR-DB"):
                     filename = f"db{filename_suffix}.png"
-                elif type_ == "ROK4-PYRAMID-VECTOR":
+                elif type_ == StoredDataType("ROK4-PYRAMID-VECTOR"):
                     filename = f"tiles{filename_suffix}.png"
 
                 if filename:
@@ -118,32 +111,6 @@ class StoredDataListModel(QStandardItemModel):
                         Qt.AspectRatioMode.KeepAspectRatio,
                         Qt.TransformationMode.SmoothTransformation,
                     )
-            elif index.column() == self.DELETE_COL:
-                result = QIcon(QgsApplication.iconPath("mActionRemove.svg"))
-            elif index.column() == self.REPORT_COL:
-                result = QIcon(QgsApplication.iconPath("mIconReport.svg"))
-        elif role == QtCore.Qt.DisplayRole and index.column() == self.ACTION_COL:
-            stored_data = self.data(
-                self.index(index.row(), self.NAME_COL), QtCore.Qt.UserRole
-            )
-            if stored_data:
-                status = stored_data.status
-                if status == StoredDataStatus.GENERATING:
-                    result = self.tr("Progress")
-                elif status == StoredDataStatus.GENERATED:
-                    current_step = stored_data.get_current_step()
-                    if current_step == StoredDataStep.TILE_GENERATION:
-                        result = self.tr("Generate")
-                    elif current_step == StoredDataStep.TILE_SAMPLE:
-                        result = self.tr("View")
-                    elif current_step == StoredDataStep.TILE_PUBLICATION:
-                        result = self.tr("Publish")
-                    elif current_step == StoredDataStep.TILE_UPDATE:
-                        result = self.tr("Compare")
-                    elif current_step == StoredDataStep.PUBLISHED:
-                        result = self.tr("View")
-                else:
-                    result = self.tr("Report")
 
         return result
 
@@ -163,9 +130,26 @@ class StoredDataListModel(QStandardItemModel):
         try:
             if dataset_name:
                 tags = {"datasheet_name": dataset_name}
-                stored_datas = manager.get_stored_data_list(datastore_id, tags=tags)
+                stored_datas = manager.get_stored_data_list(
+                    datastore_id=datastore_id,
+                    with_fields=[
+                        StoredDataField.NAME,
+                        StoredDataField.LASTEVENT,
+                        StoredDataField.STATUS,
+                        StoredDataField.TYPE,
+                    ],
+                    tags=tags,
+                )
             else:
-                stored_datas = manager.get_stored_data_list(datastore_id)
+                stored_datas = manager.get_stored_data_list(
+                    datastore_id=datastore_id,
+                    with_fields=[
+                        StoredDataField.NAME,
+                        StoredDataField.LASTEVENT,
+                        StoredDataField.STATUS,
+                        StoredDataField.TYPE,
+                    ],
+                )
             for stored_data in stored_datas:
                 self.insert_stored_data(stored_data)
         except ReadStoredDataException as exc:
@@ -192,7 +176,4 @@ class StoredDataListModel(QStandardItemModel):
             self.index(row, self.DATE_COL),
             as_datetime(stored_data.get_last_event_date()),
         )
-        self.setData(self.index(row, self.ID_COL), stored_data._id)
-        self.setData(self.index(row, self.TYPE_COL), stored_data.type)
-        self.setData(self.index(row, self.STATUS_COL), stored_data.status)
-        self.setData(self.index(row, self.OTHER_ACTIONS_COL), "...")
+        self.setData(self.index(row, self.STATUS_COL), stored_data.status.value)

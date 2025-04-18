@@ -19,6 +19,7 @@ from qgis.PyQt.QtWidgets import QAction, QToolBar
 # project
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT, __title__, __uri_homepage__
 from geoplateforme.gui.dashboard.dlg_dashboard import DashboardDialog
+from geoplateforme.gui.dashboard_old.dlg_dashboard_old import DashboardOldDialog
 from geoplateforme.gui.dlg_authentication import AuthenticationDialog
 from geoplateforme.gui.dlg_settings import PlgOptionsFactory
 from geoplateforme.gui.publication_creation.wzd_publication_creation import (
@@ -65,10 +66,12 @@ class GeoplateformePlugin:
 
         self.toolbar = None
         self.dlg_dashboard = None
+        self.dlg_dashboard_old = None
         self.dlg_storage_report = None
 
         self.action_authentication = None
         self.action_dashboard = None
+        self.action_dashboard_old = None
         self.action_storage_report = None
         self.action_import = None
         self.action_tile_create = None
@@ -116,6 +119,20 @@ class GeoplateformePlugin:
             self.iface.mainWindow(),
         )
         self.action_dashboard.triggered.connect(self.display_dashboard)
+        self.action_dashboard_old = QAction(
+            QIcon(
+                str(
+                    DIR_PLUGIN_ROOT
+                    / "resources"
+                    / "images"
+                    / "datastore"
+                    / "bac-a-sable_old.svg"
+                )
+            ),
+            self.tr("DashboardOld"),
+            self.iface.mainWindow(),
+        )
+        self.action_dashboard_old.triggered.connect(self.display_dashboard_old)
 
         # Storage report
         self.action_storage_report = QAction(
@@ -178,6 +195,7 @@ class GeoplateformePlugin:
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_authentication)
         self.iface.addPluginToWebMenu(__title__, self.action_dashboard)
+        self.iface.addPluginToWebMenu(__title__, self.action_dashboard_old)
         self.iface.addPluginToWebMenu(__title__, self.action_storage_report)
         self.iface.addPluginToWebMenu(__title__, self.action_import)
         self.iface.addPluginToWebMenu(__title__, self.action_tile_create)
@@ -190,6 +208,7 @@ class GeoplateformePlugin:
         self.iface.addToolBar(self.toolbar)
         self.toolbar.addAction(self.action_authentication)
         self.toolbar.addAction(self.action_dashboard)
+        self.toolbar.addAction(self.action_dashboard_old)
         self.toolbar.addAction(self.action_storage_report)
         self.toolbar.addAction(self.action_import)
         self.toolbar.addAction(self.action_tile_create)
@@ -208,6 +227,7 @@ class GeoplateformePlugin:
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_authentication)
         self.iface.removePluginWebMenu(__title__, self.action_dashboard)
+        self.iface.removePluginWebMenu(__title__, self.action_dashboard_old)
         self.iface.removePluginWebMenu(__title__, self.action_storage_report)
         self.iface.removePluginWebMenu(__title__, self.action_import)
         self.iface.removePluginWebMenu(__title__, self.action_tile_create)
@@ -314,6 +334,7 @@ class GeoplateformePlugin:
         enabled = len(plg_settings.qgis_auth_id) != 0
 
         self.action_dashboard.setEnabled(enabled)
+        self.action_dashboard_old.setEnabled(enabled)
         self.action_storage_report.setEnabled(False)
         self.action_import.setEnabled(False)
         self.action_tile_create.setEnabled(False)
@@ -329,6 +350,17 @@ class GeoplateformePlugin:
 
         self.dlg_dashboard.refresh()
         self.dlg_dashboard.show()
+
+    def display_dashboard_old(self) -> None:
+        """
+        Display dashboard dialog
+
+        """
+        if self.dlg_dashboard_old is None:
+            self.dlg_dashboard_old = DashboardOldDialog(self.iface.mainWindow())
+
+        self.dlg_dashboard_old.refresh()
+        self.dlg_dashboard_old.show()
 
     def display_storage_report(self) -> None:
         """
