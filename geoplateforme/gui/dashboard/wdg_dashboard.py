@@ -10,6 +10,7 @@ from qgis.core import (
     QgsProject,
     QgsVectorTileLayer,
 )
+from qgis.gui import QgsMetadataWidget
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtCore import QCoreApplication, QModelIndex
 from qgis.PyQt.QtGui import QCursor, QGuiApplication, QIcon, QStandardItemModel
@@ -61,6 +62,11 @@ class DashboardWidget(QWidget):
             os.path.join(os.path.dirname(__file__), "wdg_dashboard.ui"),
             self,
         )
+
+        # Add metadata widget
+        self.metadata = QgsMetadataWidget()
+        self.metadata.setMode(QgsMetadataWidget.Mode.ProjectMetadata)
+        self.metadata_layout.addWidget(self.metadata)
 
         # Create model for upload display
         self.mdl_upload = UploadListModel(self)
