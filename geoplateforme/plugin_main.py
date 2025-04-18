@@ -311,7 +311,7 @@ class GeoplateformePlugin:
 
         """
         plg_settings = self.plg_settings.get_plg_settings()
-        enabled = len(plg_settings.qgis_auth_id) != 0
+        enabled = plg_settings.qgis_auth_id is not None
 
         self.action_dashboard.setEnabled(enabled)
         self.action_storage_report.setEnabled(False)
