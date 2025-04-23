@@ -22,5 +22,5 @@ qgisMaximumVersion=3.99
 qt6_compatible=True
 
 # versionnement
-version=0.1.0-DEV
+version=0.3.0-DEV
 changelog=
