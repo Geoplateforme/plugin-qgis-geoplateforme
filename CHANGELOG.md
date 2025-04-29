@@ -16,6 +16,14 @@ Unreleased
 
 -->
 
+## 0.3.0-beta1 - 2025-04-29
+
+* first version deployed on plugins.qgis.org
+* fix(datastore selection): disable signal connection during update by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/25>
+* fix(tile publish): invalid levels used by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/28>
+* feat(tile creation): no upload remove after creation by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/26>
+* update(ui): use logo proposed by @IGNF-Xavier by @Guts in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/27>
+
 ## 0.2.0-beta2 - 2025-04-29
 
 * fix(plugin): Qt6 flag is supportsQt6 not qt6_compatible by @Guts in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/22>
