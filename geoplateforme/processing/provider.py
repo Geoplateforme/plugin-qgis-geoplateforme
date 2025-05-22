@@ -12,6 +12,9 @@ from qgis.PyQt.QtGui import QIcon
 # project
 from geoplateforme.__about__ import __icon_path__, __title__, __version__
 from geoplateforme.processing.check_layer import CheckLayerAlgorithm
+from geoplateforme.processing.create_geoserver_style import (
+    CreateGeoserverStyleAlgorithm,
+)
 from geoplateforme.processing.delete_data import DeleteDataAlgorithm
 from geoplateforme.processing.tile_creation import TileCreationAlgorithm
 from geoplateforme.processing.unpublish import UnpublishAlgorithm
@@ -48,6 +51,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(DeleteDataAlgorithm())
         self.addAlgorithm(GpfUploadFromLayersAlgorithm())
         self.addAlgorithm(WfsPublicationAlgorithm())
+        self.addAlgorithm(CreateGeoserverStyleAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \
