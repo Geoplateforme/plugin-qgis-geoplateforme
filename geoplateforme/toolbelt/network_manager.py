@@ -12,7 +12,6 @@ Perform network request.
 import json
 import mimetypes
 import uuid
-from codecs import encode
 from pathlib import Path
 from socket import AF_INET, SOCK_STREAM
 from socket import error as socket_error
@@ -32,7 +31,6 @@ from qgis.PyQt.QtCore import (
     QCoreApplication,
     QEventLoop,
     QFile,
-    QFileInfo,
     QIODevice,
     QUrl,
 )
@@ -528,6 +526,54 @@ class NetworkRequestsManager:
             )
         return local_path
 
+    @staticmethod
+    def add_field(body: QByteArray, boundary: str, name: str, value: str):
+        """Add multipart content in a multipart body
+
+        :param body: body to append data
+        :type body: QByteArray
+        :param boundary: boundary for multipart
+        :type boundary: str
+        :param name: field name
+        :type name: str
+        :param value: value
+        :type value: str
+        """
+        body.append(f"--{boundary}\r\n")
+        body.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n')
+        body.append(f"{value}\r\n")
+
+    @staticmethod
+    def add_file_field(
+        body: QByteArray,
+        boundary: str,
+        field_name: str,
+        filepath: Path,
+        content_type: str,
+    ):
+        """Add file content to a multipart body
+
+        :param body: body to append data
+        :type body: QByteArray
+        :param boundary: boundary for multipart
+        :type boundary: str
+        :param field_name: _description_
+        :type field_name: str
+        :param filepath: _description_
+        :type filepath: Path
+        :param content_type: _description_
+        :type content_type: str
+        """
+        with open(filepath, "rb") as f:
+            file_content = f.read()
+        body.append(f"--{boundary}\r\n")
+        body.append(
+            f'Content-Disposition: form-data; name="{field_name}"; filename="{filepath.name}"\r\n'
+        )
+        body.append(f"Content-Type: {content_type}\r\n\r\n")
+        body.append(file_content)
+        body.append(b"\r\n")
+
     def post_file(
         self,
         url: QUrl,
@@ -535,6 +581,7 @@ class NetworkRequestsManager:
         config_id: Optional[str] = None,
         debug_log_response: bool = True,
         headers: Optional[dict] = None,
+        data: Optional[dict[str, str]] = None,
     ) -> Optional[QByteArray]:
         """Post a file using multipart/form-data
 
@@ -548,6 +595,8 @@ class NetworkRequestsManager:
         :type debug_log_response: bool, optional
         :param headers: headers to add to the request, defaults to None
         :type headers: dict, optional
+        :param data: data to add to the request, defaults to None
+        :type data: dict[str,str], optional
 
         :return: feed response in bytes
         :rtype: Optional[QByteArray]
@@ -558,31 +607,22 @@ class NetworkRequestsManager:
 
         boundary = f"----GeoplateformeQGISPluginBoundary{uuid.uuid4().hex}"
 
-        body_list = []
+        body = QByteArray()
 
-        # Define part for file
-        # Add boundary
-        body_list.append(encode("--" + boundary))
-        body_list.append(
-            encode(
-                f'Content-Disposition: form-data; name="file"; filename="{QFileInfo(fp).fileName()}"'
-            )
-        )
+        if data:
+            for key, val in data.items():
+                self.add_field(body, boundary, key, val)
+
         # Define content-type
         file_type = (
             mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
         )
-        body_list.append(encode(f"Content-Type: {file_type}"))
 
         # Add file content
-        body_list.append(encode(""))
-        body_list.append(fp.readAll())
+        self.add_file_field(body, boundary, "file", file_path, file_type)
 
-        # Close part for file
-        body_list.append(encode("--" + boundary + "--"))
-
-        # Create body for encoded data
-        body = b"\r\n".join(body_list)
+        # Close multipart
+        body.append(f"--{boundary}--\r\n")
 
         # Define content header with multipart/form-data and used boundary
         all_headers = {
