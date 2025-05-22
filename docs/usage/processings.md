@@ -45,3 +45,10 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 
 ```{include} ../../geoplateforme/resources/help/create_geoserver_style.md
 ```
+
+(sld_downgrade=)
+
+# Mise à jour fichier .sld pour passer d'une version 1.1.0 à 1.0.0
+
+```{include} ../../geoplateforme/resources/help/sld_downgrade.md
+```

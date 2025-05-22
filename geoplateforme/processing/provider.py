@@ -16,6 +16,7 @@ from geoplateforme.processing.create_geoserver_style import (
     CreateGeoserverStyleAlgorithm,
 )
 from geoplateforme.processing.delete_data import DeleteDataAlgorithm
+from geoplateforme.processing.sld_downgrade import SldDowngradeAlgorithm
 from geoplateforme.processing.tile_creation import TileCreationAlgorithm
 from geoplateforme.processing.unpublish import UnpublishAlgorithm
 from geoplateforme.processing.update_tile_upload import UpdateTileUploadAlgorithm
@@ -52,6 +53,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(GpfUploadFromLayersAlgorithm())
         self.addAlgorithm(WfsPublicationAlgorithm())
         self.addAlgorithm(CreateGeoserverStyleAlgorithm())
+        self.addAlgorithm(SldDowngradeAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \
