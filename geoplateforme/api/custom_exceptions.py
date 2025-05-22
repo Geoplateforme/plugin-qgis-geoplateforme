@@ -30,6 +30,10 @@ class FileUploadException(Exception):
     pass
 
 
+class StaticFileUploadException(Exception):
+    pass
+
+
 class InvalidOAuthConfiguration(ValueError):
     pass
 
@@ -123,6 +127,10 @@ class UnavailableUploadFileTreeException(Exception):
 
 
 class UnavailableUserException(Exception):
+    pass
+
+
+class UnavailableStaticException(Exception):
     pass
 
 
