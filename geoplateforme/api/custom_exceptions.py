@@ -70,6 +70,10 @@ class ReadMetadataException(Exception):
     pass
 
 
+class ReadOfferingException(Exception):
+    pass
+
+
 class UnavailableConfigurationException(Exception):
     pass
 
