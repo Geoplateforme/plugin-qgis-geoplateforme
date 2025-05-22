@@ -85,6 +85,7 @@ class CreateGeoserverStyleAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterString(
                 name=self.DESCRIPTION,
                 description=self.tr("Description du fichier"),
+                optional=True,
             )
         )
 

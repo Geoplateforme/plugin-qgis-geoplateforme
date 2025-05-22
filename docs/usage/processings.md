@@ -38,3 +38,10 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 
 ```{include} ../../geoplateforme/resources/help/vector_tile_publish.md
 ```
+
+(create_geoserver_style=)
+
+# Ajout style Geoserver dans l'entrepôt
+
+```{include} ../../geoplateforme/resources/help/create_geoserver_style.md
+```
