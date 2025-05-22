@@ -26,14 +26,7 @@ from qgis.core import (
     QgsFileDownloader,
     QgsNetworkReplyContent,
 )
-from qgis.PyQt.QtCore import (
-    QByteArray,
-    QCoreApplication,
-    QEventLoop,
-    QFile,
-    QIODevice,
-    QUrl,
-)
+from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QEventLoop, QUrl
 from qgis.PyQt.QtNetwork import QNetworkReply, QNetworkRequest
 
 # project
@@ -601,10 +594,6 @@ class NetworkRequestsManager:
         :return: feed response in bytes
         :rtype: Optional[QByteArray]
         """
-
-        fp = QFile(str(file_path))
-        fp.open(QIODevice.OpenModeFlag.ReadOnly)
-
         boundary = f"----GeoplateformeQGISPluginBoundary{uuid.uuid4().hex}"
 
         body = QByteArray()
