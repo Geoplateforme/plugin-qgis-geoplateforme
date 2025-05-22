@@ -97,15 +97,17 @@ class StaticRequestManager:
         )
 
         try:
+            data = {
+                "name": name,
+                "type": static_type.value,
+            }
+            if description:
+                data["description"] = description
             reply = self.request_manager.post_file(
                 url=QUrl(f"{self.get_base_url(datastore_id)}"),
                 config_id=self.plg_settings.qgis_auth_id,
                 file_path=file_path,
-                data={
-                    "name": name,
-                    "description": description,
-                    "type": static_type.value,
-                },
+                data=data,
             )
         except ConnectionError as err:
             raise StaticFileUploadException(f"Error while posting upload file : {err}")
