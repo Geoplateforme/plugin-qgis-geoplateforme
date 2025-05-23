@@ -3,8 +3,11 @@ import json
 
 # PyQGIS
 from qgis.core import (
+    QgsApplication,
     QgsProcessingAlgorithm,
+    QgsProcessingContext,
     QgsProcessingException,
+    QgsProcessingFeedback,
     QgsProcessingParameterMatrix,
     QgsProcessingParameterString,
 )
@@ -25,6 +28,9 @@ from geoplateforme.api.custom_exceptions import (
 )
 from geoplateforme.api.datastore import DatastoreRequestManager
 from geoplateforme.api.stored_data import StoredDataRequestManager
+from geoplateforme.processing.create_geoserver_style import (
+    CreateGeoserverStyleAlgorithm,
+)
 from geoplateforme.processing.utils import (
     get_short_string,
     get_user_manual_url,
@@ -32,10 +38,10 @@ from geoplateforme.processing.utils import (
 )
 from geoplateforme.toolbelt.preferences import PlgOptionsManager
 
-data_type = "WFS"
+data_type = "WMS-VECTOR"
 
 
-class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
+class WmsPublicationAlgorithm(QgsProcessingAlgorithm):
     DATASTORE = "DATASTORE"
     STORED_DATA = "STORED_DATA"
     NAME = "NAME"
@@ -52,11 +58,9 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
     URL_ATTRIBUTION = "URL_ATTRIBUTION"
     URL_TITLE = "URL_TITLE"
 
-    RELATIONS_NATIVE_NAME = "native_name"
-    RELATIONS_PUBLIC_NAME = "public_name"
-    RELATIONS_TITLE = "title"
-    RELATIONS_ABSTRACT = "abstract"
-    RELATIONS_KEYWORDS = "keywords"
+    RELATIONS_NAME = "name"
+    RELATIONS_STYLE_FILE = "style"
+    RELATIONS_FTL_FILE = "ftl"
 
     # Parameter not yet implemented
     METADATA = "metadata"
@@ -76,13 +80,13 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
         return QCoreApplication.translate(self.__class__.__name__, message)
 
     def createInstance(self):
-        return WfsPublicationAlgorithm()
+        return WmsPublicationAlgorithm()
 
     def name(self):
-        return "wfs_publish"
+        return "wms_publish"
 
     def displayName(self):
-        return self.tr("Publication service WFS")
+        return self.tr("Publication service WMS")
 
     def group(self):
         return self.tr("")
@@ -101,6 +105,7 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterString(
                 name=self.DATASTORE,
                 description=self.tr("Identifiant de l'entrepôt"),
+                defaultValue="87e1beb6-ee07-4adc-8449-6a925dc28949",
             )
         )
 
@@ -108,6 +113,7 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterString(
                 name=self.STORED_DATA,
                 description=self.tr("Identifiant de la base de données vectorielle"),
+                defaultValue="fc79b4f9-aa31-4667-8f97-361a5dec6c7f",
             )
         )
 
@@ -194,6 +200,25 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
             relations = json.loads(relations_str)
             self._check_relation(relations)
 
+        relations_with_id: list[dict[str, str]] = []
+
+        for relation in relations:
+            # Create new static file
+            id_style = self._create_geoserver_style(
+                datastore=datastore,
+                name=relation[self.RELATIONS_NAME],
+                file_path=relation[self.RELATIONS_STYLE_FILE],
+                feedback=feedback,
+                context=context,
+            )
+            relation_with_id = {
+                "name": relation[self.RELATIONS_NAME],
+                "style": id_style,
+            }
+            # TODO : manage ftl file
+
+            relations_with_id.append(relation_with_id)
+
         tag_data = self.parameterAsMatrix(parameters, self.TAGS, context)
         tags = tags_from_qgs_parameter_matrix_string(tag_data)
 
@@ -219,7 +244,7 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
             configuration = Configuration(
                 _id="",
                 datastore_id=datastore,
-                _type=ConfigurationType.WFS,
+                _type=ConfigurationType.WMS_VECTOR,
                 _metadata=metadata,
                 _name=name,
                 _layer_name=layer_name,
@@ -227,7 +252,7 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
                     "used_data": [
                         {
                             "stored_data": stored_data_id,
-                            "relations": relations,
+                            "relations": relations_with_id,
                         }
                     ]
                 },
@@ -317,9 +342,8 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
             )
 
         mandatory_keys = [
-            self.RELATIONS_NATIVE_NAME,
-            self.RELATIONS_TITLE,
-            self.RELATIONS_ABSTRACT,
+            self.RELATIONS_NAME,
+            self.RELATIONS_STYLE_FILE,
         ]
         for compo in data:
             missing_keys = [key for key in mandatory_keys if key not in compo]
@@ -328,3 +352,46 @@ class WfsPublicationAlgorithm(QgsProcessingAlgorithm):
                 raise QgsProcessingException(
                     f"Missing {', '.join(missing_keys)} keys for {self.RELATIONS} item in input json."
                 )
+
+    def _create_geoserver_style(
+        self,
+        datastore: str,
+        name: str,
+        file_path: str,
+        context: QgsProcessingContext,
+        feedback: QgsProcessingFeedback,
+    ) -> str:
+        """Create a geoserver style static in datastore
+
+        :param name: static name
+        :type name: str
+        :param datastore: datastore id
+        :type datastore: str
+        :param file_path: path to file
+        :type file_path: str
+        :param context: context of processing
+        :type context: QgsProcessingContext
+        :param feedback: feedback for processing
+        :type feedback: QgsProcessingFeedback
+        :raises QgsProcessingException: an error occured when creating the database
+        :return: create static id
+        :rtype: str
+        """
+
+        algo_str = f"geoplateforme:{CreateGeoserverStyleAlgorithm().name()}"
+        alg = QgsApplication.processingRegistry().algorithmById(algo_str)
+        params = {
+            CreateGeoserverStyleAlgorithm.DATASTORE: datastore,
+            CreateGeoserverStyleAlgorithm.NAME: name,
+            CreateGeoserverStyleAlgorithm.FILE_PATH: file_path,
+        }
+        results, successful = alg.run(params, context, feedback)
+        if successful:
+            static_id = results[CreateGeoserverStyleAlgorithm.ID_STATIC]
+        else:
+            raise QgsProcessingException(
+                self.tr(
+                    "Ajout du fichier de style .sld {} dans l'entrepot à échoué."
+                ).format(file_path)
+            )
+        return static_id
