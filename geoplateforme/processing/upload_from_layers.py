@@ -230,10 +230,13 @@ class GpfUploadFromLayersAlgorithm(QgsProcessingAlgorithm):
                 )
                 files.append(self.export_layer_as_temporary_gpkg(layer, context))
             elif storage_type == "GPKG":
-                source = layer.source()
-                path = source.split("|")[0]
-                # TODO : Add warning to indicate that all gpkg layers will be uploaded
-                files.append(path)
+                feedback.pushInfo(
+                    self.tr(
+                        "Les fichiers GPKG peuvent contenir plusieurs couches. Un export dans un GPKG temporaire est effectué pour ne livrer que les données de la couche."
+                    )
+                )
+                files.append(self.export_layer_as_temporary_gpkg(layer, context))
+
             elif storage_type == "ESRI Shapefile":
                 source = layer.source()
                 files.extend(get_shapefile_associated_files(source))
