@@ -64,6 +64,44 @@ class ProcessingRequestManager:
         """
         return f"{self.plg_settings.base_url_api_entrepot}/datastores/{datastore_id}/processings"
 
+    def get_processing_by_id(
+        self, datastore_id: str, possible_ids: list[str]
+    ) -> Processing:
+        """Get processing from id.
+
+        :param datastore_id: datastore id
+        :type datastore_id: str
+        :param possible_ids: possible ids for processing
+        :type name: list[str]
+
+        :raises UnavailableProcessingException: when error occur during requesting the API
+
+        :return: processing
+        :rtype: Processing
+        """
+        self.log(
+            f"{__name__}.get_processing(datastore:{datastore_id},possible_ids:{possible_ids})"
+        )
+
+        try:
+            reply = self.request_manager.get_url(
+                url=QUrl(f"{self.get_base_url(datastore_id)}"),
+                config_id=self.plg_settings.qgis_auth_id,
+            )
+        except ConnectionError as err:
+            raise UnavailableProcessingException(
+                f"Error while fetching processing : {err}"
+            )
+
+        processing_list = json.loads(reply.data())
+        for processing in processing_list:
+            if processing["_id"] in possible_ids:
+                return Processing(name=processing["name"], _id=processing["_id"])
+
+        raise UnavailableProcessingException(
+            f"Processing(s) {possible_ids} not available(s) in server"
+        )
+
     def get_processing(
         self, datastore_id: str, possible_names: list[str]
     ) -> Processing:

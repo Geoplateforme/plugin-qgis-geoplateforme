@@ -15,6 +15,9 @@ from geoplateforme.processing.check_layer import CheckLayerAlgorithm
 from geoplateforme.processing.create_geoserver_style import (
     CreateGeoserverStyleAlgorithm,
 )
+from geoplateforme.processing.create_raster_tiles_from_wms_vector import (
+    RasterTilesFromWmsVectorAlgorithm,
+)
 from geoplateforme.processing.delete_data import DeleteDataAlgorithm
 from geoplateforme.processing.sld_downgrade import SldDowngradeAlgorithm
 from geoplateforme.processing.tile_creation import TileCreationAlgorithm
@@ -56,6 +59,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(CreateGeoserverStyleAlgorithm())
         self.addAlgorithm(SldDowngradeAlgorithm())
         self.addAlgorithm(WmsPublicationAlgorithm())
+        self.addAlgorithm(RasterTilesFromWmsVectorAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \

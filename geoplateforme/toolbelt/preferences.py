@@ -73,6 +73,11 @@ class PlgSettingsStructure:
 
     vector_tile_generation_processing_names_str: str = "Calcul de pyramide vecteur,Calcul de pyramide vecteur (Bac à sable),Calcul ou mise à jour de pyramide vecteur"
 
+    # processing ids
+    raster_tiles_from_wms_vector_processing_ids_str: str = (
+        "6a54dc92-fc93-4c8e-9f02-046bf889550e,2e56e7ba-552b-49b8-abcf-563184dd8c55"
+    )
+
     @property
     def base_url_api_entrepot(self) -> str:
         """Return the URL for API entrepot"""
@@ -104,6 +109,15 @@ class PlgSettingsStructure:
         :rtype: List[str]
         """
         return self.vector_tile_generation_processing_names_str.split(",")
+
+    @property
+    def raster_tiles_from_wms_vector_processing_ids(self) -> List[str]:
+        """Return list name possible for vector tile generation processing.
+
+        :return: list of name for processing
+        :rtype: List[str]
+        """
+        return self.raster_tiles_from_wms_vector_processing_ids_str.split(",")
 
     def create_auth_config(self) -> Optional[QgsAuthMethodConfig]:
         """Create QgsAuthMethodConfig for OAuth2 authentification.
