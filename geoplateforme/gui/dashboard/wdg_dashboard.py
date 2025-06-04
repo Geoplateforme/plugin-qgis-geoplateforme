@@ -10,7 +10,6 @@ from qgis.core import (
     QgsProject,
     QgsVectorTileLayer,
 )
-from qgis.gui import QgsMetadataWidget
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtCore import (
     QAbstractItemModel,
@@ -42,6 +41,7 @@ from geoplateforme.api.stored_data import (
     StoredDataType,
 )
 from geoplateforme.gui.dashboard.dlg_stored_data_details import StoredDataDetailsDialog
+from geoplateforme.gui.dashboard.wdg_metadata_details import MetadataDetailsWidget
 from geoplateforme.gui.dashboard.wdg_service_details import ServiceDetailsWidget
 from geoplateforme.gui.dashboard.wdg_upload_details import UploadDetailsWidget
 from geoplateforme.gui.mdl_offering import OfferingListModel
@@ -205,10 +205,9 @@ class DashboardWidget(QWidget):
         metadata = None
         if len(metadatas) == 1:
             try:
-                metadata = metadatas[0].to_qgis_format()
-                self.wdg_metadata = QgsMetadataWidget()
-                self.wdg_metadata.setMetadata(metadata)
-                self.wdg_metadata.setMode(QgsMetadataWidget.Mode.LayerMetadata)
+                metadata = metadatas[0]
+                self.wdg_metadata = MetadataDetailsWidget()
+                self.wdg_metadata.setMetadata(metadata, datastore_id)
             except UnavailableMetadataFileException as exc:
                 self.log(
                     f"Error while getting Metadata informations: {exc}",

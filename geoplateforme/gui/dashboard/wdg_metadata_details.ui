@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>metadata_details</class>
+ <widget class="QWidget" name="metadata_details">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>581</width>
+    <height>474</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-242</y>
+        <width>547</width>
+        <height>1063</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="10" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_info">
+         <property name="title">
+          <string>Metadata Informations</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_quality">
+         <property name="title">
+          <string>Quality</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_genealogy">
+            <property name="text">
+             <string>Genealogy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_genealogy"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_capabilities">
+         <property name="title">
+          <string>GetCapabilities</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_property">
+         <property name="title">
+          <string>Property</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_temporal">
+         <property name="title">
+          <string>Temporal References</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_creation_date">
+            <property name="text">
+             <string>Creation date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_frequency">
+            <property name="text">
+             <string>Frequency</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_frequency"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="de_creation_date"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_description">
+         <property name="title">
+          <string>Description</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="le_title">
+            <property name="toolTip">
+             <string>Characteristic and often unique name by
+        which the resource is known</string>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lbl_context">
+            <property name="toolTip">
+             <string>Datastore Id</string>
+            </property>
+            <property name="text">
+             <string>Context</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lbl_thematic">
+            <property name="text">
+             <string>Thematics</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lbl_inspire_kw">
+            <property name="text">
+             <string>INSPIRE Keywords</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_description">
+            <property name="toolTip">
+             <string>Brief narrative summary of the resource
+        content</string>
+            </property>
+            <property name="text">
+             <string>Description</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lbl_unique_id">
+            <property name="toolTip">
+             <string>Value uniquely identifying the resource
+        in the catalog</string>
+            </property>
+            <property name="text">
+             <string>Unique Id</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_title">
+            <property name="toolTip">
+             <string>Characteristic and often unique name by
+        which the resource is known</string>
+            </property>
+            <property name="text">
+             <string>Title</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QTextEdit" name="te_description">
+            <property name="toolTip">
+             <string>Brief narrative summary of the resource
+        content</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="lbl_kw">
+            <property name="text">
+             <string>Keywords</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="le_context">
+            <property name="toolTip">
+             <string>Datastore Id</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="le_unique_id">
+            <property name="toolTip">
+             <string>Value uniquely identifying the resource
+        in the catalog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="le_thematics"/>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="le_inspire_kw">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="le_kw"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_access">
+         <property name="title">
+          <string>Access</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_contact">
+         <property name="title">
+          <string>Contacts</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_document">
+         <property name="title">
+          <string>Documents</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QgsCollapsibleGroupBox" name="gbp_style">
+         <property name="title">
+          <string>Style Files</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QgsExtentGroupBox" name="gbp_bbox">
+         <property name="title">
+          <string>Bounding Box</string>
+         </property>
+         <property name="collapsed">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QgsCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>qgscollapsiblegroupbox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QgsExtentGroupBox</class>
+   <extends>QgsCollapsibleGroupBox</extends>
+   <header>qgsextentgroupbox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
