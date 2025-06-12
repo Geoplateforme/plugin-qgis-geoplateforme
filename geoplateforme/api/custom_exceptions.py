@@ -148,3 +148,11 @@ class UploadCreationException(Exception):
 
 class UnavailablePortException(ConnectionError):
     pass
+
+
+class ReadUserKeyException(Exception):
+    pass
+
+
+class DeleteUserKeyException(Exception):
+    pass
