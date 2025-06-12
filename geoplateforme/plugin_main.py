@@ -32,6 +32,7 @@ from geoplateforme.gui.dlg_settings import PlgOptionsFactory
 from geoplateforme.gui.provider.provider_gpf import ProviderGPF
 from geoplateforme.gui.storage.dlg_storage_report import StorageReportDialog
 from geoplateforme.gui.user.dlg_user import UserDialog
+from geoplateforme.gui.user_keys.dlg_user_keys import UserKeysDialog
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.toolbelt import PlgLogger, PlgOptionsManager
 
@@ -71,11 +72,13 @@ class GeoplateformePlugin:
 
         self.toolbar = None
         self.dlg_dashboard = None
+        self.dlg_user_keys = None
         self.dlg_dashboard_old = None
         self.dlg_storage_report = None
 
         self.action_authentication = None
         self.action_dashboard = None
+        self.action_user_keys = None
         self.action_storage_report = None
 
         self.btn_autentification = None
@@ -122,6 +125,14 @@ class GeoplateformePlugin:
             self.iface.mainWindow(),
         )
         self.action_dashboard.triggered.connect(self.display_dashboard)
+
+        # User keys
+        self.action_user_keys = QAction(
+            QIcon(":images/themes/default/locked.svg"),
+            self.tr("Clés d'accès"),
+            self.iface.mainWindow(),
+        )
+        self.action_user_keys.triggered.connect(self.user_keys)
 
         # Storage report
         self.action_storage_report = QAction(
@@ -172,6 +183,7 @@ class GeoplateformePlugin:
         # -- Menu
         self.iface.addPluginToMenu(__title__, self.action_authentication)
         self.iface.addPluginToMenu(__title__, self.action_dashboard)
+        self.iface.addPluginToMenu(__title__, self.action_user_keys)
         self.iface.addPluginToMenu(__title__, self.action_storage_report)
         self.iface.addPluginToMenu(__title__, self.action_settings)
         self.iface.addPluginToMenu(__title__, self.action_help)
@@ -182,6 +194,7 @@ class GeoplateformePlugin:
         self.iface.addToolBar(self.toolbar)
         self.toolbar.addAction(self.action_authentication)
         self.toolbar.addAction(self.action_dashboard)
+        self.toolbar.addAction(self.action_user_keys)
         self.toolbar.addAction(self.action_storage_report)
         self._update_actions_availability()
 
@@ -256,6 +269,7 @@ class GeoplateformePlugin:
         # -- Clean up menu
         self.iface.removePluginMenu(__title__, self.action_authentication)
         self.iface.removePluginMenu(__title__, self.action_dashboard)
+        self.iface.removePluginMenu(__title__, self.action_user_keys)
         self.iface.removePluginMenu(__title__, self.action_storage_report)
         self.iface.removePluginMenu(__title__, self.action_help)
         self.iface.removePluginMenu(__title__, self.action_report_issue)
@@ -335,7 +349,14 @@ class GeoplateformePlugin:
         enabled = plg_settings.qgis_auth_id is not None
 
         self.action_dashboard.setEnabled(enabled)
+        self.action_user_keys.setEnabled(enabled)
         self.action_storage_report.setEnabled(False)
+
+    def user_keys(self) -> None:
+        if self.dlg_user_keys is None:
+            self.dlg_user_keys = UserKeysDialog(self.iface.mainWindow())
+        self.dlg_user_keys.refresh()
+        self.dlg_user_keys.show()
 
     def display_dashboard(self) -> None:
         """
