@@ -34,6 +34,7 @@ from geoplateforme.processing.tools.create_geoserver_style import (
     CreateGeoserverStyleAlgorithm,
 )
 from geoplateforme.processing.tools.delete_stored_data import DeleteStoredDataAlgorithm
+from geoplateforme.processing.tools.delete_upload import DeleteUploadAlgorithm
 from geoplateforme.processing.tools.sld_downgrade import SldDowngradeAlgorithm
 from geoplateforme.processing.unpublish import UnpublishAlgorithm
 from geoplateforme.processing.update_tile_upload import UpdateTileUploadAlgorithm
@@ -64,6 +65,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(UnpublishAlgorithm())
         self.addAlgorithm(UpdateTileUploadAlgorithm())
         self.addAlgorithm(DeleteStoredDataAlgorithm())
+        self.addAlgorithm(DeleteUploadAlgorithm())
         self.addAlgorithm(GpfUploadFromLayersAlgorithm())
         self.addAlgorithm(WfsPublicationAlgorithm())
         self.addAlgorithm(CreateGeoserverStyleAlgorithm())
