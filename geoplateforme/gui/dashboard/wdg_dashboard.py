@@ -281,6 +281,8 @@ class DashboardWidget(QWidget):
                 self.select_stored_data
             )
             self.service_detail_widget_layout.addWidget(self.service_detail_dialog)
+
+            self.service_detail_dialog.offering_deleted.connect(self._offering_deleted)
             self.service_detail_zone.show()
 
     def select_upload(self, upload_id: str, refresh: bool = True) -> None:
@@ -411,6 +413,7 @@ class DashboardWidget(QWidget):
                 self.detail_dialog.set_upload(item)
                 self.detail_widget_layout.addWidget(self.detail_dialog)
                 self.detail_dialog.select_stored_data.connect(self.select_stored_data)
+                self.detail_dialog.upload_deleted.connect(self._upload_deleted)
                 self.detail_zone.show()
 
     def _stored_data_deleted(self, stored_data_id: str) -> None:
@@ -418,6 +421,22 @@ class DashboardWidget(QWidget):
 
         :param stored_data_id: deleted stored data id
         :type stored_data_id: str
+        """
+        self._dataset_updated()
+
+    def _upload_deleted(self, upload_id: str) -> None:
+        """Refresh dataset after upload delete
+
+        :param upload_id: deleted upload id
+        :type upload_id: str
+        """
+        self._dataset_updated()
+
+    def _offering_deleted(self, offering_id: str) -> None:
+        """Refresh dataset after offering delete
+
+        :param offering_id: deleted offering id
+        :type offering_id: str
         """
         self._dataset_updated()
 

@@ -1,12 +1,18 @@
 import os
 
-from qgis.core import QgsApplication, QgsProject
+from qgis.core import (
+    QgsApplication,
+    QgsProcessingContext,
+    QgsProcessingFeedback,
+    QgsProject,
+)
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtCore import QSize, Qt, pyqtSignal
 from qgis.PyQt.QtGui import QCursor, QGuiApplication, QIcon, QPixmap
 from qgis.PyQt.QtWidgets import (
     QAbstractItemView,
     QAction,
+    QMessageBox,
     QToolBar,
     QToolButton,
     QWidget,
@@ -19,11 +25,14 @@ from geoplateforme.gui.report.wdg_upload_log import UploadLogWidget
 from geoplateforme.gui.upload_database_integration.wzd_upload_database_integration import (
     UploadDatabaseIntegrationWizard,
 )
+from geoplateforme.processing import GeoplateformeProvider
+from geoplateforme.processing.tools.delete_upload import DeleteUploadAlgorithm
 from geoplateforme.toolbelt import PlgLogger
 
 
 class UploadDetailsWidget(QWidget):
     select_stored_data = pyqtSignal(str)
+    upload_deleted = pyqtSignal(str)
 
     def __init__(self, parent: QWidget = None):
         """
@@ -73,6 +82,18 @@ class UploadDetailsWidget(QWidget):
         status = upload.status
 
         if status == UploadStatus.CLOSED:
+            # Data delete
+            delete_action = QAction(
+                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg")),
+                self.tr("Suppression"),
+                self,
+            )
+            delete_action.triggered.connect(self.delete_upload)
+            button = QToolButton(self)
+            button.setDefaultAction(delete_action)
+            button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+            self.edit_toolbar.addWidget(button)
+
             generate_vector_db_action = QAction(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/dashboard/db.png")),
                 self.tr("Génération base de données vectorielle"),
@@ -120,6 +141,39 @@ class UploadDetailsWidget(QWidget):
                 self.select_stored_data.emit(created_stored_data_id)
             self.vector_db_wizard.deleteLater()
             self.vector_db_wizard = None
+
+    def delete_upload(self) -> None:
+        """Delete current upload"""
+        reply = QMessageBox.question(
+            self,
+            self.tr("Suppression livraison"),
+            self.tr("Êtes-vous sûr de vouloir supprimer la livraison ?"),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            params = {
+                DeleteUploadAlgorithm.DATASTORE: self._upload.datastore_id,
+                DeleteUploadAlgorithm.UPLOAD: self._upload._id,
+            }
+
+            algo_str = (
+                f"{GeoplateformeProvider().id()}:{DeleteUploadAlgorithm().name()}"
+            )
+            alg = QgsApplication.processingRegistry().algorithmById(algo_str)
+            context = QgsProcessingContext()
+            feedback = QgsProcessingFeedback()
+            _, success = alg.run(parameters=params, context=context, feedback=feedback)
+            if success:
+                self.upload_deleted.emit(self._upload._id)
+            else:
+                QMessageBox.critical(
+                    self,
+                    self.tr("Suppression livraison"),
+                    self.tr("La livraison n'a pas pu être supprimée:\n {}").format(
+                        feedback.textLog()
+                    ),
+                )
 
     def _load_generation_report(self) -> None:
         """

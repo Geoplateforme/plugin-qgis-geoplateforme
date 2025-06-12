@@ -1,10 +1,10 @@
 import os
 
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsProcessingContext, QgsProcessingFeedback
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtCore import QSize, Qt, pyqtSignal
 from qgis.PyQt.QtGui import QCursor, QGuiApplication, QIcon, QPixmap
-from qgis.PyQt.QtWidgets import QAction, QToolBar, QToolButton, QWidget
+from qgis.PyQt.QtWidgets import QAction, QMessageBox, QToolBar, QToolButton, QWidget
 
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT
 from geoplateforme.api.configuration import ConfigurationType
@@ -12,11 +12,14 @@ from geoplateforme.api.offerings import Offering, OfferingStatus
 from geoplateforme.gui.create_raster_tiles_from_wms_vector.wzd_raster_tiles_from_wms_vector import (
     TileRasterCreationWizard,
 )
+from geoplateforme.processing import GeoplateformeProvider
+from geoplateforme.processing.tools.delete_offering import DeleteOfferingAlgorithm
 from geoplateforme.toolbelt import PlgLogger
 
 
 class ServiceDetailsWidget(QWidget):
     select_stored_data = pyqtSignal(str)
+    offering_deleted = pyqtSignal(str)
 
     def __init__(self, parent: QWidget = None):
         """
@@ -72,6 +75,18 @@ class ServiceDetailsWidget(QWidget):
 
         # Only published offering have actions
         if status == OfferingStatus.PUBLISHED:
+            # Data delete
+            delete_action = QAction(
+                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg")),
+                self.tr("Dépublication"),
+                self,
+            )
+            delete_action.triggered.connect(self.delete_offering)
+            button = QToolButton(self)
+            button.setDefaultAction(delete_action)
+            button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+            self.edit_toolbar.addWidget(button)
+
             # WMS_VECTOR :
             # - raster tile generation
             if offering.type == ConfigurationType.WMS_VECTOR:
@@ -128,6 +143,39 @@ class ServiceDetailsWidget(QWidget):
                 self.select_stored_data.emit(stored_data_id)
             self.tile_raster_generation_wizard.deleteLater()
             self.tile_raster_generation_wizard = None
+
+    def delete_offering(self) -> None:
+        """Delete current offering"""
+        reply = QMessageBox.question(
+            self,
+            self.tr("Dépublication"),
+            self.tr("Êtes-vous sûr de vouloir dépublier le service ?"),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            params = {
+                DeleteOfferingAlgorithm.DATASTORE: self._offering.datastore_id,
+                DeleteOfferingAlgorithm.OFFERING: self._offering._id,
+            }
+
+            algo_str = (
+                f"{GeoplateformeProvider().id()}:{DeleteOfferingAlgorithm().name()}"
+            )
+            alg = QgsApplication.processingRegistry().algorithmById(algo_str)
+            context = QgsProcessingContext()
+            feedback = QgsProcessingFeedback()
+            _, success = alg.run(parameters=params, context=context, feedback=feedback)
+            if success:
+                self.offering_deleted.emit(self._offering._id)
+            else:
+                QMessageBox.critical(
+                    self,
+                    self.tr("Dépublication service"),
+                    self.tr("Le service n'a pas pu être dépublié :\n {}").format(
+                        feedback.textLog()
+                    ),
+                )
 
     def _get_status_text(self, offering: Offering) -> str:
         """

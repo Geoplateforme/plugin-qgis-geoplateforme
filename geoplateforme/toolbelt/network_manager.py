@@ -146,17 +146,21 @@ class NetworkRequestsManager:
         :return: error description
         :rtype: str
         """
+        content = req_reply.content()
+        if content.isNull():
+            return req_reply.errorString()
 
-        data = json.loads(req_reply.content().data().decode("utf-8"))
+        try:
+            raw = content.data().decode("utf-8").strip()
+            if not raw:
+                return req_reply.errorString()
 
-        if "error" in data:
-            error = data["error"]
-        else:
-            error = req_reply.errorString()
+            data = json.loads(raw)
+        except json.JSONDecodeError as e:
+            return f"{req_reply.errorString()} (invalid JSON: {e})"
 
-        error_description = ""
-        if "error_description" in data:
-            error_description = ",".join(data["error_description"])
+        error = data.get("error", req_reply.errorString())
+        error_description = ",".join(data.get("error_description", []))
 
         return f"{error} : {error_description}"
 

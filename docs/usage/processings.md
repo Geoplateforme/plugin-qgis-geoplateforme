@@ -89,6 +89,13 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 ```{include} ../../geoplateforme/resources/help/delete_stored_data.md
 ```
 
+(delete_upload)=
+
+### Suppression livraison
+
+```{include} ../../geoplateforme/resources/help/delete_upload.md
+```
+
 (create_geoserver_style)=
 
 ### Ajout style Geoserver dans l'entrepôt
