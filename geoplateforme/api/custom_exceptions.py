@@ -54,6 +54,10 @@ class MetadataCreationException(Exception):
     pass
 
 
+class MetadataUpdateException(Exception):
+    pass
+
+
 class OfferingCreationException(Exception):
     pass
 

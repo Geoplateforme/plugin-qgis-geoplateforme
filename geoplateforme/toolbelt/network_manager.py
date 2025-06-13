@@ -629,6 +629,68 @@ class NetworkRequestsManager:
         )
         return req_reply
 
+    def put_file(
+        self,
+        url: QUrl,
+        file_path: Path,
+        config_id: Optional[str] = None,
+        debug_log_response: bool = True,
+        headers: Optional[dict] = None,
+        data: Optional[dict[str, str]] = None,
+    ) -> Optional[QByteArray]:
+        """Put a file using multipart/form-data
+
+        :param url: url
+        :type url: QUrl
+        :param file_path: file path to file to upload
+        :type file_path: Path
+        :param config_id: authentication configuration ID, defaults to None
+        :type config_id: Optional[str], optional
+        :param debug_log_response: option to do not log decoded content in debug mode, defaults to True
+        :type debug_log_response: bool, optional
+        :param headers: headers to add to the request, defaults to None
+        :type headers: dict, optional
+        :param data: data to add to the request, defaults to None
+        :type data: dict[str,str], optional
+
+        :return: feed response in bytes
+        :rtype: Optional[QByteArray]
+        """
+        boundary = f"----GeoplateformeQGISPluginBoundary{uuid.uuid4().hex}"
+
+        body = QByteArray()
+
+        if data:
+            for key, val in data.items():
+                self.add_field(body, boundary, key, val)
+
+        # Define content-type
+        file_type = (
+            mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
+        )
+
+        # Add file content
+        self.add_file_field(body, boundary, "file", file_path, file_type)
+
+        # Close multipart
+        body.append(f"--{boundary}--\r\n")
+
+        # Define content header with multipart/form-data and used boundary
+        all_headers = {
+            b"Content-Type": bytes(f"multipart/form-data; boundary={boundary}", "utf8"),
+        }
+        if headers:
+            all_headers.update(headers)
+
+        req_reply = self.put_url(
+            url=url,
+            data=body,
+            config_id=config_id,
+            debug_log_response=debug_log_response,
+            headers=all_headers,
+        )
+        return req_reply
+
     def test_url(self, url: str, method: str = "head") -> bool:
         """Test if URL is reachable. First, try a HEAD then a GET.
 
