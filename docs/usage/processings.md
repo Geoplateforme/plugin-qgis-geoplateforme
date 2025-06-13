@@ -80,6 +80,15 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 ```{include} ../../geoplateforme/resources/help/wmts_publish.md
 ```
 
+## Permissions
+
+(create_permission)=
+
+### Création d'une permission
+
+```{include} ../../geoplateforme/resources/help/create_permission.md
+```
+
 ## Outils géoplateforme
 
 (delete_stored_data)=
