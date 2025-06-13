@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>581</width>
-    <height>474</height>
+    <height>675</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -20,89 +20,13 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-242</y>
+        <y>-163</y>
         <width>547</width>
-        <height>1063</height>
+        <height>892</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="10" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_info">
-         <property name="title">
-          <string>Metadata Informations</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_quality">
-         <property name="title">
-          <string>Quality</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QLabel" name="lbl_genealogy">
-            <property name="text">
-             <string>Genealogy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="le_genealogy"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_capabilities">
-         <property name="title">
-          <string>GetCapabilities</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_property">
-         <property name="title">
-          <string>Property</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_temporal">
-         <property name="title">
-          <string>Temporal References</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lbl_creation_date">
-            <property name="text">
-             <string>Creation date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lbl_frequency">
-            <property name="text">
-             <string>Frequency</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="le_frequency"/>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDateEdit" name="de_creation_date"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
         <widget class="QgsCollapsibleGroupBox" name="gbp_description">
          <property name="title">
           <string>Description</string>
@@ -204,6 +128,9 @@
              <string>Value uniquely identifying the resource
         in the catalog</string>
             </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item row="4" column="2">
@@ -222,55 +149,149 @@
          </layout>
         </widget>
        </item>
-       <item row="12" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_access">
+       <item>
+        <widget class="QgsCollapsibleGroupBox" name="gbp_quality">
          <property name="title">
-          <string>Access</string>
+          <string>Quality</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_genealogy"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_genealogy">
+            <property name="text">
+             <string>Genealogy</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
+       <item>
+        <widget class="QgsCollapsibleGroupBox" name="gbp_temporal">
+         <property name="title">
+          <string>Temporal References</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_creation_date">
+            <property name="text">
+             <string>Creation date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_frequency">
+            <property name="text">
+             <string>Frequency</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_frequency"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="de_creation_date"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QgsCollapsibleGroupBox" name="gbp_contact">
          <property name="title">
           <string>Contacts</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_contact_email">
+            <property name="text">
+             <string>Email</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="le_contact_email"/>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_document">
+       <item>
+        <widget class="QgsCollapsibleGroupBox" name="gbp_property">
          <property name="title">
-          <string>Documents</string>
+          <string>Resource manager</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_org_name">
+            <property name="text">
+             <string>Organization</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_org_email">
+            <property name="text">
+             <string>Email</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="le_org_name"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_org_email"/>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QgsCollapsibleGroupBox" name="gbp_style">
+       <item>
+        <widget class="QgsCollapsibleGroupBox" name="gbp_info">
          <property name="title">
-          <string>Style Files</string>
+          <string>Metadata Informations</string>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QgsExtentGroupBox" name="gbp_bbox">
-         <property name="title">
-          <string>Bounding Box</string>
-         </property>
-         <property name="collapsed">
-          <bool>false</bool>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="3" column="0">
+           <widget class="QLabel" name="lbl_encoding">
+            <property name="text">
+             <string>Encoding</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lbl_type">
+            <property name="text">
+             <string>Resource type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lbl_link">
+            <property name="text">
+             <string>Metadata link</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lbl_language">
+            <property name="text">
+             <string>Metadata language</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="le_type"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="le_language"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="le_link"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="le_encoding"/>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -284,12 +305,6 @@
    <class>QgsCollapsibleGroupBox</class>
    <extends>QGroupBox</extends>
    <header>qgscollapsiblegroupbox.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QgsExtentGroupBox</class>
-   <extends>QgsCollapsibleGroupBox</extends>
-   <header>qgsextentgroupbox.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

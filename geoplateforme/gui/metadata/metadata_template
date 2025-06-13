@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?><gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="{{ file_identifier }}" xsi:schemaLocation="http://www.isotc211.org/2005/gmd https://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gmx https://www.isotc211.org/2005/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd">
+    <gmd:fileIdentifier>
+        {# Identificateur de ressource unique #}
+        <gco:CharacterString>{{ fields.identifier }}</gco:CharacterString>
+    </gmd:fileIdentifier>
+    <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{{ fields.language }}">{{ fields.language }}</gmd:LanguageCode>
+    </gmd:language>
+    <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{{ fields.encoding }}">{{ fields.encoding }}</gmd:MD_CharacterSetCode>
+    </gmd:characterSet>
+    <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="{{ fields.type }}">{{ fields.type }}</gmd:MD_ScopeCode>
+    </gmd:hierarchyLevel>
+
+    {# généalogie de la ressource #}
+    <gmd:hierarchyLevelName>
+        <gco:CharacterString>{{ fields.type }}</gco:CharacterString>
+    </gmd:hierarchyLevelName>
+
+    {% if fields.title is defined or fields.abstract is defined or fields.org_name is defined or fields.org_email is defined or fields.topics is defined or fields.resolution is defined or fields.creation_date is defined %}
+        <gmd:identificationInfo>
+            <gmd:MD_DataIdentification>
+                {% if fields.title is defined %}
+                    <gmd:citation>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                {# intitulé #}
+                                <gco:CharacterString>{{ fields.title }}</gco:CharacterString>
+                            </gmd:title>
+
+                            {% if fields.creation_date is defined %}
+                                <gmd:date>
+                                    <gmd:CI_Date>
+                                        <gmd:date>
+                                            <gco:Date>{{ fields.creation_date }}</gco:Date>
+                                        </gmd:date>
+                                        <gmd:dateType>
+                                            <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                                        </gmd:dateType>
+                                    </gmd:CI_Date>
+                                </gmd:date>
+                            {% endif %}
+                        </gmd:CI_Citation>
+                    </gmd:citation>
+                {% endif %}
+
+                {% if fields.abstract is defined %}
+                    <gmd:abstract>
+                        {# résumé #}
+                        <gco:CharacterString>{{ fields.abstract }}</gco:CharacterString>
+                    </gmd:abstract>
+                {% endif %}
+
+                {% if fields.org_email is defined or fields.org_name is defined %}
+                    {# email de contact sur les métadonnées #}
+                    <gmd:pointOfContact>
+                        <gmd:CI_ResponsibleParty>
+                            {% if fields.org_name is defined %}
+                                <gmd:organisationName>
+                                    <gco:CharacterString>{{ fields.org_name }}</gco:CharacterString>
+                                </gmd:organisationName>
+                            {% endif %}
+
+                            <gmd:contactInfo>
+                                <gmd:CI_Contact>
+                                    <gmd:address>
+                                        <gmd:CI_Address>
+                                            <gmd:electronicMailAddress>
+                                                <gco:CharacterString>{{ fields.org_email }}</gco:CharacterString>
+                                            </gmd:electronicMailAddress>
+                                        </gmd:CI_Address>
+                                    </gmd:address>
+                                </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                        </gmd:CI_ResponsibleParty>
+                    </gmd:pointOfContact>
+                {% endif %}
+
+                {% if fields.inspire_keywords|length %}
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            {%- for item in fields.inspire_keywords -%}
+                                <gmd:keyword>
+                                    <gco:CharacterString>{{ item }}</gco:CharacterString>
+                                </gmd:keyword>
+                            {%- endfor -%}
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2008-06-01</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                {% endif %}
+
+                {% if fields.free_keywords|length %}
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            {%- for item in fields.free_keywords -%}
+                                <gmd:keyword>
+                                    <gco:CharacterString>{{ item }}</gco:CharacterString>
+                                </gmd:keyword>
+                            {%- endfor -%}
+                            <gmd:type>
+                                <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+                            </gmd:type>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                {% endif %}
+
+                {% if fields.topics|length %}
+                    {% for topic in fields.topics %}
+                        <gmd:topicCategory>
+                            <gmd:MD_TopicCategoryCode>{{ topic }}</gmd:MD_TopicCategoryCode>
+                        </gmd:topicCategory>
+                    {% endfor %}
+                {% endif %}
+
+                {% if fields.thumbnail is defined %}
+                    <gmd:graphicOverview>
+                        <gmd:MD_BrowseGraphic>
+                            <gmd:fileName>
+                                <gco:CharacterString>{{ fields.thumbnail.url }}</gco:CharacterString>
+                            </gmd:fileName>
+                            <gmd:fileDescription>
+                                <gco:CharacterString>Aperçu</gco:CharacterString>
+                            </gmd:fileDescription>
+                            <gmd:fileType>
+                                <gco:CharacterString>{{ fields.thumbnail.format }}</gco:CharacterString>
+                            </gmd:fileType>
+                        </gmd:MD_BrowseGraphic>
+                    </gmd:graphicOverview>
+                {% endif %}
+
+                {% if fields.frequency is defined %}
+                    <gmd:resourceMaintenance>
+                        <gmd:MD_MaintenanceInformation>
+                            <gmd:maintenanceAndUpdateFrequency>
+                                <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="{{ fields.frequency }}" />
+                            </gmd:maintenanceAndUpdateFrequency>
+                        </gmd:MD_MaintenanceInformation>
+                    </gmd:resourceMaintenance>
+                {% endif %}
+
+                {% if fields.resolution is defined %}
+                    <gmd:spatialResolution>
+                        <gmd:MD_Resolution>
+                            <gmd:equivalentScale>
+                                <gmd:MD_RepresentativeFraction>
+                                    <gmd:denominator>
+                                        <gco:Integer>{{ fields.resolution }}</gco:Integer>
+                                    </gmd:denominator>
+                                </gmd:MD_RepresentativeFraction>
+                            </gmd:equivalentScale>
+                        </gmd:MD_Resolution>
+                    </gmd:spatialResolution>
+                {% endif %}
+
+                {% if fields.bbox is defined %}
+                    <gmd:extent>
+                        <gmd:EX_Extent>
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicBoundingBox>
+                                    <gmd:westBoundLongitude>
+                                        <gco:Decimal>{{ fields.bbox.xmin }}</gco:Decimal>
+                                    </gmd:westBoundLongitude>
+                                    <gmd:eastBoundLongitude>
+                                        <gco:Decimal>{{ fields.bbox.xmax }}</gco:Decimal>
+                                    </gmd:eastBoundLongitude>
+                                    <gmd:southBoundLatitude>
+                                        <gco:Decimal>{{ fields.bbox.ymin }}</gco:Decimal>
+                                    </gmd:southBoundLatitude>
+                                    <gmd:northBoundLatitude>
+                                        <gco:Decimal>{{ fields.bbox.ymax }}</gco:Decimal>
+                                    </gmd:northBoundLatitude>
+                                </gmd:EX_GeographicBoundingBox>
+                            </gmd:geographicElement>
+                        </gmd:EX_Extent>
+                    </gmd:extent>
+                {% endif %}
+
+                <gmd:spatialRepresentationType>
+                    <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector" />
+                </gmd:spatialRepresentationType>
+            </gmd:MD_DataIdentification>
+        </gmd:identificationInfo>
+    {% endif %}
+
+    {% if fields.contact_email is defined %}
+        {# responsable de la ressource #}
+        <gmd:contact>
+            <gmd:CI_ResponsibleParty>
+                <gmd:contactInfo>
+                    <gmd:CI_Contact>
+                        <gmd:address>
+                            <gmd:CI_Address>
+                                <gmd:electronicMailAddress>
+                                    <gco:CharacterString>{{ fields.contact_email }}</gco:CharacterString>
+                                </gmd:electronicMailAddress>
+                            </gmd:CI_Address>
+                        </gmd:address>
+                    </gmd:CI_Contact>
+                </gmd:contactInfo>
+            </gmd:CI_ResponsibleParty>
+        </gmd:contact>
+    {% endif %}
+
+    {% if fields.update_date is defined %}
+        <gmd:dateStamp>
+            <gco:DateTime>{{ fields.update_date }}</gco:DateTime>
+        </gmd:dateStamp>
+    {% endif %}
+
+    {% if fields.genealogy is defined %}
+        <gmd:dataQualityInfo>
+            <gmd:DQ_DataQuality>
+                <gmd:lineage>
+                    <gmd:LI_Lineage>
+                        <gmd:statement>
+                            <gco:CharacterString>{{ fields.genealogy }}</gco:CharacterString>
+                        </gmd:statement>
+                    </gmd:LI_Lineage>
+                </gmd:lineage>
+            </gmd:DQ_DataQuality>
+        </gmd:dataQualityInfo>
+    {% endif %}
+
+    {% if fields.links is defined %}
+        <gmd:distributionInfo>
+            <gmd:MD_Distribution>
+                <gmd:transferOptions>
+                    <gmd:MD_DigitalTransferOptions>
+                        {# https://cnig.gouv.fr/IMG/pdf/guide_recherche_inspire.pdf #}
+                        {# Le champ linkage précise l’adresse du service, le champ « protocol » précise de quel type de service il s’agit (OGC:WMS, OGC:WFS, OGC:WMTS, OGC:CSW) et le champ « name » contient le nom de la couche. #}
+                        {% for link in fields.links %}
+                            {% if link.type == "offering" %}
+                                <gmd:onLine type="offering" offeringId="{{ link.offering_id }}" {% if link.open is defined %} offeringOpen="{{ link.open }}" {% endif %} >
+                                    <gmd:CI_OnlineResource>
+                                        <gmd:linkage>
+                                            <gmd:URL>{{ link.url }}</gmd:URL>
+                                        </gmd:linkage>
+                                        <gmd:protocol>
+                                            <gco:CharacterString>{{ link.format }}</gco:CharacterString>
+                                        </gmd:protocol>
+                                        <gmd:name>
+                                            <gco:CharacterString>{{ link.name }}</gco:CharacterString>
+                                        </gmd:name>
+                                        {% if link.open == "False" %}
+                                            <gmd:applicationProfile>
+                                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other">other</gmx:Anchor>
+                                            </gmd:applicationProfile>
+                                            <gmd:description>
+                                                <gmx:Anchor xlink:href="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode_restricted">Le service associé à cette donnée est en accès restreint, veuillez contacter le producteur de la donnée pour en obtenir l'accès</gmx:Anchor>
+                                            </gmd:description>
+                                        {% endif %}
+                                    </gmd:CI_OnlineResource>
+                                </gmd:onLine>
+                            {% endif %}
+
+                            {% if link.type == "style" %}
+                                <gmd:onLine type="style">
+                                    <gmd:CI_OnlineResource>
+                                        <gmd:linkage>
+                                            <gmd:URL>{{ link.url }}</gmd:URL>
+                                        </gmd:linkage>
+                                        <gmd:name>
+                                            <gco:CharacterString>{{ link.name }}</gco:CharacterString>
+                                        </gmd:name>
+                                        <gmd:description>
+                                            <gco:CharacterString>{{ link.description }}</gco:CharacterString>
+                                        </gmd:description>
+                                    </gmd:CI_OnlineResource>
+                                </gmd:onLine>
+                            {% endif %}
+
+                            {% if link.type == "getcapabilities" %}
+                                <gmd:onLine type="getcapabilities">
+                                    <gmd:CI_OnlineResource>
+                                        <gmd:linkage>
+                                            <gmd:URL>{{ link.url }}</gmd:URL>
+                                        </gmd:linkage>
+                                        <gmd:name>
+                                            <gco:CharacterString>{{ link.name }}</gco:CharacterString>
+                                        </gmd:name>
+                                        <gmd:description>
+                                            <gco:CharacterString>{{ link.description }}</gco:CharacterString>
+                                        </gmd:description>
+                                    </gmd:CI_OnlineResource>
+                                </gmd:onLine>
+                            {% endif %}
+
+                            {% if link.type == "document" %}
+                                <gmd:onLine type="document">
+                                    <gmd:CI_OnlineResource>
+                                        <gmd:linkage>
+                                            <gmd:URL>{{ link.url }}</gmd:URL>
+                                        </gmd:linkage>
+                                        <gmd:name>
+                                            <gco:CharacterString>{{ link.name }}</gco:CharacterString>
+                                        </gmd:name>
+                                        {% if link.description is defined %}
+                                            <gmd:description>
+                                                <gco:CharacterString>{{ link.description }}</gco:CharacterString>
+                                            </gmd:description>
+                                        {% endif %}
+                                    </gmd:CI_OnlineResource>
+                                </gmd:onLine>
+                            {% endif %}
+                        {% endfor %}
+                    </gmd:MD_DigitalTransferOptions>
+                </gmd:transferOptions>
+            </gmd:MD_Distribution>
+        </gmd:distributionInfo>
+    {% endif %}
+</gmd:MD_Metadata>

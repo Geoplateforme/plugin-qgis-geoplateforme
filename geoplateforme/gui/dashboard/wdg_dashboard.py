@@ -41,12 +41,12 @@ from geoplateforme.api.stored_data import (
     StoredDataType,
 )
 from geoplateforme.gui.dashboard.dlg_stored_data_details import StoredDataDetailsDialog
-from geoplateforme.gui.dashboard.wdg_metadata_details import MetadataDetailsWidget
 from geoplateforme.gui.dashboard.wdg_service_details import ServiceDetailsWidget
 from geoplateforme.gui.dashboard.wdg_upload_details import UploadDetailsWidget
 from geoplateforme.gui.mdl_offering import OfferingListModel
 from geoplateforme.gui.mdl_stored_data import StoredDataListModel
 from geoplateforme.gui.mdl_upload import UploadListModel
+from geoplateforme.gui.metadata.wdg_metadata_details import MetadataDetailsWidget
 from geoplateforme.gui.proxy_model_stored_data import StoredDataProxyModel
 from geoplateforme.gui.publication_creation.wzd_publication_creation import (
     PublicationFormCreation,
@@ -190,7 +190,9 @@ class DashboardWidget(QWidget):
         """
         Create metadata view when metadata is present
         """
-        if self.wdg_metadata:
+        if self.wdg_metadata is not None:
+            if isinstance(self.wdg_metadata, MetadataDetailsWidget):
+                self.btn_update_metadata.clicked.disconnect(self._update_metadata)
             self.metadata_layout.removeWidget(self.wdg_metadata)
             self.wdg_metadata = None
 
@@ -206,8 +208,11 @@ class DashboardWidget(QWidget):
         if len(metadatas) == 1:
             try:
                 metadata = metadatas[0]
-                self.wdg_metadata = MetadataDetailsWidget()
-                self.wdg_metadata.setMetadata(metadata, datastore_id)
+                self.wdg_metadata = MetadataDetailsWidget(
+                    metadata=metadata, datastore_id=datastore_id
+                )
+                self.btn_update_metadata.clicked.connect(self._update_metadata)
+                self.btn_update_metadata.show()
             except UnavailableMetadataFileException as exc:
                 self.log(
                     f"Error while getting Metadata informations: {exc}",
@@ -223,7 +228,13 @@ class DashboardWidget(QWidget):
         if metadata is None:
             self.wdg_metadata = QLabel()
             self.wdg_metadata.setText("No metadata available")
+            self.btn_update_metadata.hide()
         self.metadata_layout.addWidget(self.wdg_metadata)
+
+    def _update_metadata(self):
+        """Update metadata"""
+        if self.wdg_metadata is not None:
+            self.wdg_metadata.update_metadata()
 
     def refresh(
         self, datastore_id: Optional[str] = None, dataset_name: Optional[str] = None

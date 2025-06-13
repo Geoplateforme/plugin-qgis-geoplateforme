@@ -3,21 +3,27 @@ import logging
 import math
 import os
 import re
+import tempfile
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import List, Optional, Self
 from xml.etree import ElementTree
+
+from jinja2 import Environment, FileSystemLoader
 
 # PyQGIS
 from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QUrl
 
 # plugin
+from geoplateforme.__about__ import DIR_PLUGIN_ROOT
 from geoplateforme.api.custom_exceptions import (
     AddTagException,
     DeleteMetadataException,
     DeleteTagException,
+    MetadataUpdateException,
     ReadMetadataException,
     UnavailableMetadataException,
     UnavailableMetadataFileException,
@@ -58,7 +64,7 @@ class MetadataFields:
     contact_email: Optional[str] = None
     update_date: Optional[datetime] = None
     genealogy: Optional[str] = None
-    link: Optional[List[dict]] = None
+    links: Optional[List[dict]] = None
 
 
 @dataclass
@@ -342,18 +348,14 @@ class Metadata:
                     if distribution_field is not None:
                         links_field = distribution_field.findall("./{*}onLine")
                         if len(links_field) > 0:
-                            self._fields.link = []
+                            self._fields.links = []
                         for link_field in links_field:
                             link = {}
-                            if link_field.attrib["type"] == "offering":
-                                link["type"] = "Web Service"
-                            if link_field.attrib["type"] == "style":
-                                link["type"] = "Style"
-                            if link_field.attrib["type"] == "getcapabilities":
-                                link["type"] = "GetCapabilities"
-                            if link_field.attrib["type"] == "document":
-                                link["type"] = "Document"
-
+                            link["type"] = link_field.attrib["type"]
+                            if "offeringId" in link_field.attrib:
+                                link["offering_id"] = link_field.attrib["offeringId"]
+                            if "offeringOpen" in link_field.attrib:
+                                link["open"] = str(link_field.attrib["offeringOpen"])
                             link_name = link_field.find(
                                 "./{*}CI_OnlineResource/{*}name/{*}CharacterString"
                             )
@@ -374,9 +376,16 @@ class Metadata:
                             )
                             if link_description is not None:
                                 link["description"] = link_description.text
-                            self._fields.link.append(link)
+                            self._fields.links.append(link)
         except Exception as err:
             raise ReadMetadataException(err)
+
+    def generate_xml_from_fields(self) -> str:
+        """Generate xml file from the metadata fields."""
+        env = Environment(loader=FileSystemLoader(DIR_PLUGIN_ROOT / "gui/metadata"))
+        template = env.get_template("metadata_template")
+        xml = template.render(fields=self.fields)
+        return xml
 
     def update_from_api(self):
         """Update the metadata by calling API details."""
@@ -709,6 +718,34 @@ class MetadataRequestManager:
             )
         except ConnectionError as err:
             raise DeleteTagException(f"Error while deleting tags for metadata : {err}")
+
+    def update_metadata(self, datastore_id: str, metadata: Metadata):
+        """Update metadata
+
+        :param datastore_id: datastore id
+        :type datastore_id: str
+        :param metadata: metadata to update
+        :type metadata: Metadata
+
+        :raises MetadataUpdateException: when error occur during requesting the API
+        """
+        self.log(
+            f"{__name__}.update_metadata(datastore:{datastore_id}, metadata_id: {metadata._id})"
+        )
+        print(metadata.generate_xml_from_fields())
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            temp_dir = Path(tmpdirname)
+            file_name = temp_dir / f"{metadata._id}.xml"
+            file_name.write_text(metadata.generate_xml_from_fields())
+
+            try:
+                self.request_manager.put_file(
+                    url=QUrl(f"{self.get_base_url(datastore_id)}/{metadata._id}"),
+                    config_id=self.plg_settings.qgis_auth_id,
+                    file_path=file_name,
+                )
+            except ConnectionError as err:
+                raise MetadataUpdateException(f"Error while updating metadata : {err}")
 
     # TODO :
     # def create_metadata(
