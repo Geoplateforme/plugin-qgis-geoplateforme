@@ -55,9 +55,9 @@ class User:
     last_name: str
     email: str
     creation: datetime
-    communities_member: [CommunitiesMember]
+    communities_member: list[CommunitiesMember]
 
-    def get_datastore_list(self) -> [Datastore]:
+    def get_datastore_list(self) -> list[Datastore]:
         """
         Get datastore list from communities
 
@@ -74,6 +74,14 @@ class User:
                     )
                 )
         return result
+
+    def get_community_list(self) -> list[Community]:
+        """Get list of available community
+
+        :return: community list
+        :rtype: list[Community]
+        """
+        return [member.community for member in self.communities_member]
 
     @classmethod
     def from_json(cls, data):
