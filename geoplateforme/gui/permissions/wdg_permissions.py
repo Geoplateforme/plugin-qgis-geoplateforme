@@ -4,11 +4,16 @@ from typing import Optional
 
 # PyQGIS
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QAbstractItemView, QWidget
-
-from geoplateforme.gui.permissions.mdl_permissions import PermissionListModel
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAbstractItemView, QDialog, QWidget
+from qgis.utils import OverrideCursor
 
 # plugin
+from geoplateforme.gui.permissions.dlg_permission_creation import (
+    PermissionCreationDialog,
+)
+from geoplateforme.gui.permissions.mdl_permissions import PermissionListModel
 
 
 class PermissionsWidget(QWidget):
@@ -27,9 +32,17 @@ class PermissionsWidget(QWidget):
         self.tbv_permissions.setEditTriggers(
             QAbstractItemView.EditTrigger.NoEditTriggers
         )
+        self.tbv_permissions.verticalHeader().setVisible(False)
 
         self.detail_dialog = None
         self.remove_detail_zone()
+
+        self.datastore_id = None
+        self.offering_id = None
+
+        self.btn_add_permission.setEnabled(False)
+        self.btn_add_permission.setIcon(QIcon(":images/themes/default/locked.svg"))
+        self.btn_add_permission.clicked.connect(self._add_permission)
 
     def remove_detail_zone(self) -> None:
         """Hide detail zone and remove attached widgets"""
@@ -47,4 +60,18 @@ class PermissionsWidget(QWidget):
         :param offering_id: optional offering id
         :type offering_id: Optional[str]
         """
+        self.datastore_id = datastore_id
+        self.offering_id = offering_id
+
         self.mdl_permissions.refresh(datastore_id=datastore_id, offering_id=offering_id)
+        self.btn_add_permission.setEnabled(self.datastore_id is not None)
+
+    def _add_permission(self) -> None:
+        """Display permission creation dialog and refresh display model if permission created"""
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
+            dialog = PermissionCreationDialog(
+                datastore_id=self.datastore_id, parent=self
+            )
+        result = dialog.exec()
+        if result == QDialog.Accepted:
+            self.refresh(self.datastore_id, self.offering_id)
