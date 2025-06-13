@@ -1,6 +1,6 @@
 from typing import Optional
 
-from qgis.PyQt.QtCore import QObject, Qt
+from qgis.PyQt.QtCore import QModelIndex, QObject, Qt
 from qgis.PyQt.QtGui import QStandardItemModel
 
 from geoplateforme.api.configuration import Configuration, ConfigurationRequestManager
@@ -21,7 +21,7 @@ class OfferingListModel(QStandardItemModel):
     OPEN_COL = 5
     AVAILABLE_COL = 6
 
-    def __init__(self, parent: QObject = None):
+    def __init__(self, parent: QObject = None, checkable: bool = False):
         """QStandardItemModel for offering list display
 
         :param parent: parent
@@ -40,6 +40,21 @@ class OfferingListModel(QStandardItemModel):
                 self.tr("Disponibilité"),
             ]
         )
+        self._checkable = checkable
+
+    def flags(self, index: QModelIndex) -> Qt.ItemFlags:
+        """Define flags for model
+
+        :param index: model index
+        :type index: QModelIndex
+        :return: item flags
+        :rtype: Qt.ItemFlags
+        """
+        # All item are enabled and selectable
+        flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+        if index.column() == self.NAME_COL and self._checkable:
+            flags = flags | Qt.ItemFlag.ItemIsUserCheckable
+        return flags
 
     def set_datastore(
         self, datastore_id: str, dataset_name: Optional[str] = None
@@ -114,6 +129,13 @@ class OfferingListModel(QStandardItemModel):
         self.insertRow(row)
 
         self.setData(self.index(row, self.NAME_COL), offering.layer_name)
+        if self._checkable:
+            self.setData(
+                self.index(row, self.NAME_COL),
+                Qt.CheckState.Unchecked,
+                Qt.ItemDataRole.CheckStateRole,
+            )
+
         self.setData(self.index(row, self.NAME_COL), offering, Qt.ItemDataRole.UserRole)
         self.setData(self.index(row, self.ID_COL), offering._id)
         self.setData(self.index(row, self.TYPE_COL), offering.type.value)
@@ -122,6 +144,28 @@ class OfferingListModel(QStandardItemModel):
         self.setData(self.index(row, self.STATUS_COL), offering.status.value)
         self.setData(self.index(row, self.OPEN_COL), offering.open)
         self.setData(self.index(row, self.AVAILABLE_COL), offering.available)
+
+    def get_checked_offering(self, checked: bool = True) -> list[Offering]:
+        """Return offering with wanted checked status
+
+        :param checked: wanted check status, defaults to True
+        :type checked: bool, optional
+        :return: list of offering
+        :rtype: list[Offering]
+        """
+        result = []
+        for row in range(self.rowCount()):
+            row_checked = (
+                self.data(
+                    self.index(row, self.NAME_COL), Qt.ItemDataRole.CheckStateRole
+                )
+                == Qt.CheckState.Checked
+            )
+            if row_checked == checked:
+                result.append(
+                    self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole)
+                )
+        return result
 
     def get_offering_row(self, offering_id: str) -> int:
         """Get offering row for an id; returns -1 if offering is not available
