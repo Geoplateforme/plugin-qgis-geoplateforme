@@ -34,8 +34,8 @@ class PermissionType(Enum):
 @dataclass
 class PermissionAccountBeneficiary:
     _id: str
-    last_name: str
-    first_name: str
+    last_name: Optional[str] = None
+    first_name: Optional[str] = None
 
 
 @dataclass
