@@ -156,3 +156,15 @@ class ReadUserKeyException(Exception):
 
 class DeleteUserKeyException(Exception):
     pass
+
+
+class ReadPermissionException(Exception):
+    pass
+
+
+class DeletePermissionException(Exception):
+    pass
+
+
+class CreatePermissionException(Exception):
+    pass

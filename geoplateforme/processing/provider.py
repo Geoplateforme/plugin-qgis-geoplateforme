@@ -18,6 +18,9 @@ from geoplateforme.processing.generation.tile_creation import TileCreationAlgori
 from geoplateforme.processing.generation.upload_database_integration import (
     UploadDatabaseIntegrationAlgorithm,
 )
+from geoplateforme.processing.permissions.create_permission import (
+    CreatePermissionAlgorithm,
+)
 from geoplateforme.processing.publication.upload_publication import (
     UploadPublicationAlgorithm,
 )
@@ -76,6 +79,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(RasterTilesFromWmsVectorAlgorithm())
         self.addAlgorithm(WmsRasterPublicationAlgorithm())
         self.addAlgorithm(WmtsPublicationAlgorithm())
+        self.addAlgorithm(CreatePermissionAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \
