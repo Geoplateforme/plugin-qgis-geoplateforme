@@ -45,6 +45,8 @@ class ServiceDetailsWidget(QWidget):
         self.edit_toolbar = QToolBar(self)
         self.layout().setMenuBar(self.edit_toolbar)
 
+        self.gpb_permissions.setVisible(False)
+
         self.tile_raster_generation_wizard = None
 
     def set_offering(self, offering: Offering, dataset_name: str) -> None:
@@ -86,6 +88,10 @@ class ServiceDetailsWidget(QWidget):
             button.setDefaultAction(delete_action)
             button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
             self.edit_toolbar.addWidget(button)
+
+            self.gpb_permissions.setVisible(not offering.open)
+            if not offering.open:
+                self.wdg_permissions.refresh(offering.datastore_id, offering._id)
 
             # WMS_VECTOR :
             # - raster tile generation
