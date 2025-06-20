@@ -5,6 +5,7 @@ from typing import Optional
 # PyQGIS
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QDateTime
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import (
     QAbstractItemView,
     QHeaderView,
@@ -77,7 +78,9 @@ class PermissionCreationWidget(QWidget):
 
         # Connection for user and community add
         self.btn_add_user.clicked.connect(self._add_user)
+        self.btn_add_user.setIcon(QIcon(":/images/themes/default/mActionAdd.svg"))
         self.btn_add_community.clicked.connect(self._add_community)
+        self.btn_add_community.setIcon(QIcon(":/images/themes/default/mActionAdd.svg"))
 
         # No end date by default
         self.datetime_end_date.setNullRepresentation(self.tr("Aucune"))
