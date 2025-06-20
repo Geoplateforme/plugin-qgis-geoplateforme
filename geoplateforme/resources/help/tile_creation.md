@@ -21,7 +21,7 @@ Création de tuiles vectorielles depuis une base de données vectorielles.
 
 | Sortie                             | Paramètre                           | Description                    |
 |------------------------------------|-------------------------------------|--------------------------------|
-| Identifiant de la base de données créés | `CREATED_STORED_DATA_ID`        | Identifiant de la base de données créés  |
+| Identifiant des tuiles vectorielles créés | `CREATED_STORED_DATA_ID`        | Identifiant des tuiles vectorielles créés  |
 | Identifiant de l'exécution du traitement | `PROCESSING_EXEC_ID`        | Identifiant de l'exécution du traitement  |
 
 Nom du traitement : `geoplateforme:tile_creation`

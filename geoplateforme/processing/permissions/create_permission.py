@@ -5,6 +5,7 @@
 from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterDateTime,
     QgsProcessingParameterEnum,
@@ -119,6 +120,15 @@ class CreatePermissionAlgorithm(QgsProcessingAlgorithm):
             )
         )
 
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_PERMISSIONS_ID,
+                description=self.tr(
+                    "Identifiants des permissions créés. Valeurs séparées par des ,"
+                ),
+            )
+        )
+
     def processAlgorithm(self, parameters, context, feedback):
         datastore_id = self.parameterAsString(parameters, self.DATASTORE, context)
         license_ = self.parameterAsString(parameters, self.LICENCE, context)
@@ -166,9 +176,9 @@ class CreatePermissionAlgorithm(QgsProcessingAlgorithm):
             )
 
             return {
-                self.CREATED_PERMISSIONS_ID: [
-                    permission._id for permission in permissions
-                ]
+                self.CREATED_PERMISSIONS_ID: ",".join(
+                    [permission._id for permission in permissions]
+                )
             }
 
         except CreatePermissionException as exc:

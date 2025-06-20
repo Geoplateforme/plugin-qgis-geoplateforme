@@ -16,7 +16,7 @@ Création d'une base de données vectorielles depuis un identifiant de livraison
 
 | Sortie                             | Paramètre                           | Description                    |
 |------------------------------------|-------------------------------------|--------------------------------|
-| Identifiant de la base de données créés | `CREATED_STORED_DATA_ID`        | Identifiant de la base de données créés  |
+| Identifiant de la base de données créée | `CREATED_STORED_DATA_ID`        | Identifiant de la base de données créée  |
 | Identifiant de l'exécution du traitement | `PROCESSING_EXEC_ID`        | Identifiant de l'exécution du traitement  |
 
 Nom du traitement : `geoplateforme:upload_database_integration`

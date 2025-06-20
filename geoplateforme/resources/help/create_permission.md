@@ -21,6 +21,6 @@ Cette permission pourra ensuite être associée à une clé d'un utilisateur pou
 
 | Sortie                             | Paramètre                           | Description                    |
 |------------------------------------|-------------------------------------|--------------------------------|
-| Identifiants des permissions créés | `CREATED_PERMISSIONS_ID`        | Identifiants des permissions créés  |
+| Identifiants des permissions créés | `CREATED_PERMISSIONS_ID`        | Identifiants des permissions créés. Valeurs séparées par des , |
 
 Nom du traitement : `geoplateforme:create_permission`

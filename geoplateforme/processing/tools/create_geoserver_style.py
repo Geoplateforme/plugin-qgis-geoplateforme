@@ -6,6 +6,7 @@ from pathlib import Path
 from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
+    QgsProcessingOutputString,
     QgsProcessingParameterFile,
     QgsProcessingParameterString,
 )
@@ -62,7 +63,6 @@ class CreateGeoserverStyleAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterString(
                 name=self.DATASTORE,
                 description=self.tr("Identifiant de l'entrepôt"),
-                defaultValue="87e1beb6-ee07-4adc-8449-6a925dc28949",
             )
         )
 
@@ -86,6 +86,13 @@ class CreateGeoserverStyleAlgorithm(QgsProcessingAlgorithm):
                 name=self.DESCRIPTION,
                 description=self.tr("Description du fichier"),
                 optional=True,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.ID_STATIC,
+                description=self.tr("Identifiant de la donnée statique crée"),
             )
         )
 

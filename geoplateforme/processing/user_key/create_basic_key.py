@@ -5,6 +5,7 @@
 from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
+    QgsProcessingOutputString,
     QgsProcessingParameterString,
 )
 from qgis.PyQt.QtCore import QCoreApplication
@@ -110,6 +111,20 @@ class CreateBasicKeyAlgorithm(QgsProcessingAlgorithm):
                 name=self.REFERER,
                 description=self.tr("Referer"),
                 optional=True,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_KEY_ID,
+                description=self.tr("Identifiant de la clé créé."),
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_KEY_ID,
+                description=self.tr("Identifiant de la clé créée"),
             )
         )
 

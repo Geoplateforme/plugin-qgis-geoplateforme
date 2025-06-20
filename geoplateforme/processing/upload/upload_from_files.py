@@ -9,6 +9,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterFile,
@@ -32,15 +33,6 @@ from geoplateforme.processing.utils import (
     tags_from_qgs_parameter_matrix_string,
 )
 from geoplateforme.toolbelt import PlgOptionsManager
-
-
-class UploadCreationProcessingFeedback(QgsProcessingFeedback):
-    """
-    Implementation of QgsProcessingFeedback to store information from processing:
-        - created_upload_id (str) : created upload id
-    """
-
-    created_upload_id: str = ""
 
 
 class GpfUploadFromFileAlgorithm(QgsProcessingAlgorithm):
@@ -114,6 +106,7 @@ class GpfUploadFromFileAlgorithm(QgsProcessingAlgorithm):
                 description=self.tr(
                     "Fichiers à importer (séparés par ; pour fichiers multiples)"
                 ),
+                optional=True,
             )
         )
 
@@ -134,6 +127,13 @@ class GpfUploadFromFileAlgorithm(QgsProcessingAlgorithm):
                 self.WAIT_FOR_CLOSE,
                 self.tr("Attendre la fermeture de la livraison ?"),
                 defaultValue=False,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_UPLOAD_ID,
+                description=self.tr("Identifiant de la livraison créée"),
             )
         )
 

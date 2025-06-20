@@ -5,6 +5,7 @@ from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterEnum,
     QgsProcessingParameterExtent,
@@ -239,6 +240,19 @@ class RasterTilesFromWmsVectorAlgorithm(QgsProcessingAlgorithm):
         # TODO : gestion dimension : HARVEST_DIMENSION = "HARVEST_DIMENSION"
         # TODO : gestion parallélisation PARALLELIZATION = "PARALLELIZATION"
         # TODO : gestion nodata NODATA = "NODATA"
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_STORED_DATA_ID,
+                description=self.tr("Identifiant de la tuile raster créée."),
+            )
+        )
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.PROCESSING_EXEC_ID,
+                description=self.tr("Identifiant de l'exécution du traitement."),
+            )
+        )
 
     def processAlgorithm(self, parameters, context, feedback):
         stored_data_name = self.parameterAsString(

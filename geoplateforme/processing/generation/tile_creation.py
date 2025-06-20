@@ -5,6 +5,7 @@ from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterExtent,
     QgsProcessingParameterMatrix,
@@ -30,15 +31,6 @@ from geoplateforme.processing.utils import (
     tags_from_qgs_parameter_matrix_string,
 )
 from geoplateforme.toolbelt import PlgOptionsManager
-
-
-class TileCreationProcessingFeedback(QgsProcessingFeedback):
-    """
-    Implentation of QgsProcessingFeedback to store information from processing:
-        - created_pyramid_id (str) : created pyramid stored data id
-    """
-
-    created_pyramid_id: str = ""
 
 
 class TileCreationAlgorithm(QgsProcessingAlgorithm):
@@ -171,6 +163,19 @@ class TileCreationAlgorithm(QgsProcessingAlgorithm):
                 self.WAIT_FOR_GENERATION,
                 self.tr("Attendre la fin de la génération ?"),
                 defaultValue=False,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_STORED_DATA_ID,
+                description=self.tr("Identifiant des tuiles vectorielles créés."),
+            )
+        )
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.PROCESSING_EXEC_ID,
+                description=self.tr("Identifiant de l'exécution du traitement."),
             )
         )
 

@@ -4,6 +4,7 @@ from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterMatrix,
     QgsProcessingParameterString,
@@ -26,15 +27,6 @@ from geoplateforme.processing.utils import (
     tags_from_qgs_parameter_matrix_string,
 )
 from geoplateforme.toolbelt import PlgOptionsManager
-
-
-class UploadDatabaseIntegrationProcessingFeedback(QgsProcessingFeedback):
-    """
-    Implementation of QgsProcessingFeedback to store information from processing:
-        - created_vector_db_id (str) : created vector db stored data id
-    """
-
-    created_vector_db_id: str = ""
 
 
 class UploadDatabaseIntegrationAlgorithm(QgsProcessingAlgorithm):
@@ -114,6 +106,19 @@ class UploadDatabaseIntegrationAlgorithm(QgsProcessingAlgorithm):
                 self.WAIT_FOR_INTEGRATION,
                 self.tr("Attendre la fin de l'intégration ?"),
                 defaultValue=False,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_STORED_DATA_ID,
+                description=self.tr("Identifiant de la base de données créée."),
+            )
+        )
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.PROCESSING_EXEC_ID,
+                description=self.tr("Identifiant de l'exécution du traitement."),
             )
         )
 
