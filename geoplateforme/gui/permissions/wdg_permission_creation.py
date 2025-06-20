@@ -4,7 +4,8 @@ from typing import Optional
 
 # PyQGIS
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QDateTime
+from qgis.PyQt.QtCore import QDateTime, Qt
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import (
     QAbstractItemView,
     QHeaderView,
@@ -12,6 +13,7 @@ from qgis.PyQt.QtWidgets import (
     QWidget,
 )
 
+from geoplateforme.__about__ import DIR_PLUGIN_ROOT
 from geoplateforme.api.permissions import PermissionType
 from geoplateforme.api.user import Community
 from geoplateforme.gui.mdl_community import CommunityListModel
@@ -76,12 +78,88 @@ class PermissionCreationWidget(QWidget):
         self.rbtn_user.toggled.connect(self._permission_type_updated)
 
         # Connection for user and community add
+        self.btn_add_community.setIcon(QIcon(":/images/themes/default/mActionAdd.svg"))
         self.btn_add_user.clicked.connect(self._add_user)
+        self.btn_add_user.setIcon(QIcon(":/images/themes/default/mActionAdd.svg"))
         self.btn_add_community.clicked.connect(self._add_community)
+
+        # Connection for user and community delete
+        self.btn_delete_user.clicked.connect(self._del_selected_user)
+        self.btn_delete_user.setEnabled(False)
+        self.btn_delete_user.setIcon(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg"))
+        )
+        self.btn_delete_community.clicked.connect(self._del_selected_community)
+        self.btn_delete_community.setEnabled(False)
+        self.btn_delete_community.setIcon(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg"))
+        )
+
+        # Connection for selection update
+        self.tbw_user.itemSelectionChanged.connect(
+            self._update_user_delete_button_state
+        )
+        self.tbv_community.selectionModel().selectionChanged.connect(
+            self._update_community_delete_button_state
+        )
 
         # No end date by default
         self.datetime_end_date.setNullRepresentation(self.tr("Aucune"))
         self.datetime_end_date.setDateTime(QDateTime())
+
+        # Update add button if value are invalid
+        self.btn_add_community.setEnabled(False)
+        self.lne_community.textChanged.connect(self._update_add_community_button_state)
+        self.btn_add_user.setEnabled(False)
+        self.lne_user.textChanged.connect(self._update_add_user_button_state)
+
+        self._added_community_id = []
+
+    def _del_selected_user(self) -> None:
+        """Remove selected user"""
+        rows = [x.row() for x in self.tbw_user.selectedIndexes()]
+        rows.sort(reverse=True)
+        for row in rows:
+            self.tbw_user.removeRow(row)
+
+    def _update_user_delete_button_state(self) -> None:
+        """Enable delete button if at least one row is selected for user table."""
+        selected_rows = {item.row() for item in self.tbw_user.selectedItems()}
+        self.btn_delete_user.setEnabled(bool(selected_rows))
+
+    def _update_add_user_button_state(self) -> None:
+        """Enable add button if user is valid"""
+        self.btn_add_user.setEnabled(self.lne_user.valid())
+
+    def _get_deletable_selected_community_row(self) -> list[int]:
+        """Get list of selected community row that can be deleted
+
+        :return: deletable selected community row
+        :rtype: list[int]
+        """
+        selected_indexes = self.tbv_community.selectionModel().selectedIndexes()
+        row_to_delete = []
+        for index in selected_indexes:
+            community = index.data(Qt.ItemDataRole.UserRole)
+            if community and community._id in self._added_community_id:
+                row_to_delete.append(index.row())
+        return row_to_delete
+
+    def _del_selected_community(self) -> None:
+        """Remove selected community if they were added by user"""
+        row_to_delete = self._get_deletable_selected_community_row()
+        row_to_delete.sort(reverse=True)
+        for row in row_to_delete:
+            self.mdl_community.removeRow(row)
+
+    def _update_community_delete_button_state(self):
+        """Enable delete button if at least one selected community can be deleted."""
+        row_to_delete = self._get_deletable_selected_community_row()
+        self.btn_delete_community.setEnabled(bool(row_to_delete))
+
+    def _update_add_community_button_state(self) -> None:
+        """Enable add button if community is valid"""
+        self.btn_add_community.setEnabled(self.lne_community.valid())
 
     def set_datastore_id(self, datastore_id: str) -> None:
         """Define datastore id
@@ -111,6 +189,7 @@ class PermissionCreationWidget(QWidget):
             technical_name=community_id,
             supervisor="",
         )
+        self._added_community_id.append(community_id)
         self.mdl_community.insert_community(community)
 
     def _add_user(self) -> None:

@@ -27,7 +27,7 @@ class UserPermissionListProxyModel(QSortFilterProxyModel):
             source_row, UserPermissionListModel.LICENCE_COL, source_parent
         )
         permission = self.sourceModel().data(value_index, Qt.ItemDataRole.UserRole)
-        if permission:
+        if permission and permission.end_date:
             result = permission.end_date > datetime.now(timezone.utc)
 
         return result

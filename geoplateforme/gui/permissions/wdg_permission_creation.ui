@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>331</height>
+    <width>630</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,18 +54,45 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="0" column="0" colspan="2">
-        <widget class="QTableWidget" name="tbw_user"/>
+       <item row="2" column="0">
+        <widget class="UUIDLineEdit" name="lne_user"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="lne_user"/>
-       </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QPushButton" name="btn_add_user">
          <property name="text">
           <string>Ajouter</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <layout class="QGridLayout" name="grid_tbw_user">
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QToolButton" name="btn_delete_user">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="0" rowspan="2">
+          <widget class="QTableWidget" name="tbw_user"/>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -89,12 +116,15 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="lbl_other_community">
          <property name="text">
           <string>Autres communauté</string>
          </property>
         </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="UUIDLineEdit" name="lne_community"/>
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QLabel" name="lbl_community_description">
@@ -103,18 +133,42 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="3">
-        <widget class="QTableView" name="tbv_community"/>
-       </item>
-       <item row="3" column="2">
+       <item row="4" column="2">
         <widget class="QPushButton" name="btn_add_community">
          <property name="text">
           <string>Ajouter</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lne_community"/>
+       <item row="2" column="0" colspan="3">
+        <layout class="QGridLayout" name="grid_tbv_community">
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QToolButton" name="btn_delete_community">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="0" rowspan="2">
+          <widget class="QTableView" name="tbv_community"/>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -214,6 +268,11 @@
    <class>QgsDateTimeEdit</class>
    <extends>QDateTimeEdit</extends>
    <header>qgsdatetimeedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>UUIDLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>geoplateforme.toolbelt.lne_uuid</header>
   </customwidget>
  </customwidgets>
  <resources/>

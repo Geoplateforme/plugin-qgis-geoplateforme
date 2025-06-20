@@ -35,6 +35,9 @@ class UserKeysWidget(QWidget):
         self.btn_add.setIcon(QIcon(":images/themes/default/locked.svg"))
         self.btn_add.clicked.connect(self._add_user_key)
 
+        self.btn_refresh.clicked.connect(lambda: self.refresh(True))
+        self.btn_refresh.setIcon(QIcon(":/images/themes/default/mActionRefresh.svg"))
+
         self.detail_dialog = None
         self.remove_detail_zone()
 
