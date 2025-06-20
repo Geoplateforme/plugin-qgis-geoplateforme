@@ -5,7 +5,7 @@ import datetime
 import json
 import logging
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Self
 
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
@@ -27,8 +27,30 @@ class Community:
     public: bool
     name: str
     technical_name: str
-    supervisor: str
+    supervisor: Optional[str] = None
     datastore: Optional[str] = None
+
+    @classmethod
+    def from_dict(cls, val: dict) -> Self:
+        """Load object from a dict.
+        :param val: dict value to load
+        :type val: dict
+
+        :return: object with attributes filled from dict.
+        :rtype: Community
+        """
+        res = cls(
+            _id=val["_id"],
+            public=val["public"],
+            name=val["name"],
+            technical_name=val["technical_name"],
+        )
+        if "datastore" in val:
+            res.datastore = val["datastore"]
+
+        if "supervisor" in val:
+            res.datastore = val["supervisor"]
+        return res
 
 
 @dataclass

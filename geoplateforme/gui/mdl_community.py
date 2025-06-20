@@ -1,6 +1,7 @@
 from qgis.PyQt.QtCore import QModelIndex, QObject, Qt
 from qgis.PyQt.QtGui import QStandardItemModel
 
+from geoplateforme.api.catalogs import CatalogRequestManager
 from geoplateforme.api.custom_exceptions import UnavailableUserException
 from geoplateforme.api.user import Community, UserRequestsManager
 from geoplateforme.toolbelt import PlgLogger
@@ -47,6 +48,11 @@ class CommunityListModel(QStandardItemModel):
             user = manager.get_user()
             for community in user.get_community_list():
                 self.insert_community(community)
+
+            catalog_manager = CatalogRequestManager()
+            for community in catalog_manager.get_community_list():
+                self.insert_community(community)
+
         except UnavailableUserException as exc:
             self.log(
                 f"Error while getting user informations: {exc}",

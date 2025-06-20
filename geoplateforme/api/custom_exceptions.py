@@ -204,3 +204,7 @@ class ReadKeyAccessException(Exception):
 
 class DeleteKeyAccessException(Exception):
     pass
+
+
+class ReadCommunityException(Exception):
+    pass
