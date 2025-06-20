@@ -8,6 +8,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterMatrix,
     QgsProcessingParameterString,
 )
@@ -179,6 +180,13 @@ class WmsPublicationAlgorithm(QgsProcessingAlgorithm):
                 name=self.TAGS,
                 description=self.tr("Tags"),
                 headers=[self.tr("Tag"), self.tr("Valeur")],
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.OFFERING_ID,
+                description=self.tr("Identifiant de l'offre créée."),
             )
         )
 

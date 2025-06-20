@@ -67,9 +67,9 @@ def test_account_creation(
     }
     result, success = run_alg(CreatePermissionAlgorithm().name(), params)
     assert success
-    assert result[CreatePermissionAlgorithm.CREATED_PERMISSIONS_ID] == [
-        created_permission_id
-    ]
+    assert result[CreatePermissionAlgorithm.CREATED_PERMISSIONS_ID] == ",".join(
+        [created_permission_id]
+    )
 
 
 def test_community_creation(
@@ -115,6 +115,6 @@ def test_community_creation(
     }
     result, success = run_alg(CreatePermissionAlgorithm().name(), params)
     assert success
-    assert result[CreatePermissionAlgorithm.CREATED_PERMISSIONS_ID] == [
-        created_permission_id
-    ]
+    assert result[CreatePermissionAlgorithm.CREATED_PERMISSIONS_ID] == ",".join(
+        [created_permission_id]
+    )

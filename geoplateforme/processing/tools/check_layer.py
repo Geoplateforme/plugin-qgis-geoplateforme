@@ -8,11 +8,14 @@ from qgis.core import (
     QgsProcessing,
     QgsProcessingAlgorithm,
     QgsProcessingFeedback,
+    QgsProcessingOutputNumber,
     QgsProcessingParameterMultipleLayers,
     QgsVectorLayer,
 )
 from qgis.PyQt import QtCore
 from qgis.PyQt.QtCore import QCoreApplication
+
+from geoplateforme.processing.utils import get_short_string, get_user_manual_url
 
 
 class CheckLayerAlgorithm(QgsProcessingAlgorithm):
@@ -58,18 +61,25 @@ class CheckLayerAlgorithm(QgsProcessingAlgorithm):
         return "tools"
 
     def helpUrl(self):
-        return ""
+        return get_user_manual_url(self.name())
 
     def shortHelpString(self):
-        return ""
+        return get_short_string(self.name(), self.displayName())
 
     def initAlgorithm(self, config=None):
         self.addParameter(
             QgsProcessingParameterMultipleLayers(
                 name=self.INPUT_LAYERS,
                 layerType=QgsProcessing.SourceType.TypeVectorAnyGeometry,
-                description=self.tr("Input layers"),
+                description=self.tr("Couches vectorielles à vérifier"),
                 optional=True,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputNumber(
+                name=self.RESULT_CODE,
+                description=self.tr("Code de résultat. 0 si aucun problème"),
             )
         )
 

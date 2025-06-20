@@ -5,6 +5,7 @@
 from qgis.core import (
     QgsProcessingAlgorithm,
     QgsProcessingException,
+    QgsProcessingOutputString,
     QgsProcessingParameterEnum,
     QgsProcessingParameterMatrix,
     QgsProcessingParameterNumber,
@@ -244,6 +245,13 @@ class WmsRasterPublicationAlgorithm(QgsProcessingAlgorithm):
                 name=self.TAGS,
                 description=self.tr("Tags"),
                 headers=[self.tr("Tag"), self.tr("Valeur")],
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.OFFERING_ID,
+                description=self.tr("Identifiant de l'offre créée."),
             )
         )
 

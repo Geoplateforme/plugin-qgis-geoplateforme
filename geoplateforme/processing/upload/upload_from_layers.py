@@ -10,6 +10,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingException,
     QgsProcessingFeedback,
+    QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterCrs,
     QgsProcessingParameterFile,
@@ -140,6 +141,13 @@ class GpfUploadFromLayersAlgorithm(QgsProcessingAlgorithm):
                 self.WAIT_FOR_CLOSE,
                 self.tr("Attendre la fermeture de la livraison ?"),
                 defaultValue=False,
+            )
+        )
+
+        self.addOutput(
+            QgsProcessingOutputString(
+                name=self.CREATED_UPLOAD_ID,
+                description=self.tr("Identifiant de la livraison créée"),
             )
         )
 
