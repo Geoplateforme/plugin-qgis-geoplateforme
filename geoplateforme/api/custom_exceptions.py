@@ -208,3 +208,7 @@ class DeleteKeyAccessException(Exception):
 
 class ReadCommunityException(Exception):
     pass
+
+
+class AnnexeFileUploadException(Exception):
+    pass

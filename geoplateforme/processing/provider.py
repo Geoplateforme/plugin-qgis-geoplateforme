@@ -11,6 +11,7 @@ from qgis.PyQt.QtGui import QIcon
 
 # project
 from geoplateforme.__about__ import __icon_path__, __title__, __version__
+from geoplateforme.processing.annexes.create_annexe import CreateAnnexeAlgorithm
 from geoplateforme.processing.generation.create_raster_tiles_from_wms_vector import (
     RasterTilesFromWmsVectorAlgorithm,
 )
@@ -94,6 +95,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(UpdateKeyAlgorithm())
         self.addAlgorithm(DeletePermissionAlgorithm())
         self.addAlgorithm(UpdatePermissionAlgorithm())
+        self.addAlgorithm(CreateAnnexeAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \

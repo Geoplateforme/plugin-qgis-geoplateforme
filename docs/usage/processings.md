@@ -176,3 +176,12 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 
 ```{include} ../../geoplateforme/resources/help/sld_downgrade.md
 ```
+
+## Annexes
+
+(create_annexe)=
+
+### Création d'une annexe
+
+```{include} ../../geoplateforme/resources/help/create_annexe.md
+```
