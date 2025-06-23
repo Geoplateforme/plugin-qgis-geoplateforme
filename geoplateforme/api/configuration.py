@@ -16,6 +16,7 @@ from geoplateforme.api.custom_exceptions import (
     ConfigurationCreationException,
     ReadConfigurationException,
     UnavailableConfigurationException,
+    UpdateConfigurationException,
 )
 from geoplateforme.toolbelt.log_handler import PlgLogger
 from geoplateforme.toolbelt.network_manager import NetworkRequestsManager
@@ -224,9 +225,9 @@ class Configuration:
         :return: configuration extra
         :rtype: dict
         """
-        if not self._last_event and not self.is_detailed:
+        if not self._extra and not self.is_detailed:
             self.update_from_api()
-        return self._last_event
+        return self._extra
 
     @property
     def metadata(self) -> list[dict]:
@@ -676,3 +677,54 @@ class ConfigurationRequestManager:
             )
         except ConnectionError as err:
             raise AddTagException(f"Error while adding tag to configuration : {err}")
+
+    def update_extra_and_name(
+        self,
+        datastore_id: str,
+        configuration_id: str,
+        name: Optional[str] = None,
+        extra: Optional[dict] = None,
+    ) -> None:
+        """Update configuration extra and/or name
+
+        :param datastore_id: datastore id
+        :type datastore_id: str
+        :param configuration_id: configuration id
+        :type configuration_id: str
+        :param name: new name, defaults to None
+        :type name: Optional[str], optional
+        :param extra: new extra dict, defaults to None
+        :type extra: Optional[dict], optional
+        :raises UpdateConfigurationException: error during request
+        """
+        self.log(
+            f"{__name__}.update_extra_and_name({datastore_id=},{configuration_id=})"
+        )
+
+        if not name and not extra:
+            return
+
+        try:
+            # encode data
+            data = QByteArray()
+            data_map = {
+                "name": name,
+            }
+            if name is not None:
+                data_map["name"] = name
+            if extra is not None:
+                data_map["extra"] = extra
+
+            data.append(json.dumps(data_map))
+            self.request_manager.patch_url(
+                url=QUrl(
+                    f"{self.get_base_url(datastore=datastore_id)}/{configuration_id}"
+                ),
+                config_id=self.plg_settings.qgis_auth_id,
+                data=data,
+                headers={b"Content-Type": bytes("application/json", "utf8")},
+            )
+        except ConnectionError as err:
+            raise UpdateConfigurationException(
+                f"Error in configuration update : {err}"
+            ) from err
