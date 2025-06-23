@@ -130,7 +130,6 @@ class CreateAnnexeAlgorithm(QgsProcessingAlgorithm):
                 published=published,
                 labels=labels,
             )
-            print(annexe)
 
         except AnnexeFileUploadException as exc:
             raise QgsProcessingException(

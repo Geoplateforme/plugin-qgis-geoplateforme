@@ -16,7 +16,7 @@ from pathlib import Path
 from socket import AF_INET, SOCK_STREAM
 from socket import error as socket_error
 from socket import socket
-from typing import Optional, Union
+from typing import Any, Optional, Union
 
 # PyQGIS
 from qgis.core import (
@@ -579,7 +579,7 @@ class NetworkRequestsManager:
         config_id: Optional[str] = None,
         debug_log_response: bool = True,
         headers: Optional[dict] = None,
-        data: Optional[dict[str, str]] = None,
+        data: Optional[dict[str, Any]] = None,
     ) -> Optional[QByteArray]:
         """Post a file using multipart/form-data
 
@@ -594,7 +594,7 @@ class NetworkRequestsManager:
         :param headers: headers to add to the request, defaults to None
         :type headers: dict, optional
         :param data: data to add to the request, defaults to None
-        :type data: dict[str,str], optional
+        :type data: dict[str,Any], optional
 
         :return: feed response in bytes
         :rtype: Optional[QByteArray]
@@ -605,7 +605,11 @@ class NetworkRequestsManager:
 
         if data:
             for key, val in data.items():
-                self.add_field(body, boundary, key, val)
+                if isinstance(val, list):
+                    for value in val:
+                        self.add_field(body, boundary, key, value)
+                else:
+                    self.add_field(body, boundary, key, val)
 
         # Define content-type
         file_type = (
