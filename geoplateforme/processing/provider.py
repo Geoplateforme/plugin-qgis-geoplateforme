@@ -40,6 +40,9 @@ from geoplateforme.processing.publication.wms_raster_publication import (
 from geoplateforme.processing.publication.wmts_publication import (
     WmtsPublicationAlgorithm,
 )
+from geoplateforme.processing.style.add_configuration_style import (
+    AddConfigurationStyleAlgorithm,
+)
 from geoplateforme.processing.tools.check_layer import CheckLayerAlgorithm
 from geoplateforme.processing.tools.create_geoserver_style import (
     CreateGeoserverStyleAlgorithm,
@@ -98,6 +101,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(UpdatePermissionAlgorithm())
         self.addAlgorithm(CreateAnnexeAlgorithm())
         self.addAlgorithm(DeleteAnnexeAlgorithm())
+        self.addAlgorithm(AddConfigurationStyleAlgorithm())
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \

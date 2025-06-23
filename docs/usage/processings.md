@@ -192,3 +192,12 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 
 ```{include} ../../geoplateforme/resources/help/delete_annexe.md
 ```
+
+## Styles
+
+(add_configuration_style)=
+
+### Ajout d'un fichier de style pour une configuration
+
+```{include} ../../geoplateforme/resources/help/add_configuration_style.md
+```

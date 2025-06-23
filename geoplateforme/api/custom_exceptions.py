@@ -216,3 +216,7 @@ class AnnexeFileUploadException(Exception):
 
 class DeleteAnnexeException(Exception):
     pass
+
+
+class UpdateConfigurationException(Exception):
+    pass
