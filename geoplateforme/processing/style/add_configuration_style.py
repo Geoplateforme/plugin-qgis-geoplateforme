@@ -9,7 +9,6 @@ from qgis.core import (
     QgsProcessingException,
     QgsProcessingFeedback,
     QgsProcessingOutputString,
-    QgsProcessingParameterFile,
     QgsProcessingParameterString,
 )
 from qgis.PyQt.QtCore import QCoreApplication
@@ -32,11 +31,12 @@ from geoplateforme.toolbelt.preferences import PlgOptionsManager
 class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
     DATASTORE_ID = "DATASTORE_ID"
     CONFIGURATION_ID = "CONFIGURATION_ID"
-    STYLE_FILE_PATH = "STYLE_FILE_PATH"
     STYLE_NAME = "STYLE_NAME"
     DATASET_NAME = "DATASET_NAME"
+    STYLE_FILE_PATHS = "STYLE_FILE_PATHS"
+    LAYER_STYLE_NAMES = "LAYER_STYLE_NAMES"
 
-    CREATED_ANNEXE_ID = "CREATED_ANNEXE_ID"
+    CREATED_ANNEXE_IDS = "CREATED_ANNEXE_IDS"
 
     def tr(self, message: str) -> str:
         """Get the translation for a string using Qt translation API.
@@ -84,13 +84,6 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
                 description=self.tr("Identifiant de la configuration"),
             )
         )
-        self.addParameter(
-            QgsProcessingParameterFile(
-                self.STYLE_FILE_PATH,
-                self.tr("Fichier de style"),
-                fileFilter="Fichier de style (*.*)",
-            )
-        )
 
         self.addParameter(
             QgsProcessingParameterString(
@@ -105,10 +98,26 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
             )
         )
 
+        self.addParameter(
+            QgsProcessingParameterString(
+                self.STYLE_FILE_PATHS,
+                self.tr("Fichier(s) de style. Valeurs séparées par des ,"),
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterString(
+                self.LAYER_STYLE_NAMES,
+                self.tr("Nom(s) de couche pour style. Valeurs séparées par des ,"),
+                optional=True,
+            )
+        )
+
         self.addOutput(
             QgsProcessingOutputString(
-                name=self.CREATED_ANNEXE_ID,
-                description=self.tr("Identifiant de l'annexe créée."),
+                name=self.CREATED_ANNEXE_IDS,
+                description=self.tr(
+                    "Identifiants des annexes créées. Valeurs séparées par des ,"
+                ),
             )
         )
 
@@ -117,25 +126,50 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
         config_id = self.parameterAsString(parameters, self.CONFIGURATION_ID, context)
         dataset_name = self.parameterAsString(parameters, self.DATASET_NAME, context)
         style_name = self.parameterAsString(parameters, self.STYLE_NAME, context)
-        style_file = self.parameterAsString(parameters, self.STYLE_FILE_PATH, context)
 
-        # Create annexe file
-        feedback.pushInfo(self.tr("Création du fichier d'annexe"))
-        labels = ["type=style"]
-        if dataset_name:
-            labels.append(f"datasheet_name={dataset_name}")
-
-        style_uuid = uuid.uuid4()
-        style_path = f"/style/{style_uuid}.json"
-
-        created_annexe_id = self._create_annexe(
-            datastore_id=datastore_id,
-            file_path=Path(style_file),
-            public_path=style_path,
-            labels=labels,
-            context=context,
-            feedback=feedback,
+        style_file_str = self.parameterAsString(
+            parameters, self.STYLE_FILE_PATHS, context
         )
+        style_files = style_file_str.split(",")
+
+        layer_style_name_str = self.parameterAsString(
+            parameters, self.LAYER_STYLE_NAMES, context
+        )
+        layer_style_names = []
+        if layer_style_name_str:
+            layer_style_names = layer_style_name_str.split(",")
+
+            if len(style_files) != len(layer_style_names):
+                raise QgsProcessingException(
+                    self.tr(
+                        "Il est nécessaire d'avoir autant de nom de couche que de fichier de style. Fournis {}, attendu {} ".format(
+                            len(layer_style_names), len(style_files)
+                        )
+                    )
+                )
+
+        created_annexe_ids = []
+        created_annexe_public_path = []
+        # Create annexe file
+        feedback.pushInfo(self.tr("Création des fichiers d'annexe"))
+        for style_file in style_files:
+            labels = ["type=style"]
+            if dataset_name:
+                labels.append(f"datasheet_name={dataset_name}")
+
+            style_uuid = uuid.uuid4()
+            style_path = f"/style/{style_uuid}.json"
+            created_annexe_public_path.append(style_path)
+
+            created_annexe_id = self._create_annexe(
+                datastore_id=datastore_id,
+                file_path=Path(style_file),
+                public_path=style_path,
+                labels=labels,
+                context=context,
+                feedback=feedback,
+            )
+            created_annexe_ids.append(created_annexe_id)
 
         # Get configuration
         feedback.pushInfo(self.tr("Récupération de la configuration"))
@@ -165,17 +199,24 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
         settings = PlgOptionsManager.get_plg_settings()
         url_api_entrepot = settings.url_api_entrepot
         url_entrepot = url_api_entrepot.removesuffix("/api")
-        url_annexe = f"{url_entrepot}/annexes/{datastore.technical_name}{style_path}"
 
         config_extra = config.extra
         config_styles = []
         if "styles" in config_extra:
             config_styles = config_extra["styles"]
 
+        layer_list = []
+        for i, created_annexe_id in enumerate(created_annexe_ids):
+            url_annexe = f"{url_entrepot}/annexes/{datastore.technical_name}{created_annexe_public_path[i]}"
+            layer_dict = {"url": url_annexe, "annexe_id": created_annexe_id}
+            if layer_style_name_str:
+                layer_dict["name"] = layer_style_names[i]
+            layer_list.append(layer_dict)
+
         config_styles.append(
             {
                 "name": style_name,
-                "layers": [{"url": url_annexe, "annexe_id": created_annexe_id}],
+                "layers": layer_list,
             }
         )
         # Update configuration
@@ -192,9 +233,7 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
                 f"Erreur lors de la lecture de la configuration : {exc}"
             ) from exc
 
-        return {
-            self.CREATED_ANNEXE_ID: created_annexe_id,
-        }
+        return {self.CREATED_ANNEXE_IDS: ",".join(created_annexe_ids)}
 
     def _create_annexe(
         self,

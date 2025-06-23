@@ -120,17 +120,27 @@ def test_add_configuration_style(
         data_geopf_srv: pytest fixture to simulate server and mock plugin settings
     """
 
-    annexe_file = tmp_path / "annexe.json"
-    annexe_file.write_text("CONTENT")
+    annexe_file_1 = tmp_path / "annexe_1.json"
+    annexe_file_1.write_text("CONTENT")
 
-    created_annexe_id = "annexe_id"
+    annexe_file_2 = tmp_path / "annexe_2.json"
+    annexe_file_2.write_text("CONTENT")
+
+    annexes_files = [str(annexe_file_1), str(annexe_file_2)]
+    annexes_files_str = ",".join(annexes_files)
+
+    layer_style_names = ["layer1", "layer2"]
+    layer_style_names_str = ",".join(layer_style_names)
+
+    created_annexe_id_1 = "annexe_id_1"
+    created_annexe_id_2 = "annexe_id_2"
     datastore_id = DATASTORE_ID
     configuration_id = CONFIGURATION_ID
 
     # Annexe creation
     public_paths = ["/gpf/path1", "/gpf/path2"]
     labels = ["test", "gpf"]
-    data_geopf_srv.expect_oneshot_request(
+    data_geopf_srv.expect_ordered_request(
         f"/api/datastores/{datastore_id}/annexes", method="POST"
     ).respond_with_json(
         {
@@ -139,7 +149,21 @@ def test_add_configuration_style(
             "mime_type": "application/json",
             "published": True,
             "labels": labels,
-            "_id": created_annexe_id,
+            "_id": created_annexe_id_1,
+        }
+    )
+    public_paths = ["/gpf/path1", "/gpf/path2"]
+    labels = ["test", "gpf"]
+    data_geopf_srv.expect_ordered_request(
+        f"/api/datastores/{datastore_id}/annexes", method="POST"
+    ).respond_with_json(
+        {
+            "paths": public_paths,
+            "size": 15000,
+            "mime_type": "application/json",
+            "published": True,
+            "labels": labels,
+            "_id": created_annexe_id_2,
         }
     )
 
@@ -163,11 +187,14 @@ def test_add_configuration_style(
     params = {
         AddConfigurationStyleAlgorithm.DATASTORE_ID: datastore_id,
         AddConfigurationStyleAlgorithm.CONFIGURATION_ID: configuration_id,
-        AddConfigurationStyleAlgorithm.STYLE_FILE_PATH: str(annexe_file),
         AddConfigurationStyleAlgorithm.STYLE_NAME: "test_name",
         AddConfigurationStyleAlgorithm.DATASET_NAME: "datasetname",
+        AddConfigurationStyleAlgorithm.STYLE_FILE_PATHS: annexes_files_str,
+        AddConfigurationStyleAlgorithm.LAYER_STYLE_NAMES: layer_style_names_str,
     }
 
     result, success = run_alg(AddConfigurationStyleAlgorithm().name(), params)
     assert success
-    assert result[AddConfigurationStyleAlgorithm.CREATED_ANNEXE_ID] == created_annexe_id
+    assert result[AddConfigurationStyleAlgorithm.CREATED_ANNEXE_IDS] == ",".join(
+        [created_annexe_id_1, created_annexe_id_2]
+    )
