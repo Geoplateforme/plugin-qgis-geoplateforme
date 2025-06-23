@@ -6,7 +6,10 @@ from typing import Optional, Self
 from qgis.PyQt.QtCore import QUrl
 
 # plugin
-from geoplateforme.api.custom_exceptions import AnnexeFileUploadException
+from geoplateforme.api.custom_exceptions import (
+    AnnexeFileUploadException,
+    DeleteAnnexeException,
+)
 from geoplateforme.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 
@@ -114,3 +117,23 @@ class AnnexeRequestManager:
 
         data = json.loads(reply.data())
         return Annexe.from_dict(datastore_id, data)
+
+    def delete(self, datastore_id: str, annexe_id: str) -> None:
+        """Delete an annex.
+
+        :param datastore_id: datastore id
+        :type datastore_id: str
+        :param annexe_id: annexe id
+        :type annexe_id: str
+
+        :raises DeleteAnnexeException: when error occur during requesting the API
+        """
+        self.log(f"{__name__}.delete({datastore_id=},{annexe_id=})")
+
+        try:
+            self.request_manager.delete_url(
+                url=QUrl(f"{self.get_base_url(datastore_id)}/{annexe_id}"),
+                config_id=self.plg_settings.qgis_auth_id,
+            )
+        except ConnectionError as err:
+            raise DeleteAnnexeException(f"Error while deleting annexe: {err}.")

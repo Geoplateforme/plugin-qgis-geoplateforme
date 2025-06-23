@@ -185,3 +185,10 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 
 ```{include} ../../geoplateforme/resources/help/create_annexe.md
 ```
+
+(delete_annexe)=
+
+### Supression d'une annexe
+
+```{include} ../../geoplateforme/resources/help/delete_annexe.md
+```

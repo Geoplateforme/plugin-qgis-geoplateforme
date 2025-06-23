@@ -212,3 +212,7 @@ class ReadCommunityException(Exception):
 
 class AnnexeFileUploadException(Exception):
     pass
+
+
+class DeleteAnnexeException(Exception):
+    pass
