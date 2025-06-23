@@ -153,17 +153,18 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
         # Create annexe file
         feedback.pushInfo(self.tr("Création des fichiers d'annexe"))
         for style_file in style_files:
+            file_path = Path(style_file)
             labels = ["type=style"]
             if dataset_name:
                 labels.append(f"datasheet_name={dataset_name}")
 
             style_uuid = uuid.uuid4()
-            style_path = f"/style/{style_uuid}.json"
+            style_path = f"/style/{style_uuid}{file_path.suffix}"
             created_annexe_public_path.append(style_path)
 
             created_annexe_id = self._create_annexe(
                 datastore_id=datastore_id,
-                file_path=Path(style_file),
+                file_path=file_path,
                 public_path=style_path,
                 labels=labels,
                 context=context,
