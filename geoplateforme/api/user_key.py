@@ -7,6 +7,7 @@ from enum import Enum
 from typing import List, Optional, Self
 
 # PyQGIS
+from qgis.core import QgsApplication, QgsAuthMethodConfig
 from qgis.PyQt.QtCore import QByteArray, QUrl
 
 # plugin
@@ -18,6 +19,8 @@ from geoplateforme.api.custom_exceptions import (
     UpdateUserKeyException,
 )
 from geoplateforme.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+
+CFG_AUTH_PREFIX = "gpf_"
 
 
 class UserKeyType(Enum):
@@ -140,6 +143,46 @@ class UserKey:
             res._type_infos = val["type_infos"]
 
         return res
+
+    @staticmethod
+    def create_hash_auth_config(name: str, hash_val: str) -> QgsAuthMethodConfig:
+        """Create QgsAuthMethodConfig for hash authentification with apikey
+
+        :param name: name of configuration
+        :type name: str
+        :param hash_val: hash value
+        :type hash_val: str
+        :return: created configuration. Warning: config must be added to QgsApplication.authManager() before use
+        :rtype: QgsAuthMethodConfig
+        """
+        new_auth_config = QgsAuthMethodConfig(method="APIHeader", version=2)
+        new_auth_config.setId(QgsApplication.authManager().uniqueConfigId())
+        new_auth_config.setName(f"{CFG_AUTH_PREFIX}{name}")
+        new_auth_config.setConfigMap({"apikey": hash_val})
+        return new_auth_config
+
+    @staticmethod
+    def create_basic_auth_config(
+        name: str, user: str, password: str
+    ) -> QgsAuthMethodConfig:
+        """Create QgsAuthMethodConfig for basic authentification with username / password
+
+        :param name: name of configuration
+        :type name: str
+        :param user: username
+        :type user: str
+        :param password: password
+        :type password: str
+        :return: created configuration. Warning: config must be added to QgsApplication.authManager() before use
+        :rtype: QgsAuthMethodConfig
+        """
+        new_auth_config = QgsAuthMethodConfig(method="Basic", version=2)
+        new_auth_config.setId(QgsApplication.authManager().uniqueConfigId())
+        new_auth_config.setName(f"{CFG_AUTH_PREFIX}{name}")
+        new_auth_config.setConfigMap(
+            {"password": password, "realm": "", "username": user}
+        )
+        return new_auth_config
 
 
 class UserKeyRequestManager:
