@@ -87,4 +87,7 @@ class UserKeyCreationDialog(QDialog):
                     ),
                 )
 
+        # Ask for QGIS authentication creation
+        self.wdg_user_key_creation.create_qgis_auth(result)
+
         return super().accept()

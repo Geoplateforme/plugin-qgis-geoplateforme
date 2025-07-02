@@ -1,14 +1,17 @@
 # standard
 import os
-from typing import Tuple
+from typing import Any, Tuple
+
+from qgis.core import QgsApplication
 
 # PyQGIS
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QAbstractItemView, QHeaderView, QWidget
+from qgis.PyQt.QtWidgets import QAbstractItemView, QHeaderView, QMessageBox, QWidget
 
 # plugin
 from geoplateforme.api.offerings import Offering
 from geoplateforme.api.permissions import Permission
+from geoplateforme.api.user_key import UserKey
 from geoplateforme.gui.user_keys.mdl_user_permissions import UserPermissionListModel
 from geoplateforme.gui.user_keys.proxy_model_user_permissions import (
     UserPermissionListProxyModel,
@@ -124,3 +127,53 @@ class UserKeyCreationWidget(QWidget):
         return self.mdl_user_permission.get_checked_permission_and_offering(
             checked=True
         )
+
+    def _qgis_auth_creation_possible(self) -> bool:
+        """Check if qgis auth creation is possible
+
+        :return: True if auth is basic or hash, False otherwise
+        :rtype: bool
+        """
+        return self.rbtn_basic.isChecked() or self.rbtn_hash.isChecked()
+
+    def create_qgis_auth(self, result: dict[str, Any]) -> None:
+        """Ask user for qgis auth creation
+
+        :param result: user key creation result, needed to get hash value
+        :type result: dict[str, Any]
+        """
+        if not self._qgis_auth_creation_possible():
+            return
+
+        reply = QMessageBox.question(
+            self,
+            self.tr("Création authentification QGIS"),
+            self.tr(
+                "Voulez vous créer une configuration d'authentification QGIS pour cette clé ?"
+            ),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            if self.rbtn_basic.isChecked():
+                auth_config = UserKey.create_basic_auth_config(
+                    name=self.lne_name.text(),
+                    user=self.lne_login.text(),
+                    password=self.lne_password.text(),
+                )
+            elif self.rbtn_hash.isChecked():
+                auth_config = UserKey.create_hash_auth_config(
+                    name=self.lne_name.text(),
+                    hash=result[CreateHashKeyAlgorithm.CREATED_HASH],
+                )
+
+            auth_manager = QgsApplication.authManager()
+            auth_created = auth_manager.storeAuthenticationConfig(auth_config, True)
+            if not auth_created[0]:
+                QMessageBox.warning(
+                    self,
+                    self.tr("Erreur lors de la création de l'authentification QGIS."),
+                    self.tr(
+                        "La configuration d'authentification QGIS n'a pas été correctement ajouté.\nVous devez ajouter manuellement la configuration."
+                    ),
+                )
