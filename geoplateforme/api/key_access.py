@@ -24,7 +24,7 @@ class KeyAccess:
     offering: Offering
 
     @classmethod
-    def from_dict(cls, key_id: str, val: dict) :
+    def from_dict(cls, key_id: str, val: dict):
         """Load object from a dict.
 
         :param key_id: key id

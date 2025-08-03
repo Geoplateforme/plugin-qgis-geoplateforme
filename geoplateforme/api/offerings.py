@@ -166,7 +166,7 @@ class Offering:
         return self._extra
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) :
+    def from_dict(cls, datastore_id: str, val: dict):
         """Load object from a dict.
 
         :param datastore_id: datastore id

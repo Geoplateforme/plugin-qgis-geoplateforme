@@ -309,7 +309,7 @@ class Configuration:
         self._type_infos["abstract"] = val
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) :
+    def from_dict(cls, datastore_id: str, val: dict):
         """Load object from a dict.
 
         :param datastore_id: datastore id

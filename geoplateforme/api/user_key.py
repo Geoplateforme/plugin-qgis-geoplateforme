@@ -121,7 +121,7 @@ class UserKey:
         self.is_detailed = True
 
     @classmethod
-    def from_dict(cls, val: dict) :
+    def from_dict(cls, val: dict):
         """Load object from a dict.
 
         :param val: dict value to load
