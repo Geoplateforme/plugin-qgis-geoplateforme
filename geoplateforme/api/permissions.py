@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional, Self
+from typing import List, Optional, Union
 
 from qgis.PyQt.QtCore import QByteArray, QDateTime, Qt, QUrl
 
@@ -57,7 +57,7 @@ class Permission:
     end_date: Optional[datetime] = None
     datastore_author: Optional[PermissionDatastoreAuthor] = None
     beneficiary: Optional[
-        PermissionAccountBeneficiary | PermissionCommunityBeneficiary
+        Union[PermissionAccountBeneficiary, PermissionCommunityBeneficiary]
     ] = None
     only_oauth: Optional[bool] = None
 
@@ -79,7 +79,7 @@ class Permission:
         return None
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict):
         """Load object from a dict.
 
         :param datastore_id: datastore id
