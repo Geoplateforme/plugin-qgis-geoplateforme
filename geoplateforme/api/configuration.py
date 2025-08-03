@@ -5,7 +5,7 @@ import math
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Self
+from typing import List, Optional
 
 # PyQGIS
 from qgis.PyQt.QtCore import QByteArray, QUrl
@@ -309,7 +309,7 @@ class Configuration:
         self._type_infos["abstract"] = val
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) :
         """Load object from a dict.
 
         :param datastore_id: datastore id

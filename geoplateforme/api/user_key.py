@@ -4,7 +4,7 @@ import math
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Self
+from typing import List, Optional
 
 # PyQGIS
 from qgis.core import QgsApplication, QgsAuthMethodConfig
@@ -121,7 +121,7 @@ class UserKey:
         self.is_detailed = True
 
     @classmethod
-    def from_dict(cls, val: dict) -> Self:
+    def from_dict(cls, val: dict) :
         """Load object from a dict.
 
         :param val: dict value to load

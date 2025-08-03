@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Self
+
 
 from qgis.PyQt.QtCore import QUrl
 
@@ -30,7 +30,7 @@ class Static:
     description: str = ""
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) :
         """Load object from a dict.
 
         :param datastore_id: datastore id

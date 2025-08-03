@@ -84,7 +84,7 @@ class Datastore:
             )
         return endpoint_id
 
-    def get_endpoint_dict(self, endpoint_id: str) -> dict | None:
+    def get_endpoint_dict(self, endpoint_id: str) -> dict :
         """
         Get the endpoint dict
 

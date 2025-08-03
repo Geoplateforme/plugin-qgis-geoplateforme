@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import List, Optional, Self
+from typing import List, Optional
 from xml.etree import ElementTree
 
 from jinja2 import Environment, FileSystemLoader
@@ -92,7 +92,7 @@ class Metadata:
     _extra: Optional[dict] = None
 
     @property
-    def dataset_name(self) -> str | None:
+    def dataset_name(self) -> str :
         """Returns the type of the metadata.
 
         :return: metadata type
@@ -447,7 +447,7 @@ class Metadata:
         self.is_detailed = True
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) :
         """Load object from a dict.
 
         :param datastore_id: datastore id
