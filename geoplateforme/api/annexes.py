@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional, Self
+from typing import Optional
 
 from qgis.PyQt.QtCore import QUrl
 
@@ -25,7 +25,7 @@ class Annexe:
     extra: Optional[dict] = None
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict):
         """Load object from a dict.
 
         :param datastore_id: datastore id
