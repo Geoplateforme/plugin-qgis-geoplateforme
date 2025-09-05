@@ -998,18 +998,23 @@ class DashboardWidget(QWidget):
 
         """
         if self.import_wizard is not None:
-            self.refresh(
-                datastore_id=self.import_wizard.get_datastore_id(),
-                dataset_name=self.import_wizard.get_dataset_name(),
-                wait_refresh=True,
-                force_refresh=False,
-            )
             created_upload_id = self.import_wizard.get_created_upload_id()
             created_stored_data_id = self.import_wizard.get_created_stored_data_id()
-            if created_stored_data_id:
-                self.select_stored_data(created_stored_data_id, False)
-            elif created_upload_id:
-                self.select_upload(created_upload_id, False)
+            if created_upload_id or created_stored_data_id:
+                self.refresh(
+                    datastore_id=self.import_wizard.get_datastore_id(),
+                    dataset_name=self.import_wizard.get_dataset_name(),
+                    wait_refresh=True,
+                    force_refresh=True,
+                )
+                # Force update of dataset. It can be unavailable because of proxy during refresh
+                self.cbx_dataset.set_dataset_name(self.import_wizard.get_dataset_name())
+                self._update_dataset_table()
+
+                if created_stored_data_id:
+                    self.select_stored_data(created_stored_data_id, False)
+                elif created_upload_id:
+                    self.select_upload(created_upload_id, False)
             self.import_wizard.deleteLater()
             self.import_wizard = None
 

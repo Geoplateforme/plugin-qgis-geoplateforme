@@ -48,6 +48,8 @@ class UploadCreationWizard(QWizard):
             )
             self.qwp_upload_edition.wdg_upload_creation.lne_dataset.setEnabled(False)
 
+        self.setMinimumHeight(500)
+
     def set_datastore_id(self, datastore_id: str) -> None:
         """
         Define current datastore from datastore id
