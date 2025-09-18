@@ -37,7 +37,7 @@ Vous devez décrire votre extension, son utilisation de la Géoplateforme et ind
 ### Critères de référencement
 
 - {far}`square-check` le code source est sous une licence libre compatible avec QGIS (GPL2+ généralement)
-- {far}`square-check` le code source est lirement accessible
+- {far}`square-check` le code source est librement accessible
 - {far}`square-check` l'auteur déclaré dans le fichier metadata.txt est l'interlocuteur technique avec qui échanger sur l'intégration
 - {far}`square-check` les versions supportées de QGIS (`qgisMinimumVersion` et `qgisMaximumVersion`) par le plugin Géoplateforme font partie de celles supportées par le plugin tiers
 - {far}`square-check` le plugin packagé publié sur un dépôt de plugins en accès public. Idéalement le [dépôt officiel des extensions de QGIS](https://plugins.qgis.org/).
