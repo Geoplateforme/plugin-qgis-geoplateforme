@@ -14,7 +14,9 @@ Le menu de l'extension permet d'afficher les différents outils disponibles.
 
 Vous pouvez aussi afficher l'aide en ligne et les paramètres de l'extension.
 
-Vous trouverez aussi les actions disponibles pour des extensions utilisant la Géoplateforme.
+:::{note}
+Le menu peut changer selon les plugins référencés installés. Voir [la page dédiée](../external_plugins/integration.md).
+:::
 
 ## Barre d'outils
 

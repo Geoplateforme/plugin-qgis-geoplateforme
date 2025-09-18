@@ -1,0 +1,89 @@
+name: Plugin referencing request
+description: Request to add your plugin to the Géoplateforme menu in QGIS.
+labels:
+  - "Plugin referencing"
+assignees:
+  - IGNF-Xavier
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de remplir ce formulaire et contribuer à l'écosystème de la Géoplateforme !
+        Si besoin, ne pas hésiter à consulter [la documentation liée](https://geoplateforme.github.io/plugin-qgis-geoplateforme/external_plugins/integration.html/).
+
+
+  - type: markdown
+    attributes:
+      value: |
+        ----
+
+        # Vous
+
+  - type: input
+    id: in_author_name
+    attributes:
+      label: Votre nom
+      description: Merci de nous indiquer le Prénom NOM
+      placeholder: ex. "Jean DUPONT"
+    validations:
+      required: true
+
+  - type: input
+    id: in_author_mail
+    attributes:
+      label: Votre adresse email
+      description: Merci de nous indiquer votre adresse email afin de pouvoir vous contacter par ailleurs.
+      placeholder: ex. pseudo.nyme [à] mon-organisation.fr
+    validations:
+      required: true
+
+  - type: input
+    id: in_author_mail
+    attributes:
+      label: Votre organisation
+      description: Nom de votre organisme. Indiquer "particulier" si vous avez développé ce plugin sur votre temps libre.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ----
+
+        # Votre plugin
+
+  - type: textarea
+    id: tx_plugin_description
+    attributes:
+      label: Décrire le plugin en précisant son utilisation de la Géoplateforme et sa complémentarité avec le plugin idoine.
+      description: La syntaxe Markdown est acceptée.
+    validations:
+      required: true
+
+  - type: input
+    id: in_plugin_url
+    attributes:
+      label: Lien vers le plugin sur un dépôt de plugin
+      description: S'assurer que les liens vers le code source et la documentation sont valables dans le metadata.txt qui ressort dans la page dud épôt de plugins.
+      value: "https://plugins.qgis.org/mon-plugin"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: in_plugin_criteria
+    attributes:
+      label: Critères de référencement
+      options:
+        - label: J'ai lu et compris les critères de référencement
+
+  - type: markdown
+    attributes:
+      value: |
+        ----
+
+  - type: textarea
+    id: tx_misc_comment
+    attributes:
+      label: Message libre
+      description: "Un commentaire ? Une précision à apporter ? Un message pour l'équipe ?"

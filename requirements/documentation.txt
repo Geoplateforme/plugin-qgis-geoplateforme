@@ -7,5 +7,6 @@ sphinx-autobuild>=2024
 sphinx-autodoc-typehints>=1.25
 sphinx-book-theme>1
 sphinx-copybutton>=0.5
+sphinx-design>=0.5
 sphinx-sitemap>=2.5.1
 sphinxext-opengraph>=0.7

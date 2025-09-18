@@ -60,5 +60,8 @@
     ],
     "isort.check": true,
     // Extensions
-    "autoDocstring.docstringFormat": "sphinx"
+    "autoDocstring.docstringFormat": "sphinx",
+    "yaml.schemas": {
+        "https://www.schemastore.org/github-issue-forms.json": "file:///home/jmo/Git/Oslandia/Clients/IGN/plugin-qgis-geoplateforme/.github/ISSUE_TEMPLATE/20_integration_request.yml"
+    }
 }
