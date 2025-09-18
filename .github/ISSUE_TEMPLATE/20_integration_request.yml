@@ -39,7 +39,7 @@ body:
       required: true
 
   - type: input
-    id: in_author_mail
+    id: in_author_org
     attributes:
       label: Votre organisation
       description: Nom de votre organisme. Indiquer "particulier" si vous avez développé ce plugin sur votre temps libre.
