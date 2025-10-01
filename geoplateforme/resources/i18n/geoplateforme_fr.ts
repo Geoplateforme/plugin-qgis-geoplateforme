@@ -2366,12 +2366,12 @@ Ce type est adapté pour une utilisation dans un logiciel SIG ou tout outil néc
     <message>
         <location filename="../../gui/provider/provider_dialog.ui" line="129"/>
         <source>Title</source>
-        <translation>Title</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <location filename="../../gui/provider/provider_dialog.ui" line="177"/>
         <source>Producer</source>
-        <translation>Producer</translation>
+        <translation>Producteur</translation>
     </message>
     <message>
         <location filename="../../gui/provider/provider_dialog.ui" line="190"/>
