@@ -80,33 +80,6 @@ class WFSPublicationWizard(QWizard):
         self.setOption(QWizard.WizardOption.NoBackButtonOnLastPage, True)
         self.setOption(QWizard.WizardOption.NoCancelButtonOnLastPage, True)
 
-    def set_datastore_id(self, datastore_id: str) -> None:
-        """
-        Define current datastore from datastore id
-
-        Args:
-            datastore_id: (str) datastore id
-        """
-        self.qwp_table_relation.set_datastore_id(datastore_id)
-
-    def set_dataset_name(self, dataset_name: str) -> None:
-        """
-        Define current dataset name
-
-        Args:
-            dataset_name: (str) dataset name
-        """
-        self.qwp_table_relation.set_dataset_name(dataset_name)
-
-    def set_stored_data_id(self, stored_data_id: str) -> None:
-        """
-        Define current stored data from stored data id
-
-        Args:
-            stored_data_id: (str) stored data id
-        """
-        self.qwp_table_relation.set_stored_data_id(stored_data_id)
-
     def get_offering_id(self) -> str:
         """Get offering id of created service
 
