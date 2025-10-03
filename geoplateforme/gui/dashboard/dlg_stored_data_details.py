@@ -521,7 +521,7 @@ class StoredDataDetailsDialog(QDialog):
             self,
             stored_data.datastore_id,
             stored_data.tags["datasheet_name"],
-            stored_data._id,
+            stored_data,
         )
         QGuiApplication.restoreOverrideCursor()
         self.wfs_publish_wizard.finished.connect(self._del_wfs_publish_wizard)
