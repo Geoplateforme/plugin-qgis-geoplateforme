@@ -4,6 +4,7 @@ from typing import Optional
 # PyQGIS
 from qgis.PyQt.QtWidgets import QWizard
 
+from geoplateforme.api.stored_data import StoredData
 from geoplateforme.gui.publication.qwp_visibility import VisibilityPageWizard
 from geoplateforme.gui.qwp_metadata_form import MetadataFormPageWizard
 from geoplateforme.gui.wfs_publication.qwp_publication_form import (
@@ -23,7 +24,7 @@ class WFSPublicationWizard(QWizard):
         parent=None,
         datastore_id: Optional[str] = None,
         dataset_name: Optional[str] = None,
-        stored_data_id: Optional[str] = None,
+        stored_data: Optional[StoredData] = None,
     ):
         """
         QWizard for WFS publication
@@ -32,15 +33,19 @@ class WFSPublicationWizard(QWizard):
             parent: parent None
             datastore_id: datastore id
             dataset_name: dataset name
-            stored_data_id: store data id
+            stored_data: stored data
         """
 
         super().__init__(parent)
         self.setWindowTitle(self.tr("Publication WFS"))
 
+        stored_data_id = None
+        if stored_data:
+            stored_data_id = stored_data._id
+
         # First page to define stored data and table relation
         self.qwp_table_relation = TableRelationPageWizard(
-            self, datastore_id, dataset_name, stored_data_id
+            self, datastore_id, dataset_name, stored_data
         )
 
         # Second page to display publication form
