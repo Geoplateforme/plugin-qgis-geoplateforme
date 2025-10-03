@@ -413,10 +413,10 @@ class StoredDataDetailsDialog(QDialog):
         """
         QGuiApplication.setOverrideCursor(QCursor(QtCore.Qt.CursorShape.WaitCursor))
         self.wms_vector_publish_wizard = WMSVectorPublicationWizard(
+            stored_data,
             self,
             stored_data.datastore_id,
             stored_data.tags["datasheet_name"],
-            stored_data._id,
         )
         QGuiApplication.restoreOverrideCursor()
         self.wms_vector_publish_wizard.finished.connect(

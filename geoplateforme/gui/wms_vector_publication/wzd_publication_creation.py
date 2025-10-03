@@ -5,6 +5,7 @@ from typing import Optional
 from qgis.PyQt.QtWidgets import QWizard
 
 # Plugin
+from geoplateforme.api.stored_data import StoredData
 from geoplateforme.gui.publication.qwp_visibility import VisibilityPageWizard
 from geoplateforme.gui.qwp_metadata_form import MetadataFormPageWizard
 from geoplateforme.gui.wms_vector_publication.qwp_publication_form import (
@@ -21,28 +22,28 @@ from geoplateforme.gui.wms_vector_publication.qwp_wms_vector_publication_status 
 class WMSVectorPublicationWizard(QWizard):
     def __init__(
         self,
+        stored_data: StoredData,
         parent=None,
         datastore_id: Optional[str] = None,
         dataset_name: Optional[str] = None,
-        stored_data_id: Optional[str] = None,
     ):
         """
         QWizard for WMS-VECTOR publication
 
         Args:
+            stored_data: stored data
             parent: parent None
             datastore_id: datastore id
             dataset_name: dataset name
-            stored_data_id: store data id
         """
 
         super().__init__(parent)
         self.setWindowTitle(self.tr("Publication WMS-Vecteur"))
 
+        stored_data_id = stored_data._id
+
         # First page to define stored data and table relation
-        self.qwp_table_relation = TableRelationPageWizard(
-            self, datastore_id, dataset_name, stored_data_id
-        )
+        self.qwp_table_relation = TableRelationPageWizard(stored_data, self)
 
         # Second page to display publication form
         self.qwp_publication_form = PublicationFormPageWizard()
@@ -75,33 +76,6 @@ class WMSVectorPublicationWizard(QWizard):
         self.setOption(QWizard.WizardOption.NoBackButtonOnStartPage, True)
         self.setOption(QWizard.WizardOption.NoBackButtonOnLastPage, True)
         self.setOption(QWizard.WizardOption.NoCancelButtonOnLastPage, True)
-
-    def set_datastore_id(self, datastore_id: str) -> None:
-        """
-        Define current datastore from datastore id
-
-        Args:
-            datastore_id: (str) datastore id
-        """
-        self.qwp_table_relation.set_datastore_id(datastore_id)
-
-    def set_dataset_name(self, dataset_name: str) -> None:
-        """
-        Define current dataset name
-
-        Args:
-            dataset_name: (str) dataset name
-        """
-        self.qwp_table_relation.set_dataset_name(dataset_name)
-
-    def set_stored_data_id(self, stored_data_id: str) -> None:
-        """
-        Define current stored data from stored data id
-
-        Args:
-            stored_data_id: (str) stored data id
-        """
-        self.qwp_table_relation.set_stored_data_id(stored_data_id)
 
     def get_offering_id(self) -> str:
         """Get offering id of created service
