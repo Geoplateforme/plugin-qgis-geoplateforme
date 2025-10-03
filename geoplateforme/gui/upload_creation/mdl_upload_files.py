@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List
 
 from osgeo import ogr
@@ -171,7 +172,11 @@ class UploadFilesTreeModel(QStandardItemModel):
             QgsMapLayerModel.iconForLayer(layer),
             Qt.ItemDataRole.DecorationRole,
         )
-        self.setData(self.index(row, self.NAME_COL), layer.name())
+        storage_type = layer.storageType()
+        if storage_type == "ESRI Shapefile" or storage_type == "GeoJSON":
+            self.setData(self.index(row, self.NAME_COL), Path(layer.source()).stem)
+        else:
+            self.setData(self.index(row, self.NAME_COL), layer.name())
         self.setData(self.index(row, self.CSR_COL), layer.crs().authid())
 
     def _insert_file(self, filename: str) -> None:
