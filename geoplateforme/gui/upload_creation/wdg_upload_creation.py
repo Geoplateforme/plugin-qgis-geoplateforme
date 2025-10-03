@@ -1,5 +1,6 @@
 # standard
 import os
+from pathlib import Path
 from typing import List
 
 from osgeo import ogr
@@ -244,5 +245,9 @@ class UploadCreationWidget(QWidget):
         multi_geom_layer = []
         for layer in input_layers:
             if QgsWkbTypes.isMultiType(layer.wkbType()):
+                storage_type = layer.storageType()
+                if storage_type == "ESRI Shapefile" or storage_type == "GeoJSON":
+                    multi_geom_layer.append(Path(layer.source()).stem)
+            else:
                 multi_geom_layer.append(layer.name())
         return multi_geom_layer
