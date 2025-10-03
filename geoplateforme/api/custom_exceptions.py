@@ -118,6 +118,10 @@ class UnavailableExecutionException(Exception):
     pass
 
 
+class ReadExecutionLogsException(Exception):
+    pass
+
+
 class UnavailableMetadataFileException(Exception):
     pass
 
