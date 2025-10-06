@@ -34,9 +34,8 @@ class PublicationFormCreation(QWizard):
         self.setWindowTitle(self.tr("Publication WMTS-TMS"))
 
         # First page to display publication form
-        self.qwp_publication_form = PublicationFormPageWizard(
-            self, datastore_id, dataset_name, stored_data_id
-        )
+        self.qwp_publication_form = PublicationFormPageWizard(self)
+
         # Second page for metadata
         self.qwp_metadata_form = MetadataFormPageWizard(
             datastore_id, dataset_name, self

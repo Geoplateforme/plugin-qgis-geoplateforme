@@ -17,59 +17,7 @@
    <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Dataset</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Sélectionnez les tables nécessaires au service</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lbl_datastore">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Datastore</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="StoredDataComboBox" name="cbx_stored_data"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="DatastoreComboBox" name="cbx_datastore"/>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="lbl_stored_data">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Vector DB</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -80,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>872</width>
-        <height>275</height>
+        <height>368</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -104,28 +52,21 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="DatasetComboBox" name="cbx_dataset"/>
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sélectionnez les tables nécessaires au service</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>DatastoreComboBox</class>
-   <extends>QComboBox</extends>
-   <header>geoplateforme.gui.cbx_datastore</header>
-  </customwidget>
-  <customwidget>
-   <class>StoredDataComboBox</class>
-   <extends>QComboBox</extends>
-   <header>geoplateforme.gui.cbx_stored_data</header>
-  </customwidget>
-  <customwidget>
-   <class>DatasetComboBox</class>
-   <extends>QComboBox</extends>
-   <header>geoplateforme.gui.cbx_dataset</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
