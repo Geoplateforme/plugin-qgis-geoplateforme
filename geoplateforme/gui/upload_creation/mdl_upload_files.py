@@ -209,6 +209,12 @@ class UploadFilesTreeModel(QStandardItemModel):
 
         self.insertColumns(0, self.columnCount(), parent)
 
+        # Load crs from shp
+        if fileinfo.exists() and fileinfo.suffix() == "shp":
+            layer = QgsVectorLayer(filename)
+            if layer.isValid():
+                self.setData(self.index(row, self.CSR_COL), layer.crs().authid())
+
         # Load layers from gpkg
         if fileinfo.exists() and fileinfo.suffix() == "gpkg":
             for layer in ogr.Open(filename):
