@@ -847,10 +847,10 @@ class DashboardWidget(QWidget):
         self.refresh_in_progress = False
 
     def _service_selection_changed(self, selection: QItemSelection) -> None:
-        """Display service details when clicked
+        """Display service details when selection changed
 
-        :param index: selected item
-        :type index: QItemSelection
+        :param selection: selected item
+        :type selection: QItemSelection
         """
         if len(selection.indexes()) > 0:
             index = selection.indexes()[0]
