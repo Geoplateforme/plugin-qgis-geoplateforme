@@ -54,7 +54,11 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QTableView" name="tbv_permissions"/>
+     <widget class="QTableView" name="tbv_permissions">
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+     </widget>
      <widget class="QScrollArea" name="detail_zone">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -65,7 +69,7 @@
          <x>0</x>
          <y>0</y>
          <width>80</width>
-         <height>370</height>
+         <height>368</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_4">

@@ -6,7 +6,13 @@ from typing import Dict, List, Optional
 # PyQGIS
 from qgis.core import QgsApplication, QgsTask
 from qgis.PyQt import QtCore, uic
-from qgis.PyQt.QtCore import QAbstractItemModel, QItemSelectionModel, QModelIndex, Qt
+from qgis.PyQt.QtCore import (
+    QAbstractItemModel,
+    QItemSelection,
+    QItemSelectionModel,
+    QModelIndex,
+    Qt,
+)
 from qgis.PyQt.QtGui import QCursor, QGuiApplication, QIcon
 from qgis.PyQt.QtWidgets import (
     QAbstractItemView,
@@ -104,12 +110,14 @@ class DashboardWidget(QWidget):
         self.tbv_upload.setModel(self.mdl_upload)
         self.tbv_upload.verticalHeader().setVisible(False)
         self.tbv_upload.horizontalHeader().setSectionResizeMode(
-            0, QHeaderView.ResizeMode.Stretch
+            2, QHeaderView.ResizeMode.Stretch
         )
         self.tbv_upload.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbv_list.append(self.tbv_upload)
-        self.tbv_upload.pressed.connect(
-            lambda index: self._item_clicked(index, self.mdl_upload, self.tbv_upload)
+        self.tbv_upload.selectionModel().selectionChanged.connect(
+            lambda selection: self._item_selection_changed(
+                selection, self.mdl_upload, self.tbv_upload
+            )
         )
 
         # Create proxy model for each table
@@ -144,11 +152,14 @@ class DashboardWidget(QWidget):
         self.tbv_service.setModel(self.mdl_offering)
         self.tbv_service.verticalHeader().setVisible(False)
         self.tbv_service.horizontalHeader().setSectionResizeMode(
-            0, QHeaderView.ResizeMode.Stretch
+            2, QHeaderView.ResizeMode.Stretch
         )
         self.tbv_service.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self.tbv_service.pressed.connect(self._service_clicked)
+        self.tbv_service.selectionModel().selectionChanged.connect(
+            self._service_selection_changed
+        )
 
         # Initialize document table view
         self.tbv_document.setModel(self.mdl_document)
@@ -157,7 +168,10 @@ class DashboardWidget(QWidget):
             0, QHeaderView.ResizeMode.ResizeToContents
         )
         self.tbv_document.horizontalHeader().setSectionResizeMode(
-            1, QHeaderView.ResizeMode.Stretch
+            1, QHeaderView.ResizeMode.ResizeToContents
+        )
+        self.tbv_document.horizontalHeader().setSectionResizeMode(
+            2, QHeaderView.ResizeMode.Stretch
         )
         self.tbv_document.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbv_document.doubleClicked.connect(self._document_clicked)
@@ -229,9 +243,11 @@ class DashboardWidget(QWidget):
         )
         tbv.setModel(proxy_mdl)
         tbv.verticalHeader().setVisible(False)
-        tbv.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        tbv.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
         tbv.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        tbv.pressed.connect(lambda index: self._item_clicked(index, proxy_mdl, tbv))
+        tbv.selectionModel().selectionChanged.connect(
+            lambda selection: self._item_selection_changed(selection, proxy_mdl, tbv)
+        )
 
     def _set_metadata_view(self) -> None:
         """
@@ -830,6 +846,16 @@ class DashboardWidget(QWidget):
         self.setEnabled(True)
         self.refresh_in_progress = False
 
+    def _service_selection_changed(self, selection: QItemSelection) -> None:
+        """Display service details when selection changed
+
+        :param selection: selected item
+        :type selection: QItemSelection
+        """
+        if len(selection.indexes()) > 0:
+            index = selection.indexes()[0]
+            self._service_clicked(index)
+
     def _service_clicked(self, index: QModelIndex) -> None:
         """Display service details when clicked
 
@@ -945,6 +971,22 @@ class DashboardWidget(QWidget):
                 | QItemSelectionModel.SelectionFlag.Rows,
             )
             self._service_clicked(index)
+
+    def _item_selection_changed(
+        self, selection: QItemSelection, model: QAbstractItemModel, tbv: QTableView
+    ) -> None:
+        """Launch action for selected table item depending on selected item
+
+        :param selection: selected item
+        :type selection: QItemSelection
+        :param model: item model
+        :type model: QAbstractItemModel
+        :param tbv: tableview
+        :type tbv: QTableView
+        """
+        if len(selection.indexes()) > 0:
+            index = selection.indexes()[0]
+            self._item_clicked(index, model, tbv)
 
     def _item_clicked(
         self, index: QModelIndex, model: QAbstractItemModel, tbv: QTableView
