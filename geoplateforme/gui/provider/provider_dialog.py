@@ -338,16 +338,16 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
         :param metadata: metadata informations
         :type metadata: dict
         """
-        display_items = [
-            "title",
-            "layer_name",
-            "description",
-            "type",
-            "open",
-            "publication_date",
-            "srs",
-            "keywords",
-        ]
+        display_items = {
+            "title": self.tr("title"),
+            "layer_name": self.tr("layer_name"),
+            "description": self.tr("description"),
+            "type": self.tr("type"),
+            "open": self.tr("open"),
+            "publication_date": self.tr("publication_date"),
+            "srs": self.tr("srs"),
+            "keywords": self.tr("keywords"),
+        }
         item_number = 0
 
         metadata_url = None
@@ -357,7 +357,7 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
                     metadata_url = url
         if metadata_url is not None:
             link = QPushButton()
-            link.setText("Open in cartes.gouv.fr")
+            link.setText(self.tr("Open in cartes.gouv.fr"))
             link.clicked.connect(lambda: webbrowser.open(metadata_url))
             self.metadataLayout.addWidget(link, item_number, 0, 1, 2)
             item_number += 1
@@ -365,7 +365,7 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
         for item in display_items:
             if item in metadata:
                 label = QLabel()
-                label.setText(f"<b>{item} :</b>")
+                label.setText(f"<b>{display_items[item]} :</b>")
                 if item == "description":
                     text = QTextEdit()
                 else:

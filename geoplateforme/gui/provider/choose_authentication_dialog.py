@@ -20,7 +20,7 @@ class ChooseAuthenticationDialog(QDialog):
 
         self.dlg_user_keys = None
 
-        self.setWindowTitle("Choose authentication")
+        self.setWindowTitle(self.tr("Choose authentication"))
 
         QBtn = (
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -31,29 +31,33 @@ class ChooseAuthenticationDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         layout = QVBoxLayout()
-        message = QLabel("""
-            <b>This data is private, please choose a valid authentication configuration.</b>
-        """)
+        message = QLabel(
+            self.tr(
+                "<b>This data is private, please choose a valid authentication configuration.</b>"
+            )
+        )
         self.authent = QgsAuthConfigSelect()
         self.authent.setObjectName("authent")
 
         link = ""
         if metadata_link is not None:
-            link = f': <a href="{metadata_link}">link to metadata</a>'
+            link = (
+                f': <a href="{metadata_link}">' + self.tr("link to metadata") + "</a>"
+            )
 
         gb_information = QgsCollapsibleGroupBox("Informations")
         information_layout = QVBoxLayout(gb_information)
-        information_message = QLabel(f"""
-            Please contact data producer for grant access {link}<br>
-            <br>
-            If you already have grant access in geoplateforme,<br>
-            authentication configuration can be generate here :
-        """)
+        information_message = QLabel(
+            self.tr("Please contact data producer for grant access")
+            + link
+            + self.tr("<br><br>If you already have grant access in geoplateforme,<br>")
+            + self.tr("authentication configuration can be generate here :")
+        )
         # information_message.setTextFormat(Qt.RichText)
         # information_message.setTextInteractionFlags(Qt.TextBrowserInteraction);
         information_message.setOpenExternalLinks(True)
 
-        btn_user_keys = QPushButton("User keys configuration")
+        btn_user_keys = QPushButton(self.tr("User keys configuration"))
         btn_user_keys.setIcon(QIcon(":images/themes/default/locked.svg"))
         btn_user_keys.clicked.connect(self.user_key_configuration)
         information_layout.addWidget(information_message)

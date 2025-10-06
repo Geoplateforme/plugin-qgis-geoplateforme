@@ -13,7 +13,7 @@ class SelectStyleDialog(QDialog):
     def __init__(self, styles: List[str]):
         super().__init__()
 
-        self.setWindowTitle("Choose TMS style")
+        self.setWindowTitle(self.tr("Choose TMS style"))
 
         QBtn = (
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -24,9 +24,7 @@ class SelectStyleDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         layout = QVBoxLayout()
-        message = QLabel("""
-            <b>Please choose between available styles.</b>
-        """)
+        message = QLabel(self.tr("<b>Please choose between available styles.</b>"))
         self.style_combo = QComboBox()
         self.style_combo.addItem(None)
         for style in styles:
