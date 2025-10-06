@@ -112,19 +112,19 @@ class CheckLayerAlgorithm(QgsProcessingAlgorithm):
         else:
             self.add_layers_info_feedback(feedback, layers)
             if not self.check_layers_crs(feedback, layers):
-                result_code = result_code | self.ResultCode.CRS_MISMATCH
+                return {self.RESULT_CODE: self.ResultCode.CRS_MISMATCH}
             if not self.check_layers_name(feedback, layers):
-                result_code = result_code | self.ResultCode.INVALID_LAYER_NAME
+                return {self.RESULT_CODE: self.ResultCode.INVALID_LAYER_NAME}
             if not self.check_file_name(feedback, layers):
-                result_code = result_code | self.ResultCode.INVALID_FILE_NAME
+                return {self.RESULT_CODE: self.ResultCode.INVALID_FILE_NAME}
             if not self.check_layers_fields(feedback, layers):
-                result_code = result_code | self.ResultCode.INVALID_FIELD_NAME
+                return {self.RESULT_CODE: self.ResultCode.INVALID_FIELD_NAME}
             if not self.check_layers_type(feedback, layers):
-                result_code = result_code | self.ResultCode.INVALID_LAYER_TYPE
+                return {self.RESULT_CODE: self.ResultCode.INVALID_LAYER_TYPE}
             if not self.check_layers_geometry(feedback, layers):
-                result_code = result_code | self.ResultCode.INVALID_GEOMETRY
+                return {self.RESULT_CODE: self.ResultCode.INVALID_GEOMETRY}
             if not self.check_layers_nb_features(feedback, layers):
-                result_code = result_code | self.ResultCode.NO_FEATURES
+                return {self.RESULT_CODE: self.ResultCode.NO_FEATURES}
 
         return {self.RESULT_CODE: result_code}
 
