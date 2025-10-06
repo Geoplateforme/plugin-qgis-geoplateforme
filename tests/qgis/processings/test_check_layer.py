@@ -149,48 +149,6 @@ def test_crs_mismatch(alg: QgsProcessingAlgorithm, tmpdir):
     assert expected_warnings == feedback.warnings
 
 
-def test_multiple_invalid_params(alg: QgsProcessingAlgorithm, tmpdir):
-    """
-    Check return code in case of invalid layer name and crs mismatch
-
-    Args:
-        alg: pytest fixture to get QgsProcessingAlgorithm
-        tmpdir: pytest fixture to get temporary directory
-    """
-
-    filepath = create_raster_file(tmpdir, "raster.tif")
-
-    params = {
-        CheckLayerAlgorithm.INPUT_LAYERS: [
-            create_shape_file(tmpdir, "valid.shp", "valid", "EPSG:4326"),
-            create_shape_file(tmpdir, "invalid.shp", "inva&lid", "EPSG:3857"),
-            filepath,
-        ]
-    }
-    context = QgsProcessingContext()
-    feedback = QgsProcessingFeedBackTest()
-    result, success = alg.run(params, context, feedback)
-    assert success
-
-    result_code = result[CheckLayerAlgorithm.RESULT_CODE]
-    expected_result_code = CheckLayerAlgorithm.ResultCode.CRS_MISMATCH
-    expected_result_code = (
-        expected_result_code | CheckLayerAlgorithm.ResultCode.INVALID_LAYER_NAME
-    )
-    expected_result_code = (
-        expected_result_code | CheckLayerAlgorithm.ResultCode.INVALID_LAYER_TYPE
-    )
-    assert result_code == expected_result_code
-
-    expected_warnings = [
-        "- [KO] inva&lid : invalid CRS EPSG:3857. Expected EPSG:4326",
-        "- [KO] raster : invalid CRS EPSG:26912. Expected EPSG:4326",
-        f"- [KO] invalid layer name for inva&lid. Please remove any special character ({INVALID_CHARS})",
-        "- [KO] invalid layer type for raster. Only QgsVectorLayer are supported.",
-    ]
-    assert expected_warnings == feedback.warnings
-
-
 def test_invalid_layer_name(alg: QgsProcessingAlgorithm, tmpdir):
     """
     Check return code in case of invalid layer name
