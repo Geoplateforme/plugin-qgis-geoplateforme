@@ -6,14 +6,7 @@ from typing import List
 from osgeo import ogr
 
 # PyQGIS
-from qgis.core import (
-    QgsApplication,
-    QgsCoordinateReferenceSystem,
-    QgsProcessingContext,
-    QgsProcessingFeedback,
-    QgsVectorLayer,
-    QgsWkbTypes,
-)
+from qgis.core import QgsCoordinateReferenceSystem, QgsVectorLayer, QgsWkbTypes
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtWidgets import QMessageBox, QWidget
 
@@ -21,6 +14,7 @@ from qgis.PyQt.QtWidgets import QMessageBox, QWidget
 from geoplateforme.gui.lne_validators import alphanum_qval
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.tools.check_layer import CheckLayerAlgorithm
+from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 
 
 class UploadCreationWidget(QWidget):
@@ -178,13 +172,17 @@ class UploadCreationWidget(QWidget):
         valid = True
 
         algo_str = f"{GeoplateformeProvider().id()}:{CheckLayerAlgorithm().name()}"
-        alg = QgsApplication.processingRegistry().algorithmById(algo_str)
-
         params = {CheckLayerAlgorithm.INPUT_LAYERS: self._get_input_layers_for_check()}
-        context = QgsProcessingContext()
-        feedback = QgsProcessingFeedback()
-        result, success = alg.run(params, context, feedback)
 
+        run_dialog = ProcessingRunDialog(
+            alg_name=algo_str,
+            params=params,
+            title=self.tr("Check layers"),
+            parent=self,
+        )
+
+        run_dialog.exec()
+        _, result = run_dialog.processing_results()
         result_code = result[CheckLayerAlgorithm.RESULT_CODE]
 
         if result_code != CheckLayerAlgorithm.ResultCode.VALID:
@@ -210,7 +208,7 @@ class UploadCreationWidget(QWidget):
             msgBox = QMessageBox(
                 QMessageBox.Icon.Warning, self.tr("Invalid layers"), error_string
             )
-            msgBox.setDetailedText(feedback.textLog())
+            msgBox.setDetailedText(run_dialog.get_feedback().textLog())
             msgBox.exec()
 
         return valid
