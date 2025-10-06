@@ -74,4 +74,23 @@ def get_shapefile_associated_files(path: str) -> List[str]:
     :rtype: List[str]
     """
     base, _ = os.path.splitext(path)
-    return glob.glob(f"{base}.*")
+    shp_associed_files = []
+    for file in glob.glob(f"{base}.*"):
+        if Path(file).suffix in [
+            ".shx",
+            ".dbf",
+            ".prj",
+            ".sbn",
+            ".sbx",
+            ".fbn",
+            ".fbx",
+            ".ain",
+            ".aih",
+            ".ixs",
+            ".mxs",
+            ".atx",
+            ".cpg",
+            ".qix",
+        ]:
+            shp_associed_files.append(file)
+    return shp_associed_files

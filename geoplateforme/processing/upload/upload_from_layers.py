@@ -238,6 +238,15 @@ class GpfUploadFromLayersAlgorithm(QgsProcessingAlgorithm):
         if file_str:
             files = file_str.split(";")
 
+        added_files = []
+        for file in files:
+            layer = QgsVectorLayer(file)
+            if layer.isValid():
+                if layer.storageType() == "ESRI Shapefile":
+                    source = layer.source()
+                    added_files.extend(get_shapefile_associated_files(source))
+        files.extend(added_files)
+
         # define files from input layers
         for layer in layers:
             storage_type = layer.storageType()
@@ -258,6 +267,7 @@ class GpfUploadFromLayersAlgorithm(QgsProcessingAlgorithm):
 
             elif storage_type == "ESRI Shapefile":
                 source = layer.source()
+                files.append(source)
                 files.extend(get_shapefile_associated_files(source))
             elif storage_type == "GeoJSON":
                 files.append(layer.source())
