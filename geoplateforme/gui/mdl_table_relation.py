@@ -1,3 +1,5 @@
+import re
+
 from qgis.PyQt.QtCore import QModelIndex, QObject, Qt
 
 # plugin
@@ -46,12 +48,11 @@ class TableRelationTreeModel(CheckStateModel):
                 Qt.ItemDataRole.DisplayRole,
             )
             if name_value:
-                if not name_value[0] == "_" and not name_value[0].isalpha():
+                if len(re.findall(r"^[a-z_][a-z0-9_]*$", name_value)) == 0:
                     flags = flags & ~Qt.ItemFlag.ItemIsEnabled
         else:
             if not self.flags(parent) & Qt.ItemFlag.ItemIsEnabled:
                 flags = flags & ~Qt.ItemFlag.ItemIsEnabled
-
         return flags
 
     def set_stored_data(self, datastore: str, stored_data: str) -> None:
