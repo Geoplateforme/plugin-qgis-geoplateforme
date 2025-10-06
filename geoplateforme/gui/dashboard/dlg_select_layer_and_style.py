@@ -13,7 +13,7 @@ class SelectLayerAndStyleDialog(QDialog):
     def __init__(self, layers: List[dict], styles: List[dict]):
         super().__init__()
 
-        self.setWindowTitle("Choose Layer")
+        self.setWindowTitle(self.tr("Choose Layer"))
 
         QBtn = (
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -24,16 +24,16 @@ class SelectLayerAndStyleDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         layout = QVBoxLayout()
-        message_layer = QLabel("""
-            <b>Please choose between available layers.</b>
-        """)
+        message_layer = QLabel(
+            self.tr("<b>Please choose between available layers.</b>")
+        )
         self.layer_combo = QComboBox()
         for layer in layers:
             self.layer_combo.addItem(layer["name"])
 
-        message_style = QLabel("""
-            <b>Please choose between available styles.</b>
-        """)
+        message_style = QLabel(
+            self.tr("<b>Please choose between available styles.</b>")
+        )
         self.style_combo = QComboBox()
         self.style_combo.addItem(None)
         for style in styles:
