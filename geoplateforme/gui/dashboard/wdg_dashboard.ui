@@ -257,13 +257,17 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>88</height>
+             <width>157</width>
+             <height>478</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
             <item row="0" column="0">
-             <widget class="QTableView" name="tbv_service"/>
+             <widget class="QTableView" name="tbv_service">
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -284,7 +288,7 @@
              <x>0</x>
              <y>0</y>
              <width>498</width>
-             <height>28</height>
+             <height>478</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_7">

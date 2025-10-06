@@ -94,13 +94,7 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
         self.tbv_results.setModel(self.mdl_search_result)
         self.tbv_results.verticalHeader().setVisible(False)
         self.tbv_results.horizontalHeader().setSectionResizeMode(
-            0, QHeaderView.ResizeMode.Stretch
-        )
-        self.tbv_results.horizontalHeader().setSectionResizeMode(
-            3, QHeaderView.ResizeMode.ResizeToContents
-        )
-        self.tbv_results.horizontalHeader().setSectionResizeMode(
-            4, QHeaderView.ResizeMode.ResizeToContents
+            4, QHeaderView.ResizeMode.Stretch
         )
         self.tbv_results.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbv_results.selectionModel().selectionChanged.connect(
