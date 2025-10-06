@@ -16,6 +16,35 @@ Unreleased
 
 -->
 
+## 0.17.0 - 2025-10-06
+
+* fix(provider): display subset editor only when WFS layer is valid by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/362
+* fix(tile_generation): fix regression for select zoom level by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/381
+* fix(dashboard): add button to delete open upload by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/383
+* fix(metadata): fix regex for metadata unique id by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/363
+* fix(logs): add log pagination by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/387
+* fix(upload): fix display name and multigeom name for layer upload from files by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/384
+* fix(TMS): fix regex for valid table by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/392
+* fix(upload): fix upload associed files when shp is selected by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/393
+* fix(ui): better ui for table, selection and navigation by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/394
+* fix(translation): add missing translation by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/395
+* feat(upload): add checkbox to deactivate local checks before upload by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/366
+* feat(processing): add nodata param in create_raster_tules_from_wms by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/376
+* feat(generate tile): add advanced parameters for tile generation from wms by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/379
+* feat(document): add double click to open document in browser by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/382
+* feat(wfs): add subset selector when loading WFS in dashboard by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/386
+* feat(external plugins): add minimum version by @jmkerloch in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/388
+* feat(optim): avoid data load for publication by @jmkerloch in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/389
+* Feat/no freeze for check layer by @jmkerloch in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/391
+* build(deps): bump actions/labeler from 5 to 6 by @dependabot in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/365
+* build(deps): bump actions/setup-python from 5 to 6 by @dependabot in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/364
+* Update integration.md by @IGNF-Xavier in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/368
+* Update geoplateforme_fr.ts by @IGNF-Xavier in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/370
+* Update geoplateforme_fr.ts by @IGNF-Xavier in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/371
+* Update dlg_stored_data_details.py by @IGNF-Xavier in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/372
+* feat(external plugins): add BD TOPO® Extractor plugin to Geoplateforme plugin V2 by @JulesGrillot in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/390
+* build(deps-dev): update ruff requirement from <0.13.0,>=0.11.5 to >=0.11.5,<0.14.0 in /requirements by @dependabot in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/358
+
 ## 0.16.0 - 2025-09-19
 
 * fix(metadata): avoid ui block if dataset has a document by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/329>
