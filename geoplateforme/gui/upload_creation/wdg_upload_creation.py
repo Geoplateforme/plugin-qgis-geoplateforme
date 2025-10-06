@@ -248,6 +248,6 @@ class UploadCreationWidget(QWidget):
                 storage_type = layer.storageType()
                 if storage_type == "ESRI Shapefile" or storage_type == "GeoJSON":
                     multi_geom_layer.append(Path(layer.source()).stem)
-            else:
-                multi_geom_layer.append(layer.name())
+                else:
+                    multi_geom_layer.append(layer.name())
         return multi_geom_layer
