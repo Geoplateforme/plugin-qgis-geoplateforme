@@ -8,6 +8,7 @@ GPF_PLUGIN_LIST: list[str] = [
     "french_locator_filter",
     "gpf_isochrone_isodistance_itineraire",
     "bd_topo_extractor",
+    "qgireferentiels",
 ]
 
 cartes_gouv_template_url = {
