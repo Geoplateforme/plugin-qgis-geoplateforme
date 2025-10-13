@@ -12,6 +12,7 @@ Cela correspond aux [extensions listées comme dépendances](https://github.com/
 |:------- | :------------- |
 | API de géocodage et de géocodage inversé | [French Locator Filter](https://plugins.qgis.org/plugins/french_locator_filter/) |
 | API de navigation pour des calculs d'itinéraire, d'isochrone et d'isodistance | [GPF - Isochrone Isodistance Itinéraire](https://plugins.qgis.org/plugins/gpf_isochrone_isodistance_itineraire/) |
+| Extraction de la BD TOPO® facilement depuis le lien WFS de la géoplateforme en offrant quelques paramètres : emprise, format, projection, style... | [BD TOPO® Extractor](https://plugins.qgis.org/plugins/bd_topo_extractor/) |
 
 Si vous acceptez leur installation, des menus complémentaires seront disponibles dans l'extension Géoplateforme, correspondant à leurs capacités :
 
@@ -21,7 +22,7 @@ Si vous acceptez leur installation, des menus complémentaires seront disponible
 
 ## Référencement de votre extension dans le plugin Géoplateforme
 
-Les demandes d'ajout d'une extension comme recommendation par l'extension Géoplateforme doivent être traité via l'ouverture d'un ticket dans GitHub.
+Les demandes d'ajout d'une extension comme recommendation par l'extension Géoplateforme doivent être traitées via l'ouverture d'un ticket dans GitHub.
 
 ```{button-link} https://github.com/Geoplateforme/plugin-qgis-geoplateforme/issues/new?template=20_integration_request.yml
 :color: primary
@@ -50,7 +51,11 @@ Une fois votre demande validée, voici les étapes nécessaires pour finaliser l
 
 #### Modifications dans le plugin Géoplateforme
 
-Les modifications décrites ci-dessous doivent faire l'objet de pull-requests proposées par vos soins
+Les modifications décrites ci-dessous doivent faire l'objet d'une Pull Request proposée par vos soins sur le dépôt du projet ({{ repo_url }}) avec les éléments suivants :
+
+- le titre `Intégration : ajout du plugin tierce XXXX` où `XXXX` est le nom de votre plugin
+- le lien vers le ticket (_issue_) dans lequel est discuté l'intégration du plugin avec cette forme `Closes #YYYY` où `YYYY` est le numéro du ticket
+- le label `Plugin referencing`
 
 1. Ajouter le plugin à la liste `plugin_dependencies` dans `geoplateforme/metadata.txt`
 
@@ -75,6 +80,12 @@ Les modifications décrites ci-dessous doivent faire l'objet de pull-requests pr
     Attention, cela ne correspond pas au nom affiché dans les extension QGIS mais au nom du répertoire contenu dans l'archive de votre extension.
 
     Ceci est nécessaire si vous souhaitez que des actions de votre extension soient ajoutées dans l'extension Géoplateforme.
+
+1. Proposer d'intégrer vos modifications (commits) en créant une Pull Request sur le dépôt du projet ({{ repo_url }}) avec les éléments suivants :
+
+    - le titre est de la forme `Intégration : ajout du plugin tierce XXXX` où `XXXX` est le nom de votre plugin
+    - la description doit contenir le lien vers le ticket (_issue_) dans lequel est discuté l'intégration du plugin avec cette forme `Closes #YYYY` où `YYYY` est le numéro du ticket
+    - le label `Plugin referencing`
 
 #### Modifications à faire dans le plugin tiers
 
