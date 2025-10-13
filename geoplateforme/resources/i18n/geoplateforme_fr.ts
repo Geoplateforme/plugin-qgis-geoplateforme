@@ -4279,7 +4279,7 @@ Valeurs séparées par ,</translation>
     <message>
         <location filename="../../gui/upload_creation/wdg_upload_creation.ui" line="99"/>
         <source>Checking data before upload</source>
-        <translation>Validation de la donnée avant envoie</translation>
+        <translation>Validation de la donnée avant envoi</translation>
     </message>
     <message>
         <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="177"/>
