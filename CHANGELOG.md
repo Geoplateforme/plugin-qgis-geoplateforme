@@ -16,6 +16,20 @@ Unreleased
 
 -->
 
+## 0.18.0 - 2025-10-15
+
+### Documentation 📖
+
+* update(docs): add PR step to integration process by @Guts in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/413
+
+### Other Changes
+
+* pre-commit autoupdate by @pre-commit-ci[bot] in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/396
+* Intégration : ajout du plugin tierce QGIRéférentiels by @PCD-Geo in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/412
+* Update geoplateforme_fr.ts by @IGNF-Xavier in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/401
+* Intégration : MAJ de QGIReferentiels  en 1.3.6 by @PCD-Geo in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/414
+
+
 ## 0.17.0 - 2025-10-06
 
 * fix(provider): display subset editor only when WFS layer is valid by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/362
