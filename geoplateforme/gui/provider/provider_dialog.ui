@@ -114,14 +114,7 @@
            <widget class="QComboBox" name="cb_type"/>
           </item>
           <item row="3" column="1" colspan="2">
-           <widget class="QLineEdit" name="le_layername">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="le_layername"/>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="lb_title">
@@ -131,14 +124,7 @@
            </widget>
           </item>
           <item row="0" column="1" colspan="2">
-           <widget class="QLineEdit" name="le_title">
-            <property name="minimumSize">
-             <size>
-              <width>280</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="le_title"/>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="lb_layername">
