@@ -261,7 +261,7 @@ class TileGenerationStatusPageWizard(QWizardPage):
 
             self.setTitle(
                 self.tr(
-                    "Génération des tuiles vectorielle en cours.\nVous pouvez fermer la fenêtre pendant la génération."
+                    "Génération des tuiles raster en cours.\nVous pouvez fermer la fenêtre pendant la génération."
                 )
             )
             # Emit completeChanged to update finish button
