@@ -132,7 +132,7 @@
           <item row="3" column="2">
            <widget class="QLineEdit" name="le_unique_id">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value uniquely identifying the resource in the catalog. Must start with '_' or letter and can contains letters, numbers, '-', '_' or '.'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value uniquely identifying the resource in the catalog. Must contain only letters, numbers, '-', '_' or '.'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="readOnly">
              <bool>false</bool>
