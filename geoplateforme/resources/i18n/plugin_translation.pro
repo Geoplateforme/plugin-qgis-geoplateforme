@@ -33,6 +33,8 @@ FORMS =	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_editio
 	../../gui/tile_creation/qwp_tile_generation_fields_selection.ui \
 	../../gui/tile_creation/qwp_tile_generation_generalization.ui \
 	../../gui/tile_creation/qwp_tile_generation_status.ui \
+	../../gui/tile_creation/qwp_tile_generation_zoom_selection.ui \
+	../../gui/tile_creation/wdg_zoom_levels_selection.ui \
 	../../gui/upload_creation/qwp_upload_creation.ui \
 	../../gui/upload_creation/qwp_upload_edition.ui \
 	../../gui/upload_creation/wdg_layer_selection.ui \
@@ -57,7 +59,8 @@ FORMS =	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_editio
 	../../gui/wms_vector_publication/qwp_publication_form.ui \
 	../../gui/wms_vector_publication/qwp_table_style_selection.ui \
 	../../gui/wms_vector_publication/wdg_table_style_selection.ui \
-	../../gui/wmts_publication/qwp_publication_form.ui
+	../../gui/wmts_publication/qwp_publication_form.ui \
+	../../toolbelt/dlg_processing_run.ui
 
 SOURCES =	../../api/annexes.py \
 	../../api/catalogs.py \
@@ -86,6 +89,7 @@ SOURCES =	../../api/annexes.py \
 	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_status.py \
 	../../gui/create_raster_tiles_from_wms_vector/wzd_raster_tiles_from_wms_vector.py \
 	../../gui/dashboard/dlg_dashboard.py \
+	../../gui/dashboard/dlg_select_layer_and_style.py \
 	../../gui/dashboard/dlg_stored_data_details.py \
 	../../gui/dashboard/wdg_dashboard.py \
 	../../gui/dashboard/wdg_service_details.py \
@@ -99,6 +103,7 @@ SOURCES =	../../api/annexes.py \
 	../../gui/mdl_configuration.py \
 	../../gui/mdl_dataset.py \
 	../../gui/mdl_datastore.py \
+	../../gui/mdl_document.py \
 	../../gui/mdl_execution_list.py \
 	../../gui/mdl_offering.py \
 	../../gui/mdl_stored_data.py \
@@ -116,6 +121,7 @@ SOURCES =	../../api/annexes.py \
 	../../gui/provider/mdl_search_result.py \
 	../../gui/provider/provider_dialog.py \
 	../../gui/provider/provider_gpf.py \
+	../../gui/provider/select_style_dialog.py \
 	../../gui/provider/wdg_range_slider.py \
 	../../gui/proxy_model_offering.py \
 	../../gui/proxy_model_stored_data.py \
@@ -140,6 +146,8 @@ SOURCES =	../../api/annexes.py \
 	../../gui/tile_creation/qwp_tile_generation_fields_selection.py \
 	../../gui/tile_creation/qwp_tile_generation_generalization.py \
 	../../gui/tile_creation/qwp_tile_generation_status.py \
+	../../gui/tile_creation/qwp_tile_generation_zoom_selection.py \
+	../../gui/tile_creation/wdg_zoom_levels_selection.py \
 	../../gui/tile_creation/wzd_tile_creation.py \
 	../../gui/upload_creation/mdl_upload_files.py \
 	../../gui/upload_creation/qwp_upload_creation.py \
@@ -215,6 +223,7 @@ SOURCES =	../../api/annexes.py \
 	../../processing/user_key/update_key.py \
 	../../processing/utils.py \
 	../../toolbelt/check_state_model.py \
+	../../toolbelt/dlg_processing_run.py \
 	../../toolbelt/env_var_parser.py \
 	../../toolbelt/file_stats.py \
 	../../toolbelt/lne_ip_cidr_adress.py \
@@ -222,7 +231,8 @@ SOURCES =	../../api/annexes.py \
 	../../toolbelt/log_handler.py \
 	../../toolbelt/network_manager.py \
 	../../toolbelt/preferences.py \
-	../../toolbelt/range_slider.py
+	../../toolbelt/range_slider.py \
+	../../toolbelt/text_edit_feedback.py
 
 TRANSLATIONS =	geoplateforme_en.ts \
 	geoplateforme_fr.ts
