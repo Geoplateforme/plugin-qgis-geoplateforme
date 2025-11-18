@@ -2,7 +2,6 @@
   "recommendations": [
     "charliermarsh.ruff",
     "eriklynd.json-tools",
-    "ExecutableBookProject.myst-highlight",
     "davidanson.vscode-markdownlint",
     "github.vscode-github-actions",
     "GitHub.vscode-pull-request-github",
