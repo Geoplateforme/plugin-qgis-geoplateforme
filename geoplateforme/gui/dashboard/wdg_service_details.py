@@ -47,6 +47,7 @@ from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.tools.delete_offering import DeleteOfferingAlgorithm
 from geoplateforme.toolbelt import NetworkRequestsManager, PlgLogger
 from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
+from geoplateforme.toolbelt.preferences import PlgOptionsManager
 
 
 class ServiceDetailsWidget(QWidget):
@@ -82,11 +83,17 @@ class ServiceDetailsWidget(QWidget):
 
     def _open_view_style_url(self) -> None:
         """Open view style URL on webbrowser"""
-        self._open_style_url(cartes_gouv_template_url["view_style"])
+        self._open_style_url(
+            PlgOptionsManager.get_plg_settings().url_geoplateforme.rstrip("/")
+            + cartes_gouv_template_url["view_style"]
+        )
 
     def _open_create_style_url(self) -> None:
         """Open create style URL on webbrowser"""
-        self._open_style_url(cartes_gouv_template_url["create_style"])
+        self._open_style_url(
+            PlgOptionsManager.get_plg_settings().url_geoplateforme.rstrip("/")
+            + cartes_gouv_template_url["create_style"]
+        )
 
     def _open_style_url(self, template_url: str) -> None:
         """Open document URL on webbrowser"""
