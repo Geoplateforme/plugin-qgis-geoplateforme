@@ -1,10 +1,15 @@
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 import math
 import re
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional, Self
+from typing import List, Optional
 
 from qgis.PyQt.QtCore import QByteArray, QDateTime, Qt, QUrl
 
@@ -79,7 +84,7 @@ class Permission:
         return None
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) -> Permission:
         """Load object from a dict.
 
         :param datastore_id: datastore id

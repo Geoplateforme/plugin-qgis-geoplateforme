@@ -1,3 +1,8 @@
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 import logging
 import math
@@ -9,7 +14,7 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import List, Optional, Self
+from typing import List, Optional
 from xml.etree import ElementTree
 
 from jinja2 import Environment, FileSystemLoader
@@ -470,7 +475,7 @@ class Metadata:
         self.is_detailed = True
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) -> Metadata:
         """Load object from a dict.
 
         :param datastore_id: datastore id

@@ -1,8 +1,13 @@
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 import math
 import re
 from dataclasses import dataclass
-from typing import List, Self
+from typing import List
 
 from qgis.PyQt.QtCore import QUrl
 
@@ -25,7 +30,7 @@ class KeyAccess:
     offering: Offering
 
     @classmethod
-    def from_dict(cls, key_id: str, val: dict) -> Self:
+    def from_dict(cls, key_id: str, val: dict) -> KeyAccess:
         """Load object from a dict.
 
         :param key_id: key id

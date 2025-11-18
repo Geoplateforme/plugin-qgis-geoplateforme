@@ -1,9 +1,14 @@
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Self
 
+# PyQGIS
 from qgis.PyQt.QtCore import QUrl
 
 # plugin
@@ -30,7 +35,7 @@ class Static:
     description: str = ""
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) -> Static:
         """Load object from a dict.
 
         :param datastore_id: datastore id

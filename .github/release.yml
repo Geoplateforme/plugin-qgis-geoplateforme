@@ -3,6 +3,7 @@ changelog:
     authors:
       - dependabot
       - pre-commit-ci
+      - pre-commit-ci[bot]
   categories:
     - title: Bugs fixes 🐛
       labels:
