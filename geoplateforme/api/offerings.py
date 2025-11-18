@@ -1,11 +1,15 @@
-# standard
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 import logging
 import math
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Self
+from typing import List, Optional
 
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
@@ -166,7 +170,7 @@ class Offering:
         return self._extra
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) -> Offering:
         """Load object from a dict.
 
         :param datastore_id: datastore id

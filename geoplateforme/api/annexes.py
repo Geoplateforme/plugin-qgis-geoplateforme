@@ -1,3 +1,8 @@
+#! python3
+
+# Standard library
+from __future__ import annotations
+
 import json
 import math
 import os
@@ -5,8 +10,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import List, Optional, Self
+from typing import List, Optional
 
+# PyQGIS
 from qgis.PyQt.QtCore import QUrl
 
 # plugin
@@ -31,7 +37,7 @@ class Annexe:
     extra: Optional[dict] = None
 
     @classmethod
-    def from_dict(cls, datastore_id: str, val: dict) -> Self:
+    def from_dict(cls, datastore_id: str, val: dict) -> Annexe:
         """Load object from a dict.
 
         :param datastore_id: datastore id

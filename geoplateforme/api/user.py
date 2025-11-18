@@ -1,11 +1,13 @@
-#! python3  # noqa: E265
+#! python3
 
 # Standard library
+from __future__ import annotations
+
 import datetime
 import json
 import logging
 from dataclasses import dataclass
-from typing import Optional, Self
+from typing import Optional
 
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
@@ -31,7 +33,7 @@ class Community:
     datastore: Optional[str] = None
 
     @classmethod
-    def from_dict(cls, val: dict) -> Self:
+    def from_dict(cls, val: dict) -> Community:
         """Load object from a dict.
         :param val: dict value to load
         :type val: dict
