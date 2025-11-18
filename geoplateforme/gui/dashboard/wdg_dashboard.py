@@ -62,6 +62,7 @@ from geoplateforme.processing.tools.delete_stored_data import DeleteStoredDataAl
 from geoplateforme.processing.tools.delete_upload import DeleteUploadAlgorithm
 from geoplateforme.toolbelt import PlgLogger
 from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
+from geoplateforme.toolbelt.preferences import PlgOptionsManager
 
 
 class DashboardWidget(QWidget):
@@ -208,7 +209,10 @@ class DashboardWidget(QWidget):
         """Open document URL on webbrowser"""
         datastore_id = self.cbx_datastore.current_datastore_id()
         dataset_name = self.cbx_dataset.current_dataset_name()
-        documents_url = cartes_gouv_template_url["document"]
+        documents_url = (
+            PlgOptionsManager.get_plg_settings().url_geoplateforme.rstrip("/")
+            + cartes_gouv_template_url["document"]
+        )
         documents_url = documents_url.replace("{datastore_id}", datastore_id)
         documents_url = documents_url.replace("{dataset_name}", dataset_name)
         webbrowser.open(documents_url)

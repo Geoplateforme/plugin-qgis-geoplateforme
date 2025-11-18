@@ -12,9 +12,9 @@ GPF_PLUGIN_LIST: list[str] = [
 ]
 
 cartes_gouv_template_url = {
-    "document": "https://cartes.gouv.fr/entrepot/{datastore_id}/donnees/{dataset_name}?activeTab=documents",
-    "view_style": "https://cartes.gouv.fr/entrepot/{datastore_id}/service/{offering_id}/visualisation?datasheetName={dataset_name}",
-    "create_style": "https://cartes.gouv.fr/entrepot/{datastore_id}/service/{offering_id}/style/ajout?datasheetName={dataset_name}",
+    "document": "/entrepot/{datastore_id}/donnees/{dataset_name}?activeTab=documents",
+    "view_style": "/entrepot/{datastore_id}/service/{offering_id}/visualisation?datasheetName={dataset_name}",
+    "create_style": "/entrepot/{datastore_id}/service/{offering_id}/style/ajout?datasheetName={dataset_name}",
 }
 
 metadata_topic_categories = {
