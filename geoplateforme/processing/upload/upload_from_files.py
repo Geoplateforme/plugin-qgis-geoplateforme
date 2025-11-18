@@ -204,6 +204,23 @@ class GpfUploadFromFileAlgorithm(QgsProcessingAlgorithm):
                     filename=Path(filename),
                 )
 
+            # Attente prise en compte des fichiers
+            feedback.pushInfo(self.tr("Attente prise en compte des fichiers"))
+            tree = manager.get_upload_file_tree(
+                datastore_id=datastore, upload_id=upload._id
+            )
+            while len(tree) != len(files):
+                tree = manager.get_upload_file_tree(
+                    datastore_id=datastore, upload_id=upload._id
+                )
+                sleep(PlgOptionsManager.get_plg_settings().status_check_sleep)
+
+            # Attente complètement arbitraire pour être sur de pouvoir faire la fermeture
+            feedback.pushInfo(
+                self.tr("Attente arbitraire de 10s pour pouvoir faire la fermeture")
+            )
+            sleep(10)
+
             # Close upload
             feedback.pushInfo(self.tr("Fermeture de la livraison"))
             manager.close_upload(datastore_id=datastore, upload_id=upload._id)
