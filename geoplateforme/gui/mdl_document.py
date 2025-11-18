@@ -1,7 +1,8 @@
 import json
 from typing import Optional
 
-from qgis.PyQt.QtCore import QObject, Qt
+from qgis.PyQt import QtCore
+from qgis.PyQt.QtCore import QObject, Qt, QVariant
 from qgis.PyQt.QtGui import QStandardItemModel
 
 from geoplateforme.api.annexes import (
@@ -68,6 +69,25 @@ class DocumentListModel(QStandardItemModel):
                 log_level=2,
                 push=False,
             )
+
+    def data(
+        self, index: QtCore.QModelIndex, role: int = Qt.ItemDataRole.DisplayRole
+    ) -> QVariant:
+        """Override QStandardItemModel data() for decoration role for status icon
+
+        Args:
+        :param index: index
+        :type index: QModelIndex
+        :param role: Qt role
+        :type role: int
+
+        :return: data at index with role
+        :rtype: QVariant
+        """
+        result = super().data(index, role)
+        if role == Qt.ItemDataRole.ToolTipRole:
+            result = self.tr("Double click to open document in browser")
+        return result
 
     def insert_document(self, document: dict) -> None:
         """Insert stored data in model
