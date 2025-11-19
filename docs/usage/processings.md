@@ -184,6 +184,13 @@ Pour afficher tous les traitements QGIS : `Traitements > Boîte à outils`
 ```{include} ../../geoplateforme/resources/help/sld_downgrade.md
 ```
 
+(check-layers)=
+
+### Vérification locale des couches
+
+```{include} ../../geoplateforme/resources/help/check_layers.md
+```
+
 ## Annexes
 
 (create-annexe)=

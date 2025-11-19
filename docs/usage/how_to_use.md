@@ -120,11 +120,15 @@ En cas de divergence de CRS un avertissement est affiché.
 
 ![Divergence CRS](../static/images/upload_layer_crs_mismatch.png "Divergence CRS").
 
+Vous pouvez choisir de lancer une vérification locale des données avant de lancer l'intégration. Ceci est possible via l'option `Validation de la donnée avant envoi`. Le processing QGIS [`qgis:checkvalidity`](https://docs.qgis.org/3.40/fr/docs/user_manual/processing_algs/qgis/vectorgeometry.html#check-validity) est utilisé avec la méthode QGIS.
+
+Il est nécessaire de définir les tables contenant des géométries multi. Le plugin va automatiquement définir ces tables en fonction des couches sélectionnées. Il est parfois possible que la définition automatique ne donne pas les bonnes tables. Vous pouvez indiquer les tables concernées par leurs noms séparés par des virgules.
+
 Une fois vos fichiers et couches sélectionnés vous pouvez lancer l'intégration dans la Géoplateforme avec le bouton `Soumettre`.
 
 Une fenêtre est affichée pour afficher les différentes étapes de la livraison.
 
-Il n'est pas possible de la fermer tant que les données ne sont pas disponible sur l'entrepôt.
+Il n'est pas possible de la fermer tant que les données ne sont pas disponibles sur l'entrepôt.
 
 ![Attente livraison](../static/images/upload_wait_for_data.png "Attente livraison").
 

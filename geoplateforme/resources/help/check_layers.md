@@ -39,4 +39,6 @@ if CheckLayerAlgorithm.ResultCode.CRS_MISMATCH in result_code:
     print("Les CRS des couches ne sont pas tous identiques")
 ```
 
+Pour les vérifications de géométrie, le processing QGIS [`qgis:checkvalidity`](https://docs.qgis.org/3.40/fr/docs/user_manual/processing_algs/qgis/vectorgeometry.html#check-validity) est utilisé avec la méthode QGIS.
+
 Nom du traitement : `geoplateforme:check_layers`
