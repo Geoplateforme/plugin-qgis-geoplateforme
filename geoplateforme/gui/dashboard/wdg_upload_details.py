@@ -21,7 +21,8 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT
-from geoplateforme.api.upload import Upload, UploadStatus
+from geoplateforme.api.custom_exceptions import UploadClosingException
+from geoplateforme.api.upload import Upload, UploadRequestManager, UploadStatus
 from geoplateforme.gui.report.mdl_upload_details import UploadDetailsTreeModel
 from geoplateforme.gui.report.wdg_upload_log import UploadLogWidget
 from geoplateforme.gui.upload_database_integration.wzd_upload_database_integration import (
@@ -122,6 +123,16 @@ class UploadDetailsWidget(QWidget):
             button.setDefaultAction(generate_vector_db_action)
             button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
             self.action_layout.addWidget(button)
+        elif status == UploadStatus.OPEN:
+            close_action = QAction(
+                self.tr("Fermeture"),
+                self,
+            )
+            close_action.triggered.connect(self.close_upload)
+            button = QToolButton(self)
+            button.setDefaultAction(close_action)
+            button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+            self.action_layout.addWidget(button)
 
         # Add spacer to have button align left
         self.action_layout.addItem(
@@ -196,6 +207,28 @@ class UploadDetailsWidget(QWidget):
                     self.tr("La livraison n'a pas pu être supprimée:\n {}").format(
                         feedback.textLog()
                     ),
+                )
+
+    def close_upload(self) -> None:
+        """Close current upload"""
+        reply = QMessageBox.question(
+            self,
+            self.tr("Fermeture livraison"),
+            self.tr("Voulez vous fermer la livraison ?"),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            try:
+                manager = UploadRequestManager()
+                manager.close_upload(
+                    datastore_id=self._upload.datastore_id, upload_id=self._upload._id
+                )
+            except UploadClosingException as exc:
+                QMessageBox.critical(
+                    self,
+                    self.tr("Fermeture livraison"),
+                    self.tr("La livraison n'a pas pu être fermée:\n {}").format(exc),
                 )
 
     def _load_generation_report(self) -> None:
