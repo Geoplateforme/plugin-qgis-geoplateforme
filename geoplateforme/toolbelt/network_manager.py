@@ -727,23 +727,13 @@ class NetworkRequestsManager:
 
         # Check result
         if req_reply.error() != QNetworkReply.NetworkError.NoError:
-            status = reply.attribute(QNetworkRequest.Attribute.HttpStatusCodeAttribute)
             error = self.get_error_description_from_reply(req_reply)
             self.log(
                 message=error,
                 log_level=Qgis.MessageLevel.Critical,
                 push=False,
             )
-            if status != 502:
-                raise ConnectionError(error)
-            else:
-                self.log(
-                    message=self.tr(
-                        "HTTP Code 502 returned but we still consider post file as sucessful because it seems to be related to server side."
-                    ),
-                    log_level=Qgis.MessageLevel.Warning,
-                    push=False,
-                )
+            raise ConnectionError(error)
 
         if PlgOptionsManager.get_plg_settings().debug_mode:
             self.log_reply(
