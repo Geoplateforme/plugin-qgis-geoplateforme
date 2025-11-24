@@ -8,9 +8,11 @@ Perform network request.
 # ########## Imports ###############
 # ##################################
 
-# standard library
 import json
 import mimetypes
+
+# standard library
+import os
 import uuid
 from pathlib import Path
 from socket import AF_INET, SOCK_STREAM
@@ -27,8 +29,21 @@ from qgis.core import (
     QgsNetworkAccessManager,
     QgsNetworkReplyContent,
 )
-from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QEventLoop, QUrl
-from qgis.PyQt.QtNetwork import QNetworkReply, QNetworkRequest
+from qgis.PyQt.QtCore import (
+    QByteArray,
+    QCoreApplication,
+    QEventLoop,
+    QFile,
+    QIODevice,
+    QUrl,
+)
+from qgis.PyQt.QtNetwork import (
+    QHttpMultiPart,
+    QHttpPart,
+    QNetworkAccessManager,
+    QNetworkReply,
+    QNetworkRequest,
+)
 
 # project
 from geoplateforme.__about__ import __title__, __version__
@@ -576,6 +591,69 @@ class NetworkRequestsManager:
         body.append(file_content)
         body.append(b"\r\n")
 
+    def add_value_http_part(
+        self, multipart: QHttpMultiPart, name: str, value: str
+    ) -> None:
+        """Add value in multipart
+
+        :param multipart: multipart
+        :type multipart: QHttpMultiPart
+        :param name: value name
+        :type name: str
+        :param value: value
+        :type value: str
+        """
+        val_part = QHttpPart()
+
+        # headers
+        val_part.setHeader(
+            QNetworkRequest.KnownHeaders.ContentDispositionHeader,
+            f'form-data; name="{name}"',
+        )
+        val_part.setBody(str(value).encode("utf-8"))
+        multipart.append(val_part)
+
+    def add_file_part(self, multipart: QHttpMultiPart, file_path: Path) -> None:
+        """Add file part in multipart
+
+        :param multipart: multipart
+        :type multipart: QHttpMultiPart
+        :param file_path: file path
+        :type file_path: Path
+        """
+        file = QFile(str(file_path))
+        file.open(QIODevice.OpenModeFlag.ReadOnly)
+
+        # Create filepart
+        filepart = QHttpPart()
+
+        file.setParent(
+            multipart
+        )  # we cannot delete the file now, so delete it with the multiPart
+
+        # headers
+        filepart.setHeader(
+            QNetworkRequest.KnownHeaders.ContentDispositionHeader,
+            f'form-data; name="file"; filename="{os.path.basename(file_path)}"',
+        )
+        # Define content-type
+        file_type = (
+            mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
+        )
+        filepart.setHeader(
+            QNetworkRequest.KnownHeaders.ContentTypeHeader,
+            file_type,
+        )
+        # Define content-length
+        filepart.setHeader(
+            QNetworkRequest.KnownHeaders.ContentLengthHeader,
+            file.size(),
+        )
+
+        filepart.setBodyDevice(file)
+
+        multipart.append(filepart)
+
     def post_file(
         self,
         url: QUrl,
@@ -603,44 +681,69 @@ class NetworkRequestsManager:
         :return: feed response in bytes
         :rtype: Optional[QByteArray]
         """
-        boundary = f"----GeoplateformeQGISPluginBoundary{uuid.uuid4().hex}"
 
-        body = QByteArray()
+        self.log(
+            f"{__name__}.post_file({url=}, {file_path=}, {config_id=}, {headers=}, {data=})"
+        )
 
+        # Create multipart
+        multipart = QHttpMultiPart(QHttpMultiPart.ContentType.FormDataType)
+
+        # Add file
+        self.add_file_part(multipart=multipart, file_path=file_path)
+
+        # Add data
         if data:
             for key, val in data.items():
                 if isinstance(val, list):
                     for value in val:
-                        self.add_field(body, boundary, key, value)
+                        self.add_value_http_part(
+                            multipart=multipart, name=key, value=value
+                        )
                 else:
-                    self.add_field(body, boundary, key, val)
+                    self.add_value_http_part(multipart=multipart, name=key, value=val)
 
-        # Define content-type
-        file_type = (
-            mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
-        )
+        auth_manager = QgsApplication.authManager()
+        req = QNetworkRequest(url)
+        auth_manager.updateNetworkRequest(req, config_id)
 
-        # Add file content
-        self.add_file_field(body, boundary, "file", file_path, file_type)
+        # send request
+        network_manager = QNetworkAccessManager(self.ntwk_requester)
 
-        # Close multipart
-        body.append(f"--{boundary}--\r\n".encode("utf-8"))
+        reply = network_manager.post(req, multipart)
+        multipart.setParent(reply)
 
-        # Define content header with multipart/form-data and used boundary
-        all_headers = {
-            b"Content-Type": bytes(f"multipart/form-data; boundary={boundary}", "utf8"),
-        }
-        if headers:
-            all_headers.update(headers)
+        if debug_log_response:
+            reply.uploadProgress.connect(
+                lambda s, t: self.log(self.tr("Uploading {}/{} bytes".format(s, t)))
+            )
 
-        req_reply = self.post_url(
-            url=url,
-            data=body,
-            config_id=config_id,
-            debug_log_response=debug_log_response,
-            headers=all_headers,
-        )
-        return req_reply
+        # Wait for request finish
+        loop = QEventLoop()
+        reply.finished.connect(loop.quit)
+        loop.exec()
+
+        req_reply = QgsNetworkReplyContent(reply)
+        req_reply.setContent(reply.readAll())
+
+        # Check result
+        if req_reply.error() != QNetworkReply.NetworkError.NoError:
+            error = self.get_error_description_from_reply(req_reply)
+            self.log(
+                message=error,
+                log_level=Qgis.MessageLevel.Critical,
+                push=False,
+            )
+            raise ConnectionError(error)
+
+        if PlgOptionsManager.get_plg_settings().debug_mode:
+            self.log_reply(
+                method="POST",
+                req_reply=req_reply,
+                url=url,
+                debug_log_response=debug_log_response,
+            )
+        return req_reply.content()
 
     def put_file(
         self,
