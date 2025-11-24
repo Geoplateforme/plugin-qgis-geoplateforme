@@ -529,5 +529,7 @@ class ServiceDetailsWidget(QWidget):
             QgsProject.instance().addMapLayer(layer)
         else:
             iface.messageBar().pushMessage(
-                "Error", self.tr("Layer failed to load !"), level=Qgis.Critical
+                "Error",
+                self.tr("Layer failed to load !"),
+                level=Qgis.MessageLevel.Critical,
             )

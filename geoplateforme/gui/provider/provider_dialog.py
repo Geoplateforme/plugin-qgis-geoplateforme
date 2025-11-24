@@ -328,7 +328,9 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
                 QgsProject.instance().addMapLayer(layer)
             else:
                 self.iface.messageBar().pushMessage(
-                    "Error", self.tr("Layer failed to load !"), level=Qgis.Critical
+                    "Error",
+                    self.tr("Layer failed to load !"),
+                    level=Qgis.MessageLevel.Critical,
                 )
                 self.log(
                     "Layer failed to load !",
