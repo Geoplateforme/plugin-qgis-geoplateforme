@@ -713,9 +713,10 @@ class NetworkRequestsManager:
         reply = network_manager.post(req, multipart)
         multipart.setParent(reply)
 
-        reply.uploadProgress.connect(
-            lambda s, t: self.log(self.tr("Uploading {}/{} bytes".format(s, t)))
-        )
+        if debug_log_response:
+            reply.uploadProgress.connect(
+                lambda s, t: self.log(self.tr("Uploading {}/{} bytes".format(s, t)))
+            )
 
         # Wait for request finish
         loop = QEventLoop()
