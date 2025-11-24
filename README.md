@@ -1,128 +1,70 @@
-# Géoplateforme - QGIS Plugin
+# Plugin Géoplateforme pour QGIS
 
+[![License: GPLv2+](https://img.shields.io/badge/License-GPLv2+-green.svg)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-
 [![flake8](https://img.shields.io/badge/linter-flake8-green)](https://flake8.pycqa.org/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-## Generated options
+![logo plugin Géoplateforme pour QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/geoplateforme/resources/images/logo.svg)
 
-### Plugin
+Le plugin **Géoplateforme** pour QGIS est conçu pour faciliter l’accès aux données et services de la Géoplateforme directement depuis QGIS.
+Il s’adresse aux administrations, collectivités, bureaux d’études et acteurs privés souhaitant exploiter efficacement la donnée publique française.
 
-> Here is a list of the options you picked when creating the plugin with the cookiecutter template.
+![Vue de la suite de plugins Géoplateforme dans QGIS](https://github.com/Geoplateforme/plugin-qgis-geoplateforme/blob/main/docs/static/images/qgis_all_inclusive_plugins.png?raw=true)
 
-| Cookiecutter option | Picked value |
-| :------------------ | :----------: |
-| Plugin name | Géoplateforme |
-| Plugin name slugified | geoplateforme |
-| Plugin name class (used in code) | Geoplateforme |
-| Plugin category | None |
-| Plugin description short | Tirer parti de la puissance de la Géoplateforme directement depuis QGIS ! |
-| Plugin description long | Connectez-vous avec votre compte cartes.gouv.fr, accédez à votre communauté, publiez vos données sous forme de services hébergés sur la Géoplateforme de l'IGN. |
-| Plugin tags | IGN,Géoplateforme,téléversement,publication,Entrepôt |
-| Plugin icon | default_icon.png |
-| Plugin with processing provider | True |
-| Author name | Julien Moura |
-| Author organization | Oslandia |
-| Author email | <qgis@oslandia.com> |
-| Minimum QGIS version | 3.40 |
-| Maximum QGIS version | 3.99 |
-| Support Qt6 | True |
-| Git repository URL | <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/> |
-| Git default branch | main |
-| License | GPLv2+ |
-| Python linter | Flake8 |
-| CI/CD platform | GitHub |
-| Publish to <https://plugins.qgis.org> using CI/CD | True |
-| IDE | VSCode |
+🚀 Pour l'essayer, vous pouvez l'installer directement depuis le [dépôt officiel des plugins QGIS](https://plugins.qgis.org/plugins/geoplateforme/).
 
-### Tooling
+## ✅ Principales fonctionnalités
 
-This project is configured with the following tools:
+- **Accès direct aux flux de la Géoplateforme** via le gestionnaire de sources de données dans QGIS.
 
-- [Black](https://black.readthedocs.io/en/stable/) to format the code without any existential question
-- [iSort](https://pycqa.github.io/isort/) to sort the Python imports
+    ![Entrée IGN dans le gestionnaire de sources de données de QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/docs/static/images/plugin_data_source_provider.png)
 
-Code rules are enforced with [pre-commit](https://pre-commit.com/) hooks.  
-Static code analisis is based on: Flake8
+- **Configuration des géoservices** à partir de vos propres données vectorielles.
+  - Services concernés : WMS, WMS-v, WMTS, TMS, WFS
+  - Gestion des métadonnées de vos données.
+  - Gestion des permissions et des clés d’accès pour les flux  à accès restreints sur vos données ou ceux de vos partenaires.
 
-See also: [contribution guidelines](CONTRIBUTING.md).
+    ![Configuration d'un service publié](https://github.com/Geoplateforme/plugin-qgis-geoplateforme/blob/main/docs/static/images/plugin_entrepot_donnees_configuration_service.png?raw=true)
 
-## CI/CD
+- **Synchronisation avec cartes.gouv.fr** pour :
+  - la **découvrabilité des flux** dans le [catalogue](https://cartes.gouv.fr/catalogue/search).
+  - l'accès à l'**Interface de style** pour personnaliser le rendu des données.
+- **Traitements QGIS via le modeleur** (processings) pour automatiser les tâches.
 
-Plugin is linted, tested, packaged and published with GitHub.
+    ![Exemple de traitement dans le modeleur QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/docs/static/images/PluginGPF_gestionnaire.png)
 
-If you mean to deploy it to the [official QGIS plugins repository](https://plugins.qgis.org/), remember to set your OSGeo credentials (`OSGEO_USER_NAME` and `OSGEO_USER_PASSWORD`) as environment variables in your CI/CD tool.
+### Fédération de plugins
 
-### Documentation
+Le plugin se présente également comme une **fédération de plugins** spécialisés pour des usages spécifiques autour des données et services de la Géoplateforme :
 
-The documentation is generated using Sphinx and is automatically generated through the CI and published on Pages.
+- *GPF Isochrone / Isodistance / Itinéraire* : calculs d’itinéraires et iso-calculs
+- *French Locator Filter* : géocodage direct/inverse, unitaire ou en masse
+- *QGiréférentiels* : accès aux pré-paquets diffusés par la Géoplateforme
+- *BD TOPO® Extractor* : extraction ciblée de la BD TOPO avec stylisation à la volée
 
-- homepage: <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/>
-- repository: <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/>
-- tracker: <https://github.com/Geoplateforme/plugin-qgis-geoplateforme//issues/>
+![QGIS - Installation des plugins liés](https://geoplateforme.github.io/plugin-qgis-geoplateforme/_images/qgis_install_subplugins.png)
+
+Pour plus d'informations sur l'intégration des plugins tiers, [consulter cette page de la documentation](https://geoplateforme.github.io/plugin-qgis-geoplateforme/external_plugins/integration.html).
 
 ----
 
-## Next steps post generation
+## 📖 Documentation
 
-### 1. Set up development environment
-
-> Typical commands on Linux (Ubuntu).
-
-1. If you didn't pick the `git init` option, initialize your local repository:
-
-    ```sh
-    git init
-    ```
-
-1. Follow the [embedded documentation to set up your development environment](./docs/development/environment.md) to create  virtual environment and install development dependencies.
-1. Add all files to git index to prepare initial commit:
-
-    ```sh
-    git add -A
-    ```
-
-1. Run the git hooks to ensure that everything runs OK and to start developing on quality standards:
-
-    ```sh
-    pre-commit run -a
-    ```
-
-### 2. Build the documentation locally
-
-1. Have a look to the [plugin's metadata.txt file](geoplateforme/metadata.txt): review it, complete it or fix it if needed (URLs, etc.)., especially the `homepage` URL which should be to your GitLab or GitHub Pages.
-1. Change the plugin's icon stored in `geoplateforme/resources/images`
-1. Follow the [embedded documentation to build plugin documentation locally](./docs/development/documentation.md)
-
-### 3. Prepare your remote repository
-
-1. If you did not yet, create a remote repository on your Git hosting platform (GitHub, GitLab, etc.)
-1. Create labels listed in [labeler.yml file](.github/labeler.yml) to make PR auto-labelling work.
-1. Switch the source of GitHub Pages to `GitHub Actions` in your repository settings <https://github.com/Geoplateforme/plugin-qgis-geoplateforme//settings/pages>
-1. Add the remote repository to your local repository:
-
-    ```sh
-    git remote add origin <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/>
-    ```
-
-1. Commit changes:
-
-    ```sh
-    git commit -m "init(plugin): adding first files of Géoplateforme" -m "generated with QGIS Plugin Templater (https://oslandia.gitlab.io/qgis/template-qgis-plugin)"
-    ```
-
-1. Push the initial commit to the remote repository:
-
-    ```sh
-    git push -u origin main
-    ```
-
-1. Create a new release following the [packaging/release guide](./docs//development/packaging.md) with the tag `0.1.0-beta1` to trigger the CI/CD pipeline and publish the plugin on the [official QGIS plugins repository](https://plugins.qgis.org/) (if you picked up the option).
+Vous pouvez consulter la documentation à cette adresse [documentation](https://geoplateforme.github.io/plugin-qgis-geoplateforme/)
 
 ----
 
-## License
+## Crédits
 
-Distributed under the terms of the [`GPLv2+` license](LICENSE).
+Le plugin a été amorcé avec le [QGIS Plugin Templater](https://oslandia.gitlab.io/qgis/template-qgis-plugin/) en repartant sur les bases du [plugin Géotuileur](https://gitlab.com/Oslandia/qgis/ign-geotuileur) entre avril et décembre 2025.  
+
+Il a été conçu et financé par [l'IGN](https://www.ign.fr/particuliers) et principalement développé par [Oslandia](https://oslandia.com/).
+
+----
+
+## Licence
+
+Le plugin est distribué sous les termes de la licence [`GPLv2+`](https://github.com/Geoplateforme/plugin-qgis-geoplateforme/blob/main/LICENSE).
