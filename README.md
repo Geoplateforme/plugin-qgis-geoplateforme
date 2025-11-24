@@ -12,6 +12,10 @@
 Le plugin **Géoplateforme** pour QGIS est conçu pour faciliter l’accès aux données et services de la Géoplateforme directement depuis QGIS.
 Il s’adresse aux administrations, collectivités, bureaux d’études et acteurs privés souhaitant exploiter efficacement la donnée publique française.
 
+![Vue de la suite de plugins Géoplateforme dans QGIS](https://github.com/Geoplateforme/plugin-qgis-geoplateforme/blob/main/docs/static/images/qgis_all_inclusive_plugins.png?raw=true)
+
+🚀 Pour l'essayer, vous pouvez l'installer directement depuis le [dépôt officiel des plugins QGIS](https://plugins.qgis.org/plugins/geoplateforme/).
+
 ## ✅ Principales fonctionnalités
 
 - **Accès direct aux flux de la Géoplateforme** via le gestionnaire de sources de données dans QGIS.
