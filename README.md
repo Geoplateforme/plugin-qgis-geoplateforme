@@ -7,7 +7,7 @@
 [![flake8](https://img.shields.io/badge/linter-flake8-green)](https://flake8.pycqa.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-<!-- ![logo plugin Géoplateforme pour QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/geoplateforme/resources/images/logo.svg) -->
+![logo plugin Géoplateforme pour QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/geoplateforme/resources/images/logo.svg)
 
 Le plugin **Géoplateforme** pour QGIS est conçu pour faciliter l’accès aux données et services de la Géoplateforme directement depuis QGIS.
 Il s’adresse aux administrations, collectivités, bureaux d’études et acteurs privés souhaitant exploiter efficacement la donnée publique française.
