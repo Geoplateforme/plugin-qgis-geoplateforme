@@ -6,6 +6,7 @@ from tempfile import NamedTemporaryFile
 from typing import Optional
 
 from qgis.core import (
+    Qgis,
     QgsApplication,
     QgsMapBoxGlStyleConverter,
     QgsMapLayer,
@@ -27,6 +28,7 @@ from qgis.PyQt.QtWidgets import (
     QToolButton,
     QWidget,
 )
+from qgis.utils import iface
 
 from geoplateforme.__about__ import DIR_PLUGIN_ROOT
 from geoplateforme.api.configuration import ConfigurationType
@@ -525,3 +527,9 @@ class ServiceDetailsWidget(QWidget):
         layer = self._offering_map_layer(authid)
         if layer is not None and layer.isValid():
             QgsProject.instance().addMapLayer(layer)
+        else:
+            iface.messageBar().pushMessage(
+                "Error",
+                self.tr("Layer failed to load !"),
+                level=Qgis.MessageLevel.Critical,
+            )

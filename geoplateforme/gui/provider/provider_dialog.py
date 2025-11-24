@@ -5,6 +5,7 @@ import webbrowser
 from typing import Optional
 
 from qgis.core import (
+    Qgis,
     QgsMapBoxGlStyleConverter,
     QgsProject,
     QgsRasterLayer,
@@ -326,6 +327,11 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
             if layer.isValid():
                 QgsProject.instance().addMapLayer(layer)
             else:
+                self.iface.messageBar().pushMessage(
+                    "Error",
+                    self.tr("Layer failed to load !"),
+                    level=Qgis.MessageLevel.Critical,
+                )
                 self.log(
                     "Layer failed to load !",
                     log_level=2,
