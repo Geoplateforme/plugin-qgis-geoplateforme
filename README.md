@@ -7,11 +7,11 @@
 [![flake8](https://img.shields.io/badge/linter-flake8-green)](https://flake8.pycqa.org/)
 
 ## 📌 Le plugin Qgis Geoplateforme
-Le plugin **Géoplateforme** pour QGIS est conçu pour faciliter l’accès aux données et services de la Géoplateforme directement depuis QGIS. 
+Le plugin **Géoplateforme** pour QGIS est conçu pour faciliter l’accès aux données et services de la Géoplateforme directement depuis QGIS.
 Il s’adresse aux administrations, collectivités, bureaux d’études et acteurs privés souhaitant exploiter efficacement la donnée publique française.
 
 ### ✅ Fonctionnalités principales
-- **Accès direct aux flux de la Géoplateforme** via le gestionnaire de sources de données dans QGIS. 
+- **Accès direct aux flux de la Géoplateforme** via le gestionnaire de sources de données dans QGIS.
 - **Configuration des géoservices** à partir de vos propres données vectorielles.
     - Services concernés : WMS, WMS-v, WMTS, TMS, WFS
     - Gestion des métadonnées de vos données.
@@ -30,7 +30,7 @@ Il s’adresse aux administrations, collectivités, bureaux d’études et acteu
 Disponible via le **gestionnaire d’extensions QGIS** (extensions expérimentales) à partir de **QGIS ≥ 3.40.4**.  
 Compatibilité anticipée avec **QGIS 4.0** (prévue en février 2026).
 
-### 📖 Documentation 
+### 📖 Documentation
 Vous pouvez consulter la documentation à cette adresse [documentation](https://geoplateforme.github.io/plugin-qgis-geoplateforme/)
 
 ### ▶️ Utilisation
