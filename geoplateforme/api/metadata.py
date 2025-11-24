@@ -46,6 +46,7 @@ from geoplateforme.api.custom_exceptions import (
 )
 from geoplateforme.api.datastore import DatastoreRequestManager
 from geoplateforme.api.offerings import OfferingField, OfferingsRequestManager
+from geoplateforme.api.stored_data import StoredDataField, StoredDataRequestManager
 from geoplateforme.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 logger = logging.getLogger(__name__)
@@ -904,12 +905,18 @@ class MetadataRequestManager:
         """
         self.log(f"{__name__}.update_metadata_links(metadata: {metadata._id})")
         datastore_manager = DatastoreRequestManager()
+        stored_data_manager = StoredDataRequestManager()
         config_manager = ConfigurationRequestManager()
         offering_manager = OfferingsRequestManager()
         annexe_manager = AnnexeRequestManager()
         try:
             datastore = datastore_manager.get_datastore(metadata.datastore_id)
             dataset = metadata.dataset_name
+            stored_data = stored_data_manager.get_stored_data_list(
+                datastore_id=metadata.datastore_id,
+                with_fields=[StoredDataField.TAGS],
+                tags={"datasheet_name": dataset},
+            )
             configurations = config_manager.get_configuration_list(
                 datastore_id=metadata.datastore_id, tags={"datasheet_name": dataset}
             )
@@ -917,6 +924,25 @@ class MetadataRequestManager:
             style_links = []
             capabilities_links = []
             endpoints = []
+            for sd in stored_data:
+                sd_tags = {}
+                if (
+                    "producer" not in sd.tags
+                    or sd.tags["producer"] != metadata.fields.org_name
+                ):
+                    sd_tags["producer"] = metadata.fields.org_name
+                if (
+                    "production_year" not in sd.tags
+                    or sd.tags["production_year"] != metadata.fields.creation_date.year
+                ):
+                    sd_tags["production_year"] = metadata.fields.creation_date.year
+                if len(sd_tags) > 0:
+                    stored_data_manager.add_tags(
+                        metadata.datastore_id,
+                        sd._id,
+                        sd_tags,
+                    )
+
             for conf in configurations:
                 offerings = offering_manager.get_offering_list(
                     metadata.datastore_id,
@@ -994,21 +1020,44 @@ class MetadataRequestManager:
                                     }
                                 )
                 # Update and tag configuration for Geoplateforme Index
-                if metadata.fields.topics is not None:
+                tags = {}
+                if metadata.fields.org_name is not None:
+                    tags["theme"] = ", ".join(metadata.fields.topics)
+                if len(tags) > 0:
                     config_manager.add_tags(
                         metadata.datastore_id,
                         conf._id,
-                        {"theme": ", ".join(metadata.fields.topics)},
+                        tags,
                     )
-                    if conf.type_infos is None:
-                        conf._type_infos = {}
-                    conf.type_infos["keywords"] = []
-                    if metadata.fields.topics is not None:
-                        conf.type_infos["keywords"] += metadata.fields.topics
-                    if metadata.fields.inspire_keywords is not None:
-                        conf.type_infos["keywords"] += metadata.fields.inspire_keywords
-                    if metadata.fields.free_keywords is not None:
-                        conf.type_infos["keywords"] += metadata.fields.free_keywords
+                if metadata.fields.topics is not None:
+                    if conf.type == ConfigurationType.WFS:
+                        for used_data in conf.type_infos["used_data"]:
+                            for relation in used_data["relations"]:
+                                if "keywords" not in relation:
+                                    relation["keywords"] = []
+                                if metadata.fields.topics is not None:
+                                    relation["keywords"] += metadata.fields.topics
+                                if metadata.fields.inspire_keywords is not None:
+                                    relation["keywords"] += (
+                                        metadata.fields.inspire_keywords
+                                    )
+                                if metadata.fields.free_keywords is not None:
+                                    relation["keywords"] += (
+                                        metadata.fields.free_keywords
+                                    )
+                    else:
+                        if conf.type_infos is None:
+                            conf._type_infos = {}
+                        if "keywords" not in conf.type_infos:
+                            conf.type_infos["keywords"] = []
+                        if metadata.fields.topics is not None:
+                            conf.type_infos["keywords"] += metadata.fields.topics
+                        if metadata.fields.inspire_keywords is not None:
+                            conf.type_infos["keywords"] += (
+                                metadata.fields.inspire_keywords
+                            )
+                        if metadata.fields.free_keywords is not None:
+                            conf.type_infos["keywords"] += metadata.fields.free_keywords
                     conf._metadata = [
                         ConfigurationMetadata(
                             format="application/xml",
