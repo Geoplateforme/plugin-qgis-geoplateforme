@@ -1,9 +1,8 @@
 # standard
 import sys
 
-from qgis.core import (
-    QgsProcessingFeedback,
-)
+from qgis.core import QgsProcessingFeedback
+from qgis.PyQt import sip
 from qgis.PyQt.QtCore import pyqtSignal, pyqtSlot
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QTextEdit
@@ -55,6 +54,10 @@ class QTextEditProcessingFeedBack(QgsProcessingFeedback):
 
     @pyqtSlot(str, QColor)
     def _change_color_and_insert_text(self, text: str, color: QColor):
+        # We can have a feedback using a deleted text edit
+        # Need to check if object is not deleted
+        if not self._text_edit or sip.isdeleted(self._text_edit):
+            return
         self._text_edit.setTextColor(color)
         self._text_edit.append(text)
         sb = self._text_edit.verticalScrollBar()
