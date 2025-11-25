@@ -11,7 +11,7 @@ from qgis.core import (
     QgsProcessingFeedback,
 )
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QWidget
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
 # project
 from geoplateforme.toolbelt.text_edit_feedback import QTextEditProcessingFeedBack
@@ -41,6 +41,7 @@ class ProcessingRunDialog(QDialog):
 
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
+        self.title = title
         self.lbl_title.setText(title)
 
         self._feedback = QTextEditProcessingFeedBack(self.te_logs_processing)
@@ -49,7 +50,8 @@ class ProcessingRunDialog(QDialog):
         self._results: dict[str, Any] = {}
         self._successful = False
 
-        self.setEnabled(False)
+        self.btn_box.setVisible(False)
+        self.btn_box.rejected.connect(self.cancel_processing)
 
         self._processing_in_progress = True
 
@@ -61,6 +63,29 @@ class ProcessingRunDialog(QDialog):
         self._run_alg(
             alg_name=alg_name, params=params, executed_callback=self.callback_processing
         )
+
+    def enable_cancel(self, enable: bool) -> None:
+        """Enable display of cancel button
+
+        :param enable: _description_
+        :type enable: bool
+        """
+        self.btn_box.setVisible(enable)
+
+    def cancel_processing(self) -> None:
+        """Cancel processing with user confirmation"""
+        reply = QMessageBox.question(
+            self,
+            self.tr("Cancel processing"),
+            self.tr("Do you want to cancel processing {} ?".format(self.title)),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            if self._task:
+                self._task.cancel()
+            # Need to use super(), because we override reject() to avoid close during processing
+            super().reject()
 
     def processing_results(self) -> Tuple[bool, dict[str, Any]]:
         """Return processing resust

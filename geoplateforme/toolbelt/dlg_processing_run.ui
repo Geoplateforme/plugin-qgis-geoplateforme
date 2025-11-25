@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>241</height>
+    <width>679</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -46,6 +46,13 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="5" column="0">
+    <widget class="QDialogButtonBox" name="btn_box">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
