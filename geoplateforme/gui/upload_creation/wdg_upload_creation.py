@@ -8,7 +8,7 @@ from osgeo import ogr
 # PyQGIS
 from qgis.core import QgsCoordinateReferenceSystem, QgsVectorLayer, QgsWkbTypes
 from qgis.PyQt import QtCore, uic
-from qgis.PyQt.QtWidgets import QMessageBox, QWidget
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
 # Plugin
 from geoplateforme.gui.lne_validators import alphanum_qval
@@ -180,36 +180,41 @@ class UploadCreationWidget(QWidget):
             title=self.tr("Check layers"),
             parent=self,
         )
+        run_dialog.enable_cancel(True)
 
-        run_dialog.exec()
-        _, result = run_dialog.processing_results()
-        result_code = result[CheckLayerAlgorithm.RESULT_CODE]
-
-        if result_code != CheckLayerAlgorithm.ResultCode.VALID:
+        exec_result = run_dialog.exec()
+        if exec_result != QDialog.DialogCode.Accepted:
+            # User cancel processing, consider check as False to avoid upload launch
             valid = False
-            error_string = self.tr("Invalid layers:\n")
-            if CheckLayerAlgorithm.ResultCode.CRS_MISMATCH in result_code:
-                error_string += self.tr("- CRS mismatch\n")
-            if CheckLayerAlgorithm.ResultCode.INVALID_LAYER_NAME in result_code:
-                error_string += self.tr("- invalid layer name\n")
-            if CheckLayerAlgorithm.ResultCode.INVALID_FILE_NAME in result_code:
-                error_string += self.tr("- invalid file name\n")
-            if CheckLayerAlgorithm.ResultCode.INVALID_FIELD_NAME in result_code:
-                error_string += self.tr("- invalid field name\n")
-            if CheckLayerAlgorithm.ResultCode.INVALID_LAYER_TYPE in result_code:
-                error_string += self.tr("- invalid layer type\n")
-            if CheckLayerAlgorithm.ResultCode.INVALID_GEOMETRY in result_code:
-                error_string += self.tr("- invalid geometry\n")
-            if CheckLayerAlgorithm.ResultCode.NO_FEATURES in result_code:
-                error_string += self.tr("- no feature available\n")
+        else:
+            _, result = run_dialog.processing_results()
+            result_code = result[CheckLayerAlgorithm.RESULT_CODE]
 
-            error_string += self.tr("Invalid layers list are available in details.")
+            if result_code != CheckLayerAlgorithm.ResultCode.VALID:
+                valid = False
+                error_string = self.tr("Invalid layers:\n")
+                if CheckLayerAlgorithm.ResultCode.CRS_MISMATCH in result_code:
+                    error_string += self.tr("- CRS mismatch\n")
+                if CheckLayerAlgorithm.ResultCode.INVALID_LAYER_NAME in result_code:
+                    error_string += self.tr("- invalid layer name\n")
+                if CheckLayerAlgorithm.ResultCode.INVALID_FILE_NAME in result_code:
+                    error_string += self.tr("- invalid file name\n")
+                if CheckLayerAlgorithm.ResultCode.INVALID_FIELD_NAME in result_code:
+                    error_string += self.tr("- invalid field name\n")
+                if CheckLayerAlgorithm.ResultCode.INVALID_LAYER_TYPE in result_code:
+                    error_string += self.tr("- invalid layer type\n")
+                if CheckLayerAlgorithm.ResultCode.INVALID_GEOMETRY in result_code:
+                    error_string += self.tr("- invalid geometry\n")
+                if CheckLayerAlgorithm.ResultCode.NO_FEATURES in result_code:
+                    error_string += self.tr("- no feature available\n")
 
-            msgBox = QMessageBox(
-                QMessageBox.Icon.Warning, self.tr("Invalid layers"), error_string
-            )
-            msgBox.setDetailedText(run_dialog.get_feedback().textLog())
-            msgBox.exec()
+                error_string += self.tr("Invalid layers list are available in details.")
+
+                msgBox = QMessageBox(
+                    QMessageBox.Icon.Warning, self.tr("Invalid layers"), error_string
+                )
+                msgBox.setDetailedText(run_dialog.get_feedback().textLog())
+                msgBox.exec()
 
         return valid
 

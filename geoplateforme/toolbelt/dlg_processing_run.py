@@ -10,8 +10,8 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingFeedback,
 )
-from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QWidget
+from qgis.PyQt import sip, uic
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
 # project
 from geoplateforme.toolbelt.text_edit_feedback import QTextEditProcessingFeedBack
@@ -41,15 +41,18 @@ class ProcessingRunDialog(QDialog):
 
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
+        self.title = title
         self.lbl_title.setText(title)
 
         self._feedback = QTextEditProcessingFeedBack(self.te_logs_processing)
+        self._context = QgsProcessingContext()
         self._task = None
 
         self._results: dict[str, Any] = {}
         self._successful = False
 
-        self.setEnabled(False)
+        self.btn_box.setVisible(False)
+        self.btn_box.rejected.connect(self.cancel_processing)
 
         self._processing_in_progress = True
 
@@ -61,6 +64,29 @@ class ProcessingRunDialog(QDialog):
         self._run_alg(
             alg_name=alg_name, params=params, executed_callback=self.callback_processing
         )
+
+    def enable_cancel(self, enable: bool) -> None:
+        """Enable display of cancel button
+
+        :param enable: _description_
+        :type enable: bool
+        """
+        self.btn_box.setVisible(enable)
+
+    def cancel_processing(self) -> None:
+        """Cancel processing with user confirmation"""
+        reply = QMessageBox.question(
+            self,
+            self.tr("Cancel processing"),
+            self.tr("Do you want to cancel processing {} ?".format(self.title)),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            if self._task:
+                self._task.cancel()
+            # Need to use super(), because we override reject() to avoid close during processing
+            super().reject()
 
     def processing_results(self) -> Tuple[bool, dict[str, Any]]:
         """Return processing resust
@@ -78,9 +104,7 @@ class ProcessingRunDialog(QDialog):
         """
         return self._feedback
 
-    def callback_processing(
-        self, context, successful: bool, results: dict[str, Any]
-    ) -> None:
+    def callback_processing(self, successful: bool, results: dict[str, Any]) -> None:
         """Function call after processing run
 
         :param context: processing context
@@ -90,6 +114,11 @@ class ProcessingRunDialog(QDialog):
         :param results: processing results
         :type results: dict[str, Any]
         """
+        # It is possible that the instance is deleted after task completed.
+        # We need to check if the object was not deleted
+        if sip.isdeleted(self):
+            return
+
         self._processing_in_progress = False
         self.setEnabled(True)
         self.progress_bar.setVisible(False)
@@ -114,17 +143,17 @@ class ProcessingRunDialog(QDialog):
         :param executed_callback: Callback function that will be called after the algorithm execution.
         :type executed_callback: callable
         """
-        context = QgsProcessingContext()
+        self._context = QgsProcessingContext()
         alg = QgsApplication.processingRegistry().algorithmById(alg_name)
         self.setWindowTitle(alg.displayName())
-        res, error = alg.checkParameterValues(params, context)
+        res, error = alg.checkParameterValues(params, self._context)
         self.te_logs_processing.clear()
         self._feedback = QTextEditProcessingFeedBack(self.te_logs_processing)
         if res:
             self._task = QgsProcessingAlgRunnerTask(
-                alg, params, context, self._feedback
+                alg, params, self._context, self._feedback
             )
-            self._task.executed.connect(partial(executed_callback, context))
+            self._task.executed.connect(partial(executed_callback))
             QgsApplication.taskManager().addTask(self._task)
         else:
             self._processing_in_progress = False
