@@ -12,7 +12,7 @@ Unreleased
 
 -->
 
-## 0.19.0 - 2025-11-27
+## 1.0.0 - 2025-11-27
 
 * Fix/big file upload by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/431>
 * Fix/tagging conf for index by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/438>
