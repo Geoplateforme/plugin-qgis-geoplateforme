@@ -12,6 +12,18 @@ Unreleased
 
 -->
 
+## 0.19.0 - 2025-11-27
+
+* Fix/big file upload by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/431>
+* Fix/tagging conf for index by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/438>
+* fix(loading_layer): add message to user when loading failed by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/440>
+* feat(check upload): add cancel button to abort upload check by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/443>
+* feat(external plugin): update minimal version for gpf iti isochrone by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/444>
+* Doc/reference qgis for check by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/432>
+* Add files via upload - captures pour le readme du dépôt by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/439>
+* Proposal for a cleanier version of the logo by @sylvainbeo in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/442>
+* update(docs): mise au propre du README et de quelques visuels by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/441>
+
 ## 0.18.1 - 2025-11-18
 
 * fix(metadata): fix hover description on unique id by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/419>
