@@ -613,13 +613,16 @@ class NetworkRequestsManager:
         val_part.setBody(str(value).encode("utf-8"))
         multipart.append(val_part)
 
-    def add_file_part(self, multipart: QHttpMultiPart, file_path: Path) -> None:
+    def add_file_part(self, multipart: QHttpMultiPart, file_path: Path) -> QFile:
         """Add file part in multipart
 
         :param multipart: multipart
         :type multipart: QHttpMultiPart
         :param file_path: file path
         :type file_path: Path
+
+        :return: file opened for streaming (to be close after request is finished)
+        :rtype: QFile
         """
         file = QFile(str(file_path))
         file.open(QIODevice.OpenModeFlag.ReadOnly)
@@ -653,6 +656,8 @@ class NetworkRequestsManager:
         filepart.setBodyDevice(file)
 
         multipart.append(filepart)
+
+        return file
 
     def post_file(
         self,
@@ -690,7 +695,7 @@ class NetworkRequestsManager:
         multipart = QHttpMultiPart(QHttpMultiPart.ContentType.FormDataType)
 
         # Add file
-        self.add_file_part(multipart=multipart, file_path=file_path)
+        file = self.add_file_part(multipart=multipart, file_path=file_path)
 
         # Add data
         if data:
@@ -722,6 +727,9 @@ class NetworkRequestsManager:
         loop = QEventLoop()
         reply.finished.connect(loop.quit)
         loop.exec()
+
+        # Close file after upload
+        file.close()
 
         req_reply = QgsNetworkReplyContent(reply)
         req_reply.setContent(reply.readAll())
