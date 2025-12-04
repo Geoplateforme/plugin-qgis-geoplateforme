@@ -73,17 +73,17 @@ class SearchResultModel(QStandardItemModel):
                     f"{self.plg_settings.base_url_api_search}/indexes/geoplateforme/suggest?size={nb_results}&text={text}&fields=title&fields=layer_name&fields=description&fields=type"
                 ),
             )
+            search_results = json.loads(reply.data())
+            for result in search_results:
+                if result["source"]["type"] in self.authorized_type:
+                    self.insert_result(result["source"])
+
         except ConnectionError as err:
             self.log(
                 f"Error while searching layers: {err}",
                 log_level=2,
                 push=False,
             )
-
-        search_results = json.loads(reply.data())
-        for result in search_results:
-            if result["source"]["type"] in self.authorized_type:
-                self.insert_result(result["source"])
 
     def advanced_search_text(self, search_dict: str, page: int = 1) -> int:
         """Refresh QStandardItemModel data with result on text search
@@ -108,19 +108,19 @@ class SearchResultModel(QStandardItemModel):
                 data=data,
                 headers={b"Content-Type": bytes("application/json", "utf8")},
             )
+            search_results = json.loads(reply.data())
+            for document in search_results["documents"]:
+                if document["type"] in self.authorized_type:
+                    self.insert_result(document)
+
+            return len(search_results["documents"])
         except ConnectionError as err:
             self.log(
                 f"Error while searching layers: {err}",
                 log_level=2,
                 push=False,
             )
-
-        search_results = json.loads(reply.data())
-        for document in search_results["documents"]:
-            if document["type"] in self.authorized_type:
-                self.insert_result(document)
-
-        return len(search_results["documents"])
+            return 0
 
     def insert_result(self, result: dict) -> None:
         """Insert result in model
