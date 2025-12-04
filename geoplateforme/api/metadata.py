@@ -1029,48 +1029,46 @@ class MetadataRequestManager:
                         conf._id,
                         tags,
                     )
-                if metadata.fields.topics is not None:
-                    if conf.type == ConfigurationType.WFS:
-                        for used_data in conf.type_infos["used_data"]:
-                            for relation in used_data["relations"]:
-                                if "keywords" not in relation:
-                                    relation["keywords"] = []
-                                if metadata.fields.topics is not None:
-                                    relation["keywords"] += metadata.fields.topics
-                                if metadata.fields.inspire_keywords is not None:
-                                    relation["keywords"] += (
-                                        metadata.fields.inspire_keywords
-                                    )
-                                if metadata.fields.free_keywords is not None:
-                                    relation["keywords"] += (
-                                        metadata.fields.free_keywords
-                                    )
-                    else:
-                        if conf.type_infos is None:
-                            conf._type_infos = {}
-                        if "keywords" not in conf.type_infos:
-                            conf.type_infos["keywords"] = []
-                        if metadata.fields.topics is not None:
-                            conf.type_infos["keywords"] += metadata.fields.topics
-                        if metadata.fields.inspire_keywords is not None:
-                            conf.type_infos["keywords"] += (
-                                metadata.fields.inspire_keywords
-                            )
-                        if metadata.fields.free_keywords is not None:
-                            conf.type_infos["keywords"] += metadata.fields.free_keywords
-                    conf._metadata = [
-                        ConfigurationMetadata(
-                            format="application/xml",
-                            url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.dataset_name}",
-                            type=ConfigurationMetadataType.ISO19115_2003,
-                        ),
-                        ConfigurationMetadata(
-                            format="text/html",
-                            url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.dataset_name}",
-                            type=ConfigurationMetadataType.OTHER,
-                        ),
-                    ]
-                    config_manager.update_configuration(conf)
+                if conf.type == ConfigurationType.WFS:
+                    for used_data in conf.type_infos["used_data"]:
+                        for relation in used_data["relations"]:
+                            if "keywords" not in relation:
+                                relation["keywords"] = []
+                            if metadata.fields.topics is not None:
+                                relation["keywords"] += metadata.fields.topics
+                            if metadata.fields.inspire_keywords is not None:
+                                relation["keywords"] += metadata.fields.inspire_keywords
+                            if metadata.fields.free_keywords is not None:
+                                relation["keywords"] += metadata.fields.free_keywords
+                else:
+                    if conf.type_infos is None:
+                        conf._type_infos = {}
+                    if "keywords" not in conf.type_infos:
+                        conf.type_infos["keywords"] = []
+                    if metadata.fields.topics is not None:
+                        conf.type_infos["keywords"] += metadata.fields.topics
+                    if metadata.fields.inspire_keywords is not None:
+                        conf.type_infos["keywords"] += metadata.fields.inspire_keywords
+                    if metadata.fields.free_keywords is not None:
+                        conf.type_infos["keywords"] += metadata.fields.free_keywords
+                conf._metadata = [
+                    ConfigurationMetadata(
+                        format="application/xml",
+                        url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.dataset_name}",
+                        type=ConfigurationMetadataType.ISO19115_2003,
+                    ),
+                    ConfigurationMetadata(
+                        format="text/html",
+                        url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.dataset_name}",
+                        type=ConfigurationMetadataType.OTHER,
+                    ),
+                ]
+                config_manager.update_configuration(conf)
+                if len(offerings) > 0:
+                    for offering in offerings:
+                        offering_manager.synchronize(
+                            metadata.datastore_id, offering._id
+                        )
 
             document_link = []
             labels = [f"datasheet_name={dataset}", "type=document-list"]
