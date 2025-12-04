@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Get source code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -55,7 +55,7 @@ jobs:
       options: --user root
     steps:
       - name: Get source code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Check PyQt5 to PyQt6 compatibility.
         run: |
