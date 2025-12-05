@@ -12,6 +12,13 @@ Unreleased
 
 -->
 
+## 1.0.1 - 2025-12-05
+
+* fix(upload): close file after upload by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/447>
+* fix(index metadata): synchronise offering after update metadata by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/460>
+* fix(search provider): fix handling search error by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/461>
+* Update metadata URLs to use dataset identifier by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/462>
+
 ## 1.0.0 - 2025-11-27
 
 * Fix/big file upload by @jmkerloch in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/431>
