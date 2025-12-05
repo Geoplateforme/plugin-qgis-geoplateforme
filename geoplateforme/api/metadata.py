@@ -1054,12 +1054,12 @@ class MetadataRequestManager:
                 conf._metadata = [
                     ConfigurationMetadata(
                         format="application/xml",
-                        url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.dataset_name}",
+                        url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.identifier}",
                         type=ConfigurationMetadataType.ISO19115_2003,
                     ),
                     ConfigurationMetadata(
                         format="text/html",
-                        url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.dataset_name}",
+                        url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.identifier}",
                         type=ConfigurationMetadataType.OTHER,
                     ),
                 ]
