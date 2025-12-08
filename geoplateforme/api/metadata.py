@@ -785,20 +785,24 @@ class MetadataRequestManager:
         except ConnectionError as err:
             raise DeleteTagException(f"Error while deleting tags for metadata : {err}")
 
-    def update_metadata(self, datastore_id: str, metadata: Metadata):
+    def update_metadata(
+        self, datastore_id: str, metadata: Metadata, update_index: bool = False
+    ):
         """Update metadata
 
         :param datastore_id: datastore id
         :type datastore_id: str
         :param metadata: metadata to update
         :type metadata: Metadata
+        :param update_index: True to update configurations and offerings
+        :type update_index: bool
 
         :raises MetadataUpdateException: when error occur during requesting the API
         """
         self.log(
             f"{__name__}.update_metadata(datastore:{datastore_id}, metadata_id: {metadata._id})"
         )
-        self.update_metadata_links(metadata)
+        self.update_metadata_links(metadata, update_index)
         with tempfile.TemporaryDirectory() as tmpdirname:
             temp_dir = Path(tmpdirname)
             file_name = temp_dir / f"{metadata._id}.xml"
@@ -895,11 +899,13 @@ class MetadataRequestManager:
             )
         return data
 
-    def update_metadata_links(self, metadata: Metadata):
+    def update_metadata_links(self, metadata: Metadata, update_index: bool = False):
         """Update metadata links by parsing dataset.
 
         :param metadata_id: metadata id
         :type metadata_id: str
+        :param update_index: True to update configurations and offerings
+        :type update_index: bool
 
         :raises MetadataUpdateLinksException: when error occur
         """
@@ -943,6 +949,7 @@ class MetadataRequestManager:
                         sd_tags,
                     )
 
+            offerings_to_synchronise = []
             for conf in configurations:
                 offerings = offering_manager.get_offering_list(
                     metadata.datastore_id,
@@ -1020,55 +1027,65 @@ class MetadataRequestManager:
                                     }
                                 )
                 # Update and tag configuration for Geoplateforme Index
-                tags = {}
-                if metadata.fields.org_name is not None:
-                    tags["theme"] = ", ".join(metadata.fields.topics)
-                if len(tags) > 0:
-                    config_manager.add_tags(
-                        metadata.datastore_id,
-                        conf._id,
-                        tags,
-                    )
-                if conf.type == ConfigurationType.WFS:
-                    for used_data in conf.type_infos["used_data"]:
-                        for relation in used_data["relations"]:
-                            if "keywords" not in relation:
-                                relation["keywords"] = []
-                            if metadata.fields.topics is not None:
-                                relation["keywords"] += metadata.fields.topics
-                            if metadata.fields.inspire_keywords is not None:
-                                relation["keywords"] += metadata.fields.inspire_keywords
-                            if metadata.fields.free_keywords is not None:
-                                relation["keywords"] += metadata.fields.free_keywords
-                else:
-                    if conf.type_infos is None:
-                        conf._type_infos = {}
-                    if "keywords" not in conf.type_infos:
-                        conf.type_infos["keywords"] = []
-                    if metadata.fields.topics is not None:
-                        conf.type_infos["keywords"] += metadata.fields.topics
-                    if metadata.fields.inspire_keywords is not None:
-                        conf.type_infos["keywords"] += metadata.fields.inspire_keywords
-                    if metadata.fields.free_keywords is not None:
-                        conf.type_infos["keywords"] += metadata.fields.free_keywords
-                conf._metadata = [
-                    ConfigurationMetadata(
-                        format="application/xml",
-                        url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.fields.identifier}",
-                        type=ConfigurationMetadataType.ISO19115_2003,
-                    ),
-                    ConfigurationMetadata(
-                        format="text/html",
-                        url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.fields.identifier}",
-                        type=ConfigurationMetadataType.OTHER,
-                    ),
-                ]
-                config_manager.update_configuration(conf)
-                if len(offerings) > 0:
-                    for offering in offerings:
-                        offering_manager.synchronize(
-                            metadata.datastore_id, offering._id
+                if update_index:
+                    tags = {}
+                    if metadata.fields.org_name is not None:
+                        tags["theme"] = ", ".join(metadata.fields.topics)
+                    if len(tags) > 0:
+                        config_manager.add_tags(
+                            metadata.datastore_id,
+                            conf._id,
+                            tags,
                         )
+                    if conf.type == ConfigurationType.WFS:
+                        for used_data in conf.type_infos["used_data"]:
+                            for relation in used_data["relations"]:
+                                if "keywords" not in relation:
+                                    relation["keywords"] = []
+                                if metadata.fields.topics is not None:
+                                    relation["keywords"] += metadata.fields.topics
+                                if metadata.fields.inspire_keywords is not None:
+                                    relation["keywords"] += (
+                                        metadata.fields.inspire_keywords
+                                    )
+                                if metadata.fields.free_keywords is not None:
+                                    relation["keywords"] += (
+                                        metadata.fields.free_keywords
+                                    )
+                    else:
+                        if conf.type_infos is None:
+                            conf._type_infos = {}
+                        if "keywords" not in conf.type_infos:
+                            conf.type_infos["keywords"] = []
+                        if metadata.fields.topics is not None:
+                            conf.type_infos["keywords"] += metadata.fields.topics
+                        if metadata.fields.inspire_keywords is not None:
+                            conf.type_infos["keywords"] += (
+                                metadata.fields.inspire_keywords
+                            )
+                        if metadata.fields.free_keywords is not None:
+                            conf.type_infos["keywords"] += metadata.fields.free_keywords
+                    conf._metadata = [
+                        ConfigurationMetadata(
+                            format="application/xml",
+                            url=f"https://data.geopf.fr/csw?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&elementSetName=full&ID={metadata.fields.identifier}",
+                            type=ConfigurationMetadataType.ISO19115_2003,
+                        ),
+                        ConfigurationMetadata(
+                            format="text/html",
+                            url=f"https://cartes.gouv.fr/catalogue/dataset/{metadata.fields.identifier}",
+                            type=ConfigurationMetadataType.OTHER,
+                        ),
+                    ]
+                    config_manager.update_configuration(conf)
+                    if len(offerings) > 0:
+                        for offering in offerings:
+                            offerings_to_synchronise.append(offering)
+
+            # Update offering for Geoplateforme Index
+            if update_index:
+                for offering in offerings_to_synchronise:
+                    offering_manager.synchronize(metadata.datastore_id, offering._id)
 
             document_link = []
             labels = [f"datasheet_name={dataset}", "type=document-list"]

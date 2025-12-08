@@ -764,7 +764,7 @@
 <context>
     <name>DashboardWidget</name>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="405"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="438"/>
         <source>Datastore</source>
         <translation>Entrepôt</translation>
     </message>
@@ -774,7 +774,7 @@
         <translation>Tableau de bord</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="367"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="400"/>
         <source>Refresh</source>
         <translation>Rafraîchir</translation>
     </message>
@@ -824,175 +824,185 @@
         <translation>Services</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="307"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="340"/>
         <source>Documents</source>
         <translation>Documents</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="341"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="374"/>
         <source>Permissions</source>
         <translation>Permissions</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="360"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="393"/>
         <source>Create dataset</source>
         <translation>Nouvelle fiche</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="386"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="419"/>
         <source>Dataset</source>
         <translation>Fiche de données</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="412"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="445"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="718"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="722"/>
         <source>Suppression impossible</source>
         <translation>Suppression impossible</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="356"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="360"/>
         <source>L&apos;entrepôt ou le dataset ne sont pas définis</source>
         <translation>L&apos;entrepôt ou le dataset ne sont pas définis</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="383"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="387"/>
         <source>Impossible de récupérer les configurations et offres associées au dataset : {}</source>
         <translation>Impossible de récupérer les configurations et offres associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="394"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="398"/>
         <source>Impossible de récupérer les données stockées associées au dataset : {}</source>
         <translation>Impossible de récupérer les données stockées associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="405"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="409"/>
         <source>Impossible de récupérer les livraisons associées au dataset : {}</source>
         <translation>Impossible de récupérer les livraisons associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="416"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="420"/>
         <source>Impossible de récupérer les métadatas associées au dataset : {}</source>
         <translation>Impossible de récupérer les métadatas associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="428"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="432"/>
         <source>Êtes-vous sûr de vouloir supprimer le dataset ?</source>
         <translation>Êtes-vous sûr de vouloir supprimer la fiche de données ?</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="429"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="433"/>
         <source>
 Les éléments suivants seront supprimés:</source>
         <translation>
 Les éléments suivants seront supprimés:</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="433"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="437"/>
         <source>
 {} Offre(s)</source>
         <translation>
 {} Offre(s)</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="437"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="441"/>
         <source>
 {} Données stockées(s)</source>
         <translation>
 {} Données stockées(s)</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="441"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="445"/>
         <source>
 {} Livraison(s)</source>
         <translation>
 {} Livraison(s)</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="445"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="449"/>
         <source>
  La métadonnée associée ({})</source>
         <translation>
  La métadonnée associée ({})</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="451"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="455"/>
         <source>Suppression dataset {}</source>
         <translation>Suppression fiche de données {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="549"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="553"/>
         <source>Un service n&apos;a pas pu être dépublié :
  {}</source>
         <translation>Un service n&apos;a pas pu être dépublié :
  {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="610"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="614"/>
         <source>Une données stockées n&apos;a pas pu être supprimée :
  {}</source>
         <translation>Une données stockées n&apos;a pas pu être supprimée :
  {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="668"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="672"/>
         <source>Une livraison n&apos;a pas pu être supprimée :
  {}</source>
         <translation>Une livraison n&apos;a pas pu être supprimée :
  {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="718"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="722"/>
         <source>Une metadata n&apos;a pas pu être supprimée : {}</source>
         <translation>Une metadata n&apos;a pas pu être supprimée : {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="329"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="333"/>
         <source>Erreur mise à jour métadonnée.</source>
         <translation>Erreur mise à jour métadonnée.</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="329"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="333"/>
         <source>Erreur lors de la mise à jour des métadonnée. : {exception}</source>
         <translation>Erreur lors de la mise à jour des métadonnée. : {exception}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="835"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="839"/>
         <source>Erreur mise à jour des données.</source>
         <translation>Erreur mise à jour des données.</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="835"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="839"/>
         <source>Erreur lors de la mise à jour des données. : {exception}</source>
         <translation>Erreur lors de la mise à jour des données. : {exception}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="313"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="346"/>
         <source>Open in carte.gouv</source>
         <translation>Ouvrir dans cartes.gouv</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="323"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="356"/>
         <source>Double click to open document in browser</source>
         <translation>Double cliquer pour ouvrir le document dans un navigateur</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="540"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="544"/>
         <source>Unpublish services</source>
         <translation>Dépublier les services</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="601"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="605"/>
         <source>Delete stored data {}</source>
         <translation>Supprimer la donnée stockée {}</translation>
     </message>
     <message>
-        <location filename="../../gui/dashboard/wdg_dashboard.py" line="659"/>
+        <location filename="../../gui/dashboard/wdg_dashboard.py" line="663"/>
         <source>Delete upload {}</source>
         <translation>Supprimer la livraison {}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="317"/>
+        <source>When a new service is created, don&apos;t forget to update the Geoplateforme index.</source>
+        <translation>Quand un nouveau service est créé, n&apos;oubliez pas de mettre à jour l&apos;index de la Geoplateforme.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dashboard/wdg_dashboard.ui" line="327"/>
+        <source>Update Geoplaforme index</source>
+        <translation>Mise à jour de l&apos;index Geoplateforme</translation>
     </message>
 </context>
 <context>
@@ -2092,12 +2102,12 @@ Les éléments suivants seront supprimés:</translation>
         <translation>Put la demande sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="874"/>
+        <location filename="../../toolbelt/network_manager.py" line="882"/>
         <source>PATCH request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>La demande de patch sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="717"/>
+        <location filename="../../toolbelt/network_manager.py" line="722"/>
         <source>Uploading {}/{} bytes</source>
         <translation>Chargement {}/{} bytes</translation>
     </message>
@@ -2415,14 +2425,24 @@ Ce type est adapté pour une utilisation dans un logiciel SIG ou tout outil néc
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;title&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="133"/>
+        <location filename="../../toolbelt/dlg_processing_run.py" line="162"/>
         <source>Can&apos;t run {0}</source>
         <translation>Ne peut pas exécuter {0}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="134"/>
+        <location filename="../../toolbelt/dlg_processing_run.py" line="163"/>
         <source>Invalid parameters : {0}.</source>
         <translation>Paramètres invalides : {0}.</translation>
+    </message>
+    <message>
+        <location filename="../../toolbelt/dlg_processing_run.py" line="78"/>
+        <source>Cancel processing</source>
+        <translation>Annuler le traitement</translation>
+    </message>
+    <message>
+        <location filename="../../toolbelt/dlg_processing_run.py" line="78"/>
+        <source>Do you want to cancel processing {} ?</source>
+        <translation>Voulez vous annuler le traitement {} ?</translation>
     </message>
 </context>
 <context>
@@ -4301,54 +4321,54 @@ Vous pouvez fermer la fenêtre pendant la génération.</translation>
         <translation>Définir le CRS</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="190"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="195"/>
         <source>Invalid layers:
 </source>
         <translation>Couches non valides:
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="192"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="197"/>
         <source>- CRS mismatch
 </source>
         <translation>- incohérence de CRS
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="194"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="199"/>
         <source>- invalid layer name
 </source>
         <translation>- Nom de la couche non valide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="196"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="201"/>
         <source>- invalid file name
 </source>
         <translation>- nom de fichier invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="198"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="203"/>
         <source>- invalid field name
 </source>
         <translation>- nom d&apos;attribut invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="200"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="205"/>
         <source>- invalid layer type
 </source>
         <translation>- Type de couche non valide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="206"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="211"/>
         <source>Invalid layers list are available in details.</source>
         <translation>Liste des couches invalides disponible dans les détails.</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="208"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="213"/>
         <source>Invalid layers</source>
         <translation>Couches invalides</translation>
     </message>
@@ -4375,14 +4395,14 @@ Values separated by ,</source>
 Valeurs séparées par ,</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="202"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="207"/>
         <source>- invalid geometry
 </source>
         <translation>- géométrie invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="204"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="209"/>
         <source>- no feature available
 </source>
         <translation>- aucune géométrie de disponible

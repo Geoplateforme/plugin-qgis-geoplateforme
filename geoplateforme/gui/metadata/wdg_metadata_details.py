@@ -300,4 +300,4 @@ class MetadataDetailsWidget(QWidget):
         """Update metadata on GPF with widget fields"""
         self.update_metadata_fields()
         manager = MetadataRequestManager()
-        manager.update_metadata(self.datastore_id, self.metadata)
+        manager.update_metadata(self.datastore_id, self.metadata, True)
