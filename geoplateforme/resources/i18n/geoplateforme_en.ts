@@ -1001,8 +1001,8 @@ The following elements will be deleted:</translation>
     </message>
     <message>
         <location filename="../../gui/dashboard/wdg_dashboard.ui" line="327"/>
-        <source>Update Geoplaforme index</source>
-        <translation>Update Geoplaforme index</translation>
+        <source>Update Geoplateforme index</source>
+        <translation>Update Geoplateforme index</translation>
     </message>
 </context>
 <context>
