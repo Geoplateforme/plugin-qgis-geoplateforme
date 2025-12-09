@@ -243,8 +243,14 @@
        <string>Services</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QSplitter" name="service_splitter">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -258,7 +264,7 @@
              <x>0</x>
              <y>0</y>
              <width>157</width>
-             <height>478</height>
+             <height>418</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
@@ -288,7 +294,7 @@
              <x>0</x>
              <y>0</y>
              <width>498</width>
-             <height>478</height>
+             <height>418</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_7">
@@ -299,6 +305,33 @@
           </widget>
          </widget>
         </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
+         <item>
+          <widget class="QLabel" name="lbl_update_index">
+           <property name="text">
+            <string>When a new service is created, don't forget to update the Geoplateforme index.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_update_index">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Update Geoplaforme index</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

@@ -205,6 +205,9 @@ class DashboardWidget(QWidget):
         self.btn_add_data.clicked.connect(self._add_data_to_dataset)
         self.btn_add_data.setIcon(QIcon(":/images/themes/default/mActionAdd.svg"))
 
+        self.btn_update_index.clicked.connect(self._run_metadata_update)
+        self.check_offering_status()
+
     def _open_document_url(self) -> None:
         """Open document URL on webbrowser"""
         datastore_id = self.cbx_datastore.current_datastore_id()
@@ -296,6 +299,7 @@ class DashboardWidget(QWidget):
             self.wdg_metadata = QLabel()
             self.wdg_metadata.setText("No metadata available")
             self.btn_update_metadata.hide()
+            self.btn_update_index.setEnabled(False)
         self.metadata_layout.addWidget(self.wdg_metadata)
 
     def _update_metadata(self, task: QgsTask):
@@ -1216,4 +1220,29 @@ class DashboardWidget(QWidget):
 
         self.tbv_document.resizeColumnsToContents()
 
+        self.check_offering_status()
+
         QGuiApplication.restoreOverrideCursor()
+
+    def check_offering_status(self) -> None:
+        if self.mdl_offering.rowCount() == 0:
+            self.btn_update_metadata.setEnabled(True)
+            self.btn_update_index.setEnabled(False)
+        elif (
+            len(
+                self.mdl_offering.findItems(
+                    "PUBLISHED", column=OfferingListModel.STATUS_COL
+                )
+            )
+            + len(
+                self.mdl_offering.findItems(
+                    "UNSTABLE", column=OfferingListModel.STATUS_COL
+                )
+            )
+            != self.mdl_offering.rowCount()
+        ):
+            self.btn_update_metadata.setEnabled(False)
+            self.btn_update_index.setEnabled(False)
+        else:
+            self.btn_update_metadata.setEnabled(True)
+            self.btn_update_index.setEnabled(True)
