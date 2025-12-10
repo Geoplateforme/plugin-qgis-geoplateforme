@@ -11,6 +11,11 @@ Unreleased
 *
 
 -->
+## 1.0.3 - 2025-12-09
+
+* fix(index): Button added to update the geoplatform index by @Ducarouge in https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/468
+
+
 ## 1.0.2 - 2025-12-05
 
 * fix(metadata): fix error in metadata url by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/464>
