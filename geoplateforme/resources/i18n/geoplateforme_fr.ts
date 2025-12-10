@@ -1001,7 +1001,7 @@ Les éléments suivants seront supprimés:</translation>
     </message>
     <message>
         <location filename="../../gui/dashboard/wdg_dashboard.ui" line="327"/>
-        <source>Update Geoplaforme index</source>
+        <source>Update Geoplateforme index</source>
         <translation>Mise à jour de l&apos;index Geoplateforme</translation>
     </message>
 </context>
