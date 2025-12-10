@@ -324,7 +324,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Update Geoplaforme index</string>
+            <string>Update Geoplateforme index</string>
            </property>
            <property name="checkable">
             <bool>false</bool>
