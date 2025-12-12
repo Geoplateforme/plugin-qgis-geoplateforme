@@ -34,7 +34,7 @@ Il s’adresse aux administrations, collectivités, bureaux d’études et acteu
   - l'accès à l'**Interface de style** pour personnaliser le rendu des données.
 - **Traitements QGIS via le modeleur** (processings) pour automatiser les tâches.
 
-    ![Exemple de traitement dans le modeleur QGIS](https://raw.githubusercontent.com/Geoplateforme/plugin-qgis-geoplateforme/refs/heads/main/docs/static/images/PluginGPF_gestionnaire.png)
+    ![Exemple de traitement dans le modeleur QGIS](https://video.osgeo.org/w/baDmkJ3HCtmWrASkCLGVho)
 
 ### Fédération de plugins
 
