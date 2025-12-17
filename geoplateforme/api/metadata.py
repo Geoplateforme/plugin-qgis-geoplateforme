@@ -1077,6 +1077,16 @@ class MetadataRequestManager:
                             type=ConfigurationMetadataType.OTHER,
                         ),
                     ]
+                    if conf.extra is not None:
+                        if config_style := conf.extra.get("styles", None):
+                            for style in config_style:
+                                conf._metadata.append(
+                                    ConfigurationMetadata(
+                                        format="application/json",
+                                        url=style["layers"][0]["url"],
+                                        type=ConfigurationMetadataType.OTHER,
+                                    )
+                                )
                     config_manager.update_configuration(conf)
                     if len(offerings) > 0:
                         for offering in offerings:
