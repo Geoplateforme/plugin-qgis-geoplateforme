@@ -26,7 +26,7 @@ from geoplateforme.__about__ import (
 )
 from geoplateforme.api.custom_exceptions import UnavailableUserException
 from geoplateforme.constants import GPF_PLUGIN_LIST
-from geoplateforme.gui.dashboard.dlg_dashboard import DashboardDialog
+from geoplateforme.gui.dashboard.mw_dashboard import DashboardWindow
 from geoplateforme.gui.dlg_authentication import AuthenticationDialog
 from geoplateforme.gui.dlg_settings import PlgOptionsFactory
 from geoplateforme.gui.provider.provider_gpf import ProviderGPF
@@ -72,9 +72,8 @@ class GeoplateformePlugin:
         self.action_report_issue = None
 
         self.toolbar = None
-        self.dlg_dashboard = None
+        self.mw_dashboard = None
         self.dlg_user_keys = None
-        self.dlg_dashboard_old = None
         self.dlg_storage_report = None
 
         self.action_authentication = None
@@ -373,10 +372,10 @@ class GeoplateformePlugin:
 
         # Close dashboard if connection is not available
         if not enabled:
-            if self.dlg_dashboard is not None:
-                self.dlg_dashboard.close()
-                del self.dlg_dashboard
-                self.dlg_dashboard = None
+            if self.mw_dashboard is not None:
+                self.mw_dashboard.close()
+                del self.mw_dashboard
+                self.mw_dashboard = None
 
     def user_keys(self) -> None:
         if self.dlg_user_keys is None:
@@ -389,10 +388,10 @@ class GeoplateformePlugin:
         Display dashboard dialog
 
         """
-        if self.dlg_dashboard is None:
-            self.dlg_dashboard = DashboardDialog(self.iface.mainWindow())
-            self.dlg_dashboard.refresh()
-        self.dlg_dashboard.show()
+        if self.mw_dashboard is None:
+            self.mw_dashboard = DashboardWindow(self.iface.mainWindow())
+            self.mw_dashboard.refresh()
+        self.mw_dashboard.show()
 
     def display_storage_report(self) -> None:
         """

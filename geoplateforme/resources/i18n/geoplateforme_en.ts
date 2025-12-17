@@ -754,14 +754,6 @@
     </message>
 </context>
 <context>
-    <name>DashboardDialog</name>
-    <message>
-        <location filename="../../gui/dashboard/dlg_dashboard.py" line="21"/>
-        <source>Dashboard</source>
-        <translation>Dashboard</translation>
-    </message>
-</context>
-<context>
     <name>DashboardWidget</name>
     <message>
         <location filename="../../gui/dashboard/wdg_dashboard.ui" line="26"/>
@@ -1003,6 +995,19 @@ The following elements will be deleted:</translation>
         <location filename="../../gui/dashboard/wdg_dashboard.ui" line="327"/>
         <source>Update Geoplateforme index</source>
         <translation>Update Geoplateforme index</translation>
+    </message>
+</context>
+<context>
+    <name>DashboardWindow</name>
+    <message>
+        <location filename="../../gui/dashboard/mw_dashboard.py" line="21"/>
+        <source>Dashboard</source>
+        <translation>Dashboard</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dashboard/mw_dashboard.ui" line="14"/>
+        <source>MainWindow</source>
+        <translation>Dashboard</translation>
     </message>
 </context>
 <context>
@@ -1631,42 +1636,42 @@ The following elements will be deleted:</translation>
 <context>
     <name>GeoplateformePlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="107"/>
+        <location filename="../../plugin_main.py" line="106"/>
         <source>Login</source>
         <translation>Login</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="115"/>
+        <location filename="../../plugin_main.py" line="114"/>
         <source>Dashboard</source>
         <translation>Dashboard</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="131"/>
+        <location filename="../../plugin_main.py" line="130"/>
         <source>Access keys</source>
         <translation>Access keys</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="139"/>
+        <location filename="../../plugin_main.py" line="138"/>
         <source>Storage report</source>
         <translation>Storage report</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="147"/>
+        <location filename="../../plugin_main.py" line="146"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="157"/>
+        <location filename="../../plugin_main.py" line="156"/>
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="169"/>
+        <location filename="../../plugin_main.py" line="168"/>
         <source>Report issue</source>
         <translation>Report issue</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="255"/>
+        <location filename="../../plugin_main.py" line="254"/>
         <source>3rd party extensions</source>
         <translation>3rd party extensions</translation>
     </message>

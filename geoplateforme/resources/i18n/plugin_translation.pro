@@ -3,8 +3,8 @@
 
 FORMS =	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_edition.ui \
 	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_status.ui \
-	../../gui/dashboard/dlg_dashboard.ui \
 	../../gui/dashboard/dlg_stored_data_details.ui \
+	../../gui/dashboard/mw_dashboard.ui \
 	../../gui/dashboard/wdg_dashboard.ui \
 	../../gui/dashboard/wdg_service_details.ui \
 	../../gui/dashboard/wdg_upload_details.ui \
@@ -88,9 +88,9 @@ SOURCES =	../../api/annexes.py \
 	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_edition.py \
 	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_status.py \
 	../../gui/create_raster_tiles_from_wms_vector/wzd_raster_tiles_from_wms_vector.py \
-	../../gui/dashboard/dlg_dashboard.py \
 	../../gui/dashboard/dlg_select_layer_and_style.py \
 	../../gui/dashboard/dlg_stored_data_details.py \
+	../../gui/dashboard/mw_dashboard.py \
 	../../gui/dashboard/wdg_dashboard.py \
 	../../gui/dashboard/wdg_service_details.py \
 	../../gui/dashboard/wdg_upload_details.py \

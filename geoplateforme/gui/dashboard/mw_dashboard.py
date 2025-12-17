@@ -1,10 +1,10 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QWidget
+from qgis.PyQt.QtWidgets import QMainWindow, QWidget
 
 
-class DashboardDialog(QDialog):
+class DashboardWindow(QMainWindow):
     def __init__(self, parent: QWidget):
         """
         QDialog to display dashboard
@@ -15,7 +15,7 @@ class DashboardDialog(QDialog):
         super().__init__(parent)
 
         uic.loadUi(
-            os.path.join(os.path.dirname(__file__), "dlg_dashboard.ui"),
+            os.path.join(os.path.dirname(__file__), "mw_dashboard.ui"),
             self,
         )
         self.setWindowTitle(self.tr("Dashboard"))
