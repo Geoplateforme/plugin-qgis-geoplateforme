@@ -4,13 +4,13 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
 from geoplateforme.api.configuration import Configuration, ConfigurationType
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.gui.styles.wdg_mapbox_style_creation import MapboxStyleCreationWidget
 from geoplateforme.gui.styles.wdg_wfs_style_creation import WfsStyleCreationWidget
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.style.add_configuration_style import (
     AddConfigurationStyleAlgorithm,
 )
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 
 
 class ConfigurationStyleCreationDialog(QDialog):

@@ -29,7 +29,8 @@ class IpCIDRLineEdit(QLineEdit):
             self.setStyleSheet("border: 2px solid red;")
             self.setToolTip(
                 self.tr(
-                    "Cette plage d’IP doit être au format CIDR (exemples: 192.168.1.1/32, 192.168.0.1/24)"
+                    "Cette plage d’IP doit être au format CIDR "
+                    "(exemples: 192.168.1.1/32, 192.168.0.1/24)"
                 )
             )
         else:

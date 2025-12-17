@@ -10,11 +10,12 @@ from qgis.core import QgsCoordinateReferenceSystem, QgsVectorLayer, QgsWkbTypes
 from qgis.PyQt import QtCore, uic
 from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
+
 # Plugin
 from geoplateforme.gui.lne_validators import alphanum_qval
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.tools.check_layer import CheckLayerAlgorithm
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 
 
 class UploadCreationWidget(QWidget):

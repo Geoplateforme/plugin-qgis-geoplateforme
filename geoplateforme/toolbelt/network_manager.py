@@ -8,10 +8,9 @@ Perform network request.
 # ########## Imports ###############
 # ##################################
 
+# standard library
 import json
 import mimetypes
-
-# standard library
 import os
 import uuid
 from pathlib import Path

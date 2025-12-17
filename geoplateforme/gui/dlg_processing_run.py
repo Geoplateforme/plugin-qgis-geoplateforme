@@ -14,7 +14,7 @@ from qgis.PyQt import sip, uic
 from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QWidget
 
 # project
-from geoplateforme.toolbelt.text_edit_feedback import QTextEditProcessingFeedBack
+from geoplateforme.gui.text_edit_feedback import QTextEditProcessingFeedBack
 
 
 class ProcessingRunDialog(QDialog):

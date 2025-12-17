@@ -72,7 +72,7 @@
   <customwidget>
    <class>IpCIDRLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>geoplateforme.toolbelt.lne_ip_cidr_adress</header>
+   <header>geoplateforme.gui.lne_ip_cidr_adress</header>
   </customwidget>
  </customwidgets>
  <resources/>

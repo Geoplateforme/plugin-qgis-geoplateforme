@@ -40,6 +40,7 @@ from geoplateforme.gui.create_raster_tiles_from_wms_vector.wzd_raster_tiles_from
 from geoplateforme.gui.dashboard.dlg_select_layer_and_style import (
     SelectLayerAndStyleDialog,
 )
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.gui.provider.capabilities_reader import read_tms_layer_capabilities
 from geoplateforme.gui.provider.choose_authentication_dialog import (
     ChooseAuthenticationDialog,
@@ -48,7 +49,6 @@ from geoplateforme.gui.provider.select_style_dialog import SelectStyleDialog
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.tools.delete_offering import DeleteOfferingAlgorithm
 from geoplateforme.toolbelt import NetworkRequestsManager, PlgLogger
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.toolbelt.preferences import PlgOptionsManager
 
 
