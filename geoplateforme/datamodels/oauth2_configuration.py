@@ -61,7 +61,7 @@ class OAuth2Configuration:
     requestUrl: str = (
         "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/auth"
     )
-    scope: str = "api"
+    scope: str = ""
     tokenUrl: str = (
         "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/token"
     )
