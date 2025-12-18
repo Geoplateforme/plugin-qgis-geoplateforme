@@ -1,16 +1,21 @@
 #! python3  # noqa: E265
 
-"""
-Processing provider module.
-"""
+"""Processing provider module."""
+
+# standard
 
 # PyQGIS
-from qgis.core import QgsProcessingProvider
+from qgis.core import QgsProcessingModelAlgorithm, QgsProcessingProvider
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 
 # project
-from geoplateforme.__about__ import __icon_path__, __title__, __version__
+from geoplateforme.__about__ import (
+    DIR_PLUGIN_ROOT,
+    __icon_path__,
+    __title__,
+    __version__,
+)
 from geoplateforme.processing.annexes.create_annexe import CreateAnnexeAlgorithm
 from geoplateforme.processing.annexes.delete_annexe import DeleteAnnexeAlgorithm
 from geoplateforme.processing.generation.create_raster_tiles_from_wms_vector import (
@@ -79,7 +84,7 @@ class GeoplateformeProvider(QgsProcessingProvider):
     """
 
     def loadAlgorithms(self):
-        """Loads all algorithms belonging to this provider."""
+        """Loads all algorithms and models belonging to this provider."""
         self.addAlgorithm(CheckLayerAlgorithm())
         self.addAlgorithm(GpfUploadFromFileAlgorithm())
         self.addAlgorithm(UploadDatabaseIntegrationAlgorithm())
@@ -110,6 +115,14 @@ class GeoplateformeProvider(QgsProcessingProvider):
         self.addAlgorithm(AddConfigurationStyleAlgorithm())
         self.addAlgorithm(DeleteConfigurationStyleAlgorithm())
         self.addAlgorithm(DeleteUserKeyAccessesAlgorithm())
+
+        # load models (*.model3) files from the 'models' folder
+        for model_path in DIR_PLUGIN_ROOT.joinpath("processing").glob(
+            "models/*.model3"
+        ):
+            model = QgsProcessingModelAlgorithm()
+            if model.fromFile(f"{model_path}"):
+                self.addAlgorithm(model)
 
     def id(self) -> str:
         """Unique provider id, used for identifying it. This string should be unique, \
