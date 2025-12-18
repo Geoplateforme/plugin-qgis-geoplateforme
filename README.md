@@ -34,7 +34,7 @@ Il s’adresse aux administrations, collectivités, bureaux d’études et acteu
   - l'accès à l'**Interface de style** pour personnaliser le rendu des données.
 - **Traitements QGIS via le modeleur** (processings) pour automatiser les tâches.
 
-    ![Exemple de traitement dans le modeleur QGIS](https://video.osgeo.org/w/baDmkJ3HCtmWrASkCLGVho)
+    [Exemple de traitement dans le modeleur QGIS](https://video.osgeo.org/w/baDmkJ3HCtmWrASkCLGVho) :
 
     https://github.com/user-attachments/assets/e5ed6ac7-dfc3-4681-b033-54b977945737
 
