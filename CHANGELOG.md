@@ -12,6 +12,15 @@ Unreleased
 
 -->
 
+## 1.1.0 - 2025-12-18
+
+* fix(TMS): add style url in metadata for TMS configuration by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/486>
+* feat(dashboard): Change dashboard Dialog to QMainWindow by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/487>
+* update(processing): intégration des fichiers de modèles QGIS (*.model3) dans la boîte à outils de traitements de QGIS by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/475>
+* update(docs): intègre la vidéo de démonstration du modèle dans le README by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/474>
+* update(constants): corrige les modèles d'URLs cartes.gouv.fr by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/481>
+* update(tooling): affine la configuration de la couverture de code pour refléter la réalité by @Guts in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/485>
+
 ## 1.0.4 - 2025-12-10
 
 * Fix typo in Geoplateforme index translation by @IGNF-Xavier in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/470>
@@ -20,11 +29,9 @@ Unreleased
 
 * fix(index): Button added to update the geoplatform index by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/468>
 
-
 ## 1.0.2 - 2025-12-05
 
 * fix(metadata): fix error in metadata url by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/464>
-
 
 ## 1.0.1 - 2025-12-05
 
