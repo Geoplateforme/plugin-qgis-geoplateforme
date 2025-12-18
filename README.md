@@ -36,6 +36,9 @@ Il s’adresse aux administrations, collectivités, bureaux d’études et acteu
 
     ![Exemple de traitement dans le modeleur QGIS](https://video.osgeo.org/w/baDmkJ3HCtmWrASkCLGVho)
 
+    https://github.com/user-attachments/assets/e5ed6ac7-dfc3-4681-b033-54b977945737
+
+
 ### Fédération de plugins
 
 Le plugin se présente également comme une **fédération de plugins** spécialisés pour des usages spécifiques autour des données et services de la Géoplateforme :
