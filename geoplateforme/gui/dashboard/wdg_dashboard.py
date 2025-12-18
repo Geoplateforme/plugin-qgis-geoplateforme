@@ -49,6 +49,7 @@ from geoplateforme.constants import cartes_gouv_template_url
 from geoplateforme.gui.dashboard.dlg_stored_data_details import StoredDataDetailsDialog
 from geoplateforme.gui.dashboard.wdg_service_details import ServiceDetailsWidget
 from geoplateforme.gui.dashboard.wdg_upload_details import UploadDetailsWidget
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.gui.mdl_document import DocumentListModel
 from geoplateforme.gui.mdl_offering import OfferingListModel
 from geoplateforme.gui.mdl_stored_data import StoredDataListModel
@@ -61,7 +62,6 @@ from geoplateforme.processing.tools.delete_offering import DeleteOfferingAlgorit
 from geoplateforme.processing.tools.delete_stored_data import DeleteStoredDataAlgorithm
 from geoplateforme.processing.tools.delete_upload import DeleteUploadAlgorithm
 from geoplateforme.toolbelt import PlgLogger
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.toolbelt.preferences import PlgOptionsManager
 
 

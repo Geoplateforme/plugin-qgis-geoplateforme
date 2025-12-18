@@ -9,8 +9,8 @@ from geoplateforme.api.stored_data import (
     StoredDataRequestManager,
     TableRelation,
 )
+from geoplateforme.gui.mdl_check_state_model import CheckStateModel
 from geoplateforme.toolbelt import PlgLogger
-from geoplateforme.toolbelt.check_state_model import CheckStateModel
 
 
 class TableRelationTreeModel(CheckStateModel):

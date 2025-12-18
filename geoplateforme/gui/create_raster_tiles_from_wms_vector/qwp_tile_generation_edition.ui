@@ -191,7 +191,7 @@
   <customwidget>
    <class>RangeSlider</class>
    <extends>QWidget</extends>
-   <header>geoplateforme.toolbelt.range_slider</header>
+   <header>geoplateforme.gui.wdg_range_slider</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

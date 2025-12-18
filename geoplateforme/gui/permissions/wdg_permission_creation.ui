@@ -32,7 +32,7 @@
    <item row="5" column="0" colspan="5">
     <widget class="QStackedWidget" name="stack_user_community">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="user_page">
       <property name="minimumSize">
@@ -272,7 +272,7 @@
   <customwidget>
    <class>UUIDLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>geoplateforme.toolbelt.lne_uuid</header>
+   <header>geoplateforme.gui.lne_uuid</header>
   </customwidget>
  </customwidgets>
  <resources/>

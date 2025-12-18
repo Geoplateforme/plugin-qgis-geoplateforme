@@ -11,10 +11,11 @@ from qgis.PyQt.QtWidgets import QMessageBox, QWidget
 from qgis.PyQt.QtXml import QDomDocument
 from qgis.utils import OverrideCursor
 
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
+
 # Project
 from geoplateforme.processing.provider import GeoplateformeProvider
 from geoplateforme.processing.tools.sld_downgrade import SldDowngradeAlgorithm
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 
 
 class SldSelectionWidget(QWidget):

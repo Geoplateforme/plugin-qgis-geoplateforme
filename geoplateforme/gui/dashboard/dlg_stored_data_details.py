@@ -31,6 +31,7 @@ from geoplateforme.api.stored_data import (
     StoredDataType,
 )
 from geoplateforme.api.upload import UploadRequestManager
+from geoplateforme.gui.dlg_processing_run import ProcessingRunDialog
 from geoplateforme.gui.mdl_table_relation import TableRelationTreeModel
 from geoplateforme.gui.publication_creation.wzd_publication_creation import (
     PublicationFormCreation,
@@ -54,7 +55,6 @@ from geoplateforme.gui.wmts_publication.wzd_publication_creation import (
 from geoplateforme.processing import GeoplateformeProvider
 from geoplateforme.processing.tools.delete_stored_data import DeleteStoredDataAlgorithm
 from geoplateforme.toolbelt import PlgLogger
-from geoplateforme.toolbelt.dlg_processing_run import ProcessingRunDialog
 
 
 class StoredDataDetailsDialog(QDialog):

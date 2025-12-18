@@ -1,4 +1,4 @@
-import typing
+from typing import Any
 
 from qgis.PyQt.QtCore import QModelIndex, Qt, pyqtSignal
 from qgis.PyQt.QtGui import QStandardItemModel
@@ -31,7 +31,7 @@ class CheckStateModel(QStandardItemModel):
     def setData(
         self,
         index: QModelIndex,
-        value: typing.Any,
+        value: Any,
         role: int = Qt.ItemDataRole.DisplayRole,
     ) -> bool:
         """
