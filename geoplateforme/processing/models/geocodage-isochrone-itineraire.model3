@@ -122,7 +122,7 @@
         <Option name="ADDITIONAL_URL_PARAM" type="List">
           <Option type="Map">
             <Option value="2" name="source" type="int"/>
-            <Option value="" name="static_value" type="QString"/>
+            <Option name="static_value" type="invalid"/>
           </Option>
         </Option>
         <Option name="DIRECTION" type="List">
@@ -219,7 +219,7 @@
         <Option name="ADDITIONAL_URL_PARAM" type="List">
           <Option type="Map">
             <Option value="2" name="source" type="int"/>
-            <Option value="" name="static_value" type="QString"/>
+            <Option name="static_value" type="invalid"/>
           </Option>
         </Option>
         <Option name="DIRECTION" type="List">
@@ -316,7 +316,7 @@
         <Option name="ADDITIONAL_URL_PARAM_FIELD" type="List">
           <Option type="Map">
             <Option value="2" name="source" type="int"/>
-            <Option value="" name="static_value" type="QString"/>
+            <Option name="static_value" type="invalid"/>
           </Option>
         </Option>
         <Option name="CRS" type="List">
@@ -471,8 +471,8 @@
   <Option name="help"/>
   <Option value="Version2" name="internal_version" type="QString"/>
   <Option name="modelVariables"/>
-  <Option value="" name="model_group" type="QString"/>
-  <Option value="Modèle" name="model_name" type="QString"/>
+  <Option value="Modèles" name="model_group" type="QString"/>
+  <Option value="Chaîne de traitements GPF multi-plugins" name="model_name" type="QString"/>
   <Option value="" name="outputGroup" type="QString"/>
   <Option name="outputOrder"/>
   <Option name="parameterDefinitions" type="Map">
