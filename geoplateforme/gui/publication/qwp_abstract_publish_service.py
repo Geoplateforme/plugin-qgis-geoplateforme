@@ -176,7 +176,7 @@ class AbstractPublishServicePage(QWizardPage):
         exception: Optional[Exception],
         updated_metadata: Optional[Metadata] = None,
     ) -> None:
-        """Callback after metadata update.
+        """Callback after metadata create or update.
         Check if exception was raised and launch metadata publish
 
         :param exception: exception raised during creation
@@ -185,21 +185,28 @@ class AbstractPublishServicePage(QWizardPage):
         :type updated_metadata: Optional[Metadata], optional
         """
         if exception is None:
-            self._add_step_in_label(self.tr("Métadonnée mise à jour avec succès"))
-            self._add_step_in_label(self.tr("Publication métadonnée"))
-            self.publish_task = QgsTask.fromFunction(
-                "Publish metadata",
-                self._publish_metadata_task,
-                datastore_id=updated_metadata.datastore_id,
-                metadata=updated_metadata,
-                on_finished=self._on_metadata_published,
-            )
-            QgsApplication.taskManager().addTask(self.publish_task)
+            metadata = self.qwp_metadata_form.metadata
+            if len(metadata.endpoints) == 0:
+                self._add_step_in_label(self.tr("Métadonnée créée avec succès"))
+                self._add_step_in_label(self.tr("Publication métadonnée"))
+                self.publish_task = QgsTask.fromFunction(
+                    "Publish metadata",
+                    self._publish_metadata_task,
+                    datastore_id=updated_metadata.datastore_id,
+                    metadata=updated_metadata,
+                    on_finished=self._on_metadata_published,
+                )
+                QgsApplication.taskManager().addTask(self.publish_task)
+            else:
+                self._add_step_in_label(self.tr("Metadonnee mise a jour avec succes"))
+                self.metadata_published = True
 
         else:
             self.publish_error = True
             self._add_step_in_label(
-                self.tr("Erreur lors de la mise à jour de la métadonnée")
+                self.tr(
+                    "Erreur lors de la création ou de la mise à jour de la métadonnée"
+                )
             )
             self.tbw_errors.setVisible(True)
             self.tbw_errors.setText(str(exception))
