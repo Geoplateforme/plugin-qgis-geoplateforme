@@ -18,18 +18,15 @@ from qgis.PyQt.QtCore import QCoreApplication
 # Plugin
 from geoplateforme.api.configuration import ConfigurationRequestManager
 from geoplateforme.api.custom_exceptions import (
-    MetadataPublishException,
     MetadataUnpublishException,
     MetadataUpdateException,
     ReadConfigurationException,
     ReadMetadataException,
     ReadOfferingException,
     UnavailableConfigurationException,
-    UnavailableEndpointException,
     UnavailableMetadataFileException,
     UnavailableOfferingsException,
 )
-from geoplateforme.api.datastore import DatastoreRequestManager
 from geoplateforme.api.metadata import MetadataRequestManager
 from geoplateforme.api.offerings import OfferingsRequestManager, OfferingStatus
 from geoplateforme.processing.style.delete_configuration_style import (
@@ -289,18 +286,6 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                 )
 
             if metadata is not None:
-                try:
-                    # get the endpoint for the publication
-                    datastore_manager = DatastoreRequestManager()
-                    datastore = datastore_manager.get_datastore(datastore_id)
-                    metadata_endpoint_id = datastore.get_endpoint(data_type="METADATA")
-                except (UnavailableEndpointException,) as exc:
-                    raise QgsProcessingException(
-                        self.tr(
-                            "Erreur lors de la récupération du endpoint pour la publication de la métadata : {}"
-                        ).format(exc)
-                    ) from exc
-
                 if len(remaining_configurations) == 0:
                     feedback.pushInfo(
                         self.tr(
@@ -308,12 +293,13 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                         )
                     )
                     try:
-                        # Unpublish metadata
-                        manager.unpublish(
-                            datastore_id=datastore_id,
-                            endpoint_id=metadata_endpoint_id,
-                            metadata_file_identifier=metadata.file_identifier,
-                        )
+                        for endpoint in metadata.endpoints:
+                            # Unpublish metadata
+                            manager.unpublish(
+                                datastore_id=datastore_id,
+                                endpoint_id=endpoint["_id"],
+                                metadata_file_identifier=metadata.file_identifier,
+                            )
 
                     except MetadataUnpublishException as exc:
                         raise QgsProcessingException(
@@ -337,23 +323,4 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                                 "Erreur lors de la mise à jour de la metadata associée au dataset : {}"
                             ).format(exc)
                         ) from exc
-
-                    feedback.pushInfo(
-                        self.tr("Publication de la metadata associée au dataset")
-                    )
-                    try:
-                        # Publish metadata
-                        manager.publish(
-                            datastore_id=datastore_id,
-                            endpoint_id=metadata_endpoint_id,
-                            metadata_file_identifier=metadata.file_identifier,
-                        )
-
-                    except MetadataPublishException as exc:
-                        raise QgsProcessingException(
-                            self.tr(
-                                "Erreur lors de la publication de la metadata associée au dataset : {}"
-                            ).format(exc)
-                        ) from exc
-
         return {}

@@ -9,6 +9,7 @@ FORMS =	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_editio
 	../../gui/dashboard/wdg_service_details.ui \
 	../../gui/dashboard/wdg_upload_details.ui \
 	../../gui/dlg_authentication.ui \
+	../../gui/dlg_processing_run.ui \
 	../../gui/dlg_settings.ui \
 	../../gui/metadata/wdg_metadata_details.ui \
 	../../gui/permissions/dlg_permission_creation.ui \
@@ -59,8 +60,7 @@ FORMS =	../../gui/create_raster_tiles_from_wms_vector/qwp_tile_generation_editio
 	../../gui/wms_vector_publication/qwp_publication_form.ui \
 	../../gui/wms_vector_publication/qwp_table_style_selection.ui \
 	../../gui/wms_vector_publication/wdg_table_style_selection.ui \
-	../../gui/wmts_publication/qwp_publication_form.ui \
-	../../toolbelt/dlg_processing_run.ui
+	../../gui/wmts_publication/qwp_publication_form.ui
 
 SOURCES =	../../api/annexes.py \
 	../../api/catalogs.py \
@@ -95,10 +95,14 @@ SOURCES =	../../api/annexes.py \
 	../../gui/dashboard/wdg_service_details.py \
 	../../gui/dashboard/wdg_upload_details.py \
 	../../gui/dlg_authentication.py \
+	../../gui/dlg_processing_run.py \
 	../../gui/dlg_settings.py \
 	../../gui/formatting_text_edit.py \
 	../../gui/gui_commons.py \
+	../../gui/lne_ip_cidr_adress.py \
+	../../gui/lne_uuid.py \
 	../../gui/lne_validators.py \
+	../../gui/mdl_check_state_model.py \
 	../../gui/mdl_community.py \
 	../../gui/mdl_configuration.py \
 	../../gui/mdl_dataset.py \
@@ -142,6 +146,7 @@ SOURCES =	../../api/annexes.py \
 	../../gui/styles/wdg_mapbox_style_creation.py \
 	../../gui/styles/wdg_sld_selection.py \
 	../../gui/styles/wdg_wfs_style_creation.py \
+	../../gui/text_edit_feedback.py \
 	../../gui/tile_creation/qwp_tile_generation_edition.py \
 	../../gui/tile_creation/qwp_tile_generation_fields_selection.py \
 	../../gui/tile_creation/qwp_tile_generation_generalization.py \
@@ -171,6 +176,7 @@ SOURCES =	../../api/annexes.py \
 	../../gui/user_keys/wdg_user_key_ip_filter.py \
 	../../gui/user_keys/wdg_user_keys.py \
 	../../gui/wdg_publication_form.py \
+	../../gui/wdg_range_slider.py \
 	../../gui/wdg_text_edit.py \
 	../../gui/wfs_publication/qwp_publication_form.py \
 	../../gui/wfs_publication/qwp_table_relation.py \
@@ -222,17 +228,11 @@ SOURCES =	../../api/annexes.py \
 	../../processing/user_key/delete_user_key_accesses.py \
 	../../processing/user_key/update_key.py \
 	../../processing/utils.py \
-	../../toolbelt/check_state_model.py \
-	../../toolbelt/dlg_processing_run.py \
 	../../toolbelt/env_var_parser.py \
 	../../toolbelt/file_stats.py \
-	../../toolbelt/lne_ip_cidr_adress.py \
-	../../toolbelt/lne_uuid.py \
 	../../toolbelt/log_handler.py \
 	../../toolbelt/network_manager.py \
-	../../toolbelt/preferences.py \
-	../../toolbelt/range_slider.py \
-	../../toolbelt/text_edit_feedback.py
+	../../toolbelt/preferences.py
 
 TRANSLATIONS =	geoplateforme_en.ts \
 	geoplateforme_fr.ts
