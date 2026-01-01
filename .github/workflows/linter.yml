@@ -63,7 +63,7 @@ jobs:
           pyqt5_to_pyqt6.py --logfile pyqt6_checker.log ${{ env.PROJECT_FOLDER }}/
 
       - name: Upload script report if script fails
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: pyqt6-checker-error-report
