@@ -19,7 +19,7 @@
         <translation>Métadonnée créée avec succès</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="189"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="191"/>
         <source>Publication métadonnée</source>
         <translation>Publication métadonnée</translation>
     </message>
@@ -29,44 +29,49 @@
         <translation>Erreur lors de la création de la métadonnée</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="188"/>
-        <source>Métadonnée mise à jour avec succès</source>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="201"/>
+        <source>Metadonnee mise a jour avec succes</source>
         <translation>Métadonnée mise à jour avec succès</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="201"/>
-        <source>Erreur lors de la mise à jour de la métadonnée</source>
-        <translation>Erreur lors de la mise à jour de la métadonnée</translation>
-    </message>
-    <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="246"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="251"/>
         <source>Métadonnée publiée avec succès</source>
         <translation>Métadonnée publiée avec succès</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="250"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="255"/>
         <source>Erreur lors de la publication de la métadonnée</source>
         <translation>Erreur lors de la publication de la métadonnée</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="263"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="268"/>
         <source>Création de la métadonnée</source>
         <translation>Création de la métadonnée</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="274"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="279"/>
         <source>Mise à jour de la métadonnée</source>
         <translation>Mise à jour de la métadonnée</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="295"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="300"/>
         <source>Publication métadonnée en cours.</source>
         <translation>Publication métadonnée en cours.</translation>
     </message>
     <message>
-        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="295"/>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="300"/>
         <source>La publication de la métadonnée est en cours. Vous devez attendre la fin du traitement avant de fermer cette fenêtre.</source>
         <translation>La publication de la métadonnée est en cours. Vous devez attendre la fin du traitement avant de fermer cette fenêtre.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="190"/>
+        <source>Métadonnée créée avec succès</source>
+        <translation>Métadonnée créée avec succès</translation>
+    </message>
+    <message>
+        <location filename="../../gui/publication/qwp_abstract_publish_service.py" line="206"/>
+        <source>Erreur lors de la création ou de la mise à jour de la métadonnée</source>
+        <translation>Erreur lors de la création ou de la mise à jour de la métadonnée</translation>
     </message>
 </context>
 <context>
@@ -1210,7 +1215,7 @@ Les éléments suivants seront supprimés:</translation>
         <translation>Erreur lors de la récupération des autres configuration associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../processing/tools/delete_offering.py" line="305"/>
+        <location filename="../../processing/tools/delete_offering.py" line="293"/>
         <source>Aucune configuration disponible dans le dataset, dépublication de la métadata</source>
         <translation>Aucune configuration disponible dans le dataset, dépublication de la métadata</translation>
     </message>
@@ -1220,7 +1225,7 @@ Les éléments suivants seront supprimés:</translation>
         <translation>Erreur lors de la récupération des metadatas associées au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../processing/tools/delete_offering.py" line="319"/>
+        <location filename="../../processing/tools/delete_offering.py" line="308"/>
         <source>Erreur lors de la dépublication de la metadata associée au dataset : {}</source>
         <translation>Erreur lors de la dépublication de la metadata associée au dataset : {}</translation>
     </message>
@@ -1245,29 +1250,14 @@ Les éléments suivants seront supprimés:</translation>
         <translation>Erreur lors de la lecture de la metadata associée au dataset : {}</translation>
     </message>
     <message>
-        <location filename="../../processing/tools/delete_offering.py" line="298"/>
-        <source>Erreur lors de la récupération du endpoint pour la publication de la métadata : {}</source>
-        <translation>Erreur lors de la récupération du endpoint pour la publication de la métadata : {}</translation>
-    </message>
-    <message>
-        <location filename="../../processing/tools/delete_offering.py" line="325"/>
+        <location filename="../../processing/tools/delete_offering.py" line="314"/>
         <source>Mise à jour de la metadata associée au dataset</source>
         <translation>Mise à jour de la metadata associée au dataset</translation>
     </message>
     <message>
-        <location filename="../../processing/tools/delete_offering.py" line="335"/>
+        <location filename="../../processing/tools/delete_offering.py" line="324"/>
         <source>Erreur lors de la mise à jour de la metadata associée au dataset : {}</source>
         <translation>Erreur lors de la mise à jour de la metadata associée au dataset : {}</translation>
-    </message>
-    <message>
-        <location filename="../../processing/tools/delete_offering.py" line="341"/>
-        <source>Publication de la metadata associée au dataset</source>
-        <translation>Publication de la metadata associée au dataset</translation>
-    </message>
-    <message>
-        <location filename="../../processing/tools/delete_offering.py" line="353"/>
-        <source>Erreur lors de la publication de la metadata associée au dataset : {}</source>
-        <translation>Erreur lors de la publication de la metadata associée au dataset : {}</translation>
     </message>
 </context>
 <context>
@@ -1679,7 +1669,7 @@ Les éléments suivants seront supprimés:</translation>
 <context>
     <name>GeoplateformeProvider</name>
     <message>
-        <location filename="../../processing/provider.py" line="141"/>
+        <location filename="../../processing/provider.py" line="154"/>
         <source>Geoplateforme - Tools</source>
         <translation>Outil géoplateforme</translation>
     </message>
@@ -1959,7 +1949,7 @@ Les éléments suivants seront supprimés:</translation>
 <context>
     <name>IpCIDRLineEdit</name>
     <message>
-        <location filename="../../toolbelt/lne_ip_cidr_adress.py" line="30"/>
+        <location filename="../../gui/lne_ip_cidr_adress.py" line="30"/>
         <source>Cette plage d’IP doit être au format CIDR (exemples: 192.168.1.1/32, 192.168.0.1/24)</source>
         <translation>Cette plage d’IP doit être au format CIDR (exemples: 192.168.1.1/32, 192.168.0.1/24)</translation>
     </message>
@@ -2082,37 +2072,37 @@ Les éléments suivants seront supprimés:</translation>
 <context>
     <name>NetworkRequestsManager</name>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="144"/>
+        <location filename="../../toolbelt/network_manager.py" line="143"/>
         <source>Something went wrong during request preparation: {}</source>
         <translation>Quelque chose s&apos;est mal passé lors de la préparation de la demande: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="307"/>
+        <location filename="../../toolbelt/network_manager.py" line="306"/>
         <source>GET request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>Obtenir une demande sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="365"/>
+        <location filename="../../toolbelt/network_manager.py" line="364"/>
         <source>DELETE request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>Supprimer la demande sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="419"/>
+        <location filename="../../toolbelt/network_manager.py" line="418"/>
         <source>POST request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>La demande de publication sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="474"/>
+        <location filename="../../toolbelt/network_manager.py" line="473"/>
         <source>PUT request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>Put la demande sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="882"/>
+        <location filename="../../toolbelt/network_manager.py" line="881"/>
         <source>PATCH request on URL {} (with auth config {}) failed. Trace: {}</source>
         <translation>La demande de patch sur URL {} (avec Auth config {}) a échoué. Tracer: {}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/network_manager.py" line="722"/>
+        <location filename="../../toolbelt/network_manager.py" line="721"/>
         <source>Uploading {}/{} bytes</source>
         <translation>Chargement {}/{} bytes</translation>
     </message>
@@ -2420,32 +2410,32 @@ Ce type est adapté pour une utilisation dans un logiciel SIG ou tout outil néc
 <context>
     <name>ProcessingRunDialog</name>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.ui" line="14"/>
+        <location filename="../../gui/dlg_processing_run.ui" line="14"/>
         <source>Processing run</source>
         <translation>Traitement en cours</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.ui" line="23"/>
+        <location filename="../../gui/dlg_processing_run.ui" line="23"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;title&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;title&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="162"/>
+        <location filename="../../gui/dlg_processing_run.py" line="162"/>
         <source>Can&apos;t run {0}</source>
         <translation>Ne peut pas exécuter {0}</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="163"/>
+        <location filename="../../gui/dlg_processing_run.py" line="163"/>
         <source>Invalid parameters : {0}.</source>
         <translation>Paramètres invalides : {0}.</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="78"/>
+        <location filename="../../gui/dlg_processing_run.py" line="78"/>
         <source>Cancel processing</source>
         <translation>Annuler le traitement</translation>
     </message>
     <message>
-        <location filename="../../toolbelt/dlg_processing_run.py" line="78"/>
+        <location filename="../../gui/dlg_processing_run.py" line="78"/>
         <source>Do you want to cancel processing {} ?</source>
         <translation>Voulez vous annuler le traitement {} ?</translation>
     </message>
@@ -3302,36 +3292,36 @@ Ce type est adapté pour une utilisation dans un logiciel SIG ou tout outil néc
         <translation>Couche</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="111"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="112"/>
         <source>Création .sld</source>
         <translation>Création .sld</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="70"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="71"/>
         <source>Veuillez sélectionner une couche pour la création du sld.</source>
         <translation>Veuillez sélectionner une couche pour la création du sld.</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="111"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="112"/>
         <source>Le fichier .sld n&apos;a pas pu être exporté depuis la couche vectorielle:
  {}</source>
         <translation>Le fichier .sld n&apos;a pas pu être exporté depuis la couche vectorielle:
  {}</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="149"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="150"/>
         <source>Conversion .sld</source>
         <translation>Conversion .sld</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="149"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="150"/>
         <source>Le fichier .sld n&apos;a pas pu être converti au format 1.0.0:
  {}</source>
         <translation>Le fichier .sld n&apos;a pas pu être converti au format 1.0.0:
  {}</translation>
     </message>
     <message>
-        <location filename="../../gui/styles/wdg_sld_selection.py" line="140"/>
+        <location filename="../../gui/styles/wdg_sld_selection.py" line="141"/>
         <source>Downgrade .sld for layer {}</source>
         <translation>Downgrade du .sld pour la couche {}</translation>
     </message>
@@ -4090,7 +4080,7 @@ Vous pouvez fermer la fenêtre pendant la génération.</translation>
 <context>
     <name>UUIDLineEdit</name>
     <message>
-        <location filename="../../toolbelt/lne_uuid.py" line="26"/>
+        <location filename="../../gui/lne_uuid.py" line="26"/>
         <source>La valeur doit être un UUID xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</source>
         <translation>La valeur doit être un UUID xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</translation>
     </message>
@@ -4306,74 +4296,74 @@ Vous pouvez fermer la fenêtre pendant la génération.</translation>
         <translation>Nom du jeu de donnée:</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="132"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="133"/>
         <source>No name defined.</source>
         <translation>Aucun nom défini.</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="132"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="133"/>
         <source>Please define data name</source>
         <translation>Définir le nom de la donnée</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="138"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="139"/>
         <source>No SRS defined.</source>
         <translation>Aucun CRS défini.</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="138"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="139"/>
         <source>Please define SRS</source>
         <translation>Définir le CRS</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="195"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="196"/>
         <source>Invalid layers:
 </source>
         <translation>Couches non valides:
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="197"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="198"/>
         <source>- CRS mismatch
 </source>
         <translation>- incohérence de CRS
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="199"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="200"/>
         <source>- invalid layer name
 </source>
         <translation>- Nom de la couche non valide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="201"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="202"/>
         <source>- invalid file name
 </source>
         <translation>- nom de fichier invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="203"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="204"/>
         <source>- invalid field name
 </source>
         <translation>- nom d&apos;attribut invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="205"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="206"/>
         <source>- invalid layer type
 </source>
         <translation>- Type de couche non valide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="211"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="212"/>
         <source>Invalid layers list are available in details.</source>
         <translation>Liste des couches invalides disponible dans les détails.</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="213"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="214"/>
         <source>Invalid layers</source>
         <translation>Couches invalides</translation>
     </message>
@@ -4383,12 +4373,12 @@ Vous pouvez fermer la fenêtre pendant la génération.</translation>
         <translation>Nom de la donnée</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="124"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="125"/>
         <source>No dataset name defined.</source>
         <translation>Aucun nom de jeu de données.</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="124"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="125"/>
         <source>Please define dataset name</source>
         <translation>Définir le nom du jeu de donnée</translation>
     </message>
@@ -4400,14 +4390,14 @@ Values separated by ,</source>
 Valeurs séparées par ,</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="207"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="208"/>
         <source>- invalid geometry
 </source>
         <translation>- géométrie invalide
 </translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="209"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="210"/>
         <source>- no feature available
 </source>
         <translation>- aucune géométrie de disponible
@@ -4419,7 +4409,7 @@ Valeurs séparées par ,</translation>
         <translation>Validation de la donnée avant envoi</translation>
     </message>
     <message>
-        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="177"/>
+        <location filename="../../gui/upload_creation/wdg_upload_creation.py" line="178"/>
         <source>Check layers</source>
         <translation>Validation des couches</translation>
     </message>
