@@ -143,8 +143,12 @@ class StoredDataDetailsDialog(QDialog):
 
         status = stored_data.status
 
-        # Add delete action for GENERATED or UNSTABLE stored data
-        if status == StoredDataStatus.GENERATED or status == StoredDataStatus.UNSTABLE:
+        # Add delete action for GENERATED, CREATED or UNSTABLE stored data
+        if (
+            status == StoredDataStatus.GENERATED
+            or status == StoredDataStatus.CREATED
+            or status == StoredDataStatus.UNSTABLE
+        ):
             # Data delete
             delete_action = QAction(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg")),
