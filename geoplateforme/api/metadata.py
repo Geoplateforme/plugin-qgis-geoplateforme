@@ -989,7 +989,7 @@ class MetadataRequestManager:
                         for url in endpoint["urls"]:
                             if url["type"] == "TMS":
                                 # Warning, add /1.0.0 to patch url stored in Entrepot (see : https://github.com/Geoplateforme/plugin-qgis-geoplateforme/issues/179)
-                                layer_url = url["url"] + "/1.0.0"
+                                layer_url = url["url"].rstrip("/") + "/1.0.0"
                                 break
                     # For WFS we need to add one access for each relation
                     layer_name = offering.layer_name
@@ -1043,28 +1043,36 @@ class MetadataRequestManager:
                                 if "keywords" not in relation:
                                     relation["keywords"] = []
                                 if metadata.fields.topics is not None:
-                                    relation["keywords"] += metadata.fields.topics
+                                    for topic in metadata.fields.topics:
+                                        if topic not in relation["keywords"]:
+                                            relation["keywords"].append(topic)
                                 if metadata.fields.inspire_keywords is not None:
-                                    relation["keywords"] += (
-                                        metadata.fields.inspire_keywords
-                                    )
+                                    for (
+                                        inspire_keyword
+                                    ) in metadata.fields.inspire_keywords:
+                                        if inspire_keyword not in relation["keywords"]:
+                                            relation["keywords"].append(inspire_keyword)
                                 if metadata.fields.free_keywords is not None:
-                                    relation["keywords"] += (
-                                        metadata.fields.free_keywords
-                                    )
+                                    for free_keyword in metadata.fields.free_keywords:
+                                        if free_keyword not in relation["keywords"]:
+                                            relation["keywords"].append(free_keyword)
                     else:
                         if conf.type_infos is None:
                             conf._type_infos = {}
                         if "keywords" not in conf.type_infos:
                             conf.type_infos["keywords"] = []
                         if metadata.fields.topics is not None:
-                            conf.type_infos["keywords"] += metadata.fields.topics
+                            for topic in metadata.fields.topics:
+                                if topic not in conf.type_infos["keywords"]:
+                                    conf.type_infos["keywords"].append(topic)
                         if metadata.fields.inspire_keywords is not None:
-                            conf.type_infos["keywords"] += (
-                                metadata.fields.inspire_keywords
-                            )
+                            for inspire_keyword in metadata.fields.inspire_keywords:
+                                if inspire_keyword not in conf.type_infos["keywords"]:
+                                    conf.type_infos["keywords"].append(inspire_keyword)
                         if metadata.fields.free_keywords is not None:
-                            conf.type_infos["keywords"] += metadata.fields.free_keywords
+                            for free_keyword in metadata.fields.free_keywords:
+                                if free_keyword not in conf.type_infos["keywords"]:
+                                    conf.type_infos["keywords"].append(free_keyword)
                     conf._metadata = [
                         ConfigurationMetadata(
                             format="application/xml",
