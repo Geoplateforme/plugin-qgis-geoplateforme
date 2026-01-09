@@ -12,6 +12,12 @@ Unreleased
 
 -->
 
+## 1.1.1 - 2026-01-09
+
+* fix(metadata): Fix metadata publication process by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/491>
+* fix(stored_data): add delete button on raster tiles stored data with CREATED status by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/501>
+* fix(metadata): fix trailling '/' in TMS URL and avoid duplicate keywords in service configuration by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/503>
+
 ## 1.1.0 - 2025-12-18
 
 * fix(TMS): add style url in metadata for TMS configuration by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/486>
