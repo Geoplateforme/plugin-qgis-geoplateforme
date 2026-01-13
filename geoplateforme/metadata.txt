@@ -25,4 +25,4 @@ supportsQt6=True
 version=1.2.0-DEV
 changelog=
 
-plugin_dependencies=French Locator Filter==1.4.1,GPF - Isochrone Isodistance Itinéraire==1.0.0,BD TOPO® Extractor==1.3.1,QGIRéférentiels==1.3.6
+plugin_dependencies=French Locator Filter==1.4.1,GPF - Isochrone Isodistance Itinéraire==1.0.0,BD TOPO® Extractor==2.0.1,QGIRéférentiels==1.3.6
