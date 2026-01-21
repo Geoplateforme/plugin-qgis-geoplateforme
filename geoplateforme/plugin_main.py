@@ -71,7 +71,7 @@ class GeoplateformePlugin:
         self.action_settings = None
         self.action_report_issue = None
 
-        self.toolbar = None
+        self.gpf_toolbar: Optional[QToolBar] = None
         self.mw_dashboard = None
         self.dlg_user_keys = None
         self.dlg_storage_report = None
@@ -190,12 +190,13 @@ class GeoplateformePlugin:
         self.iface.addPluginToMenu(__title__, self.action_report_issue)
 
         # -- Toolbar
-        self.toolbar = QToolBar("GeoplateformeToolbar")
-        self.iface.addToolBar(self.toolbar)
-        self.toolbar.addAction(self.action_authentication)
-        self.toolbar.addAction(self.action_dashboard)
-        self.toolbar.addAction(self.action_user_keys)
-        self.toolbar.addAction(self.action_storage_report)
+        self.gpf_toolbar: QToolBar = self.iface.addToolBar(name=f"{__title__}")
+        self.gpf_toolbar.setObjectName("GeoplateformeToolbar")
+
+        self.gpf_toolbar.addAction(self.action_authentication)
+        self.gpf_toolbar.addAction(self.action_dashboard)
+        self.gpf_toolbar.addAction(self.action_user_keys)
+        self.gpf_toolbar.addAction(self.action_storage_report)
         self._update_actions_availability()
 
         # -- Provider
@@ -292,7 +293,7 @@ class GeoplateformePlugin:
             self.iface.removePluginMenu(__title__, action)
 
         # remove toolbar :
-        self.toolbar.deleteLater()
+        self.gpf_toolbar.deleteLater()
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
