@@ -1,0 +1,82 @@
+---
+name: 🚀 Specify an evolution
+description: Provide the necessary information to create or improve a feature for the Géoplateforme plugin
+labels: ["nouvelle fonctionnalité","amélioration"]
+projects: ["IGNF/4"]
+type: "Feature"
+body:
+  - type: textarea
+    id: job-to-be-done
+    attributes:
+      label: 📝 Job to be done (JTBD)
+      description: |
+        Describe the generic task that the user is trying to accomplish, regardless of the tool.
+      placeholder: |
+        Example: Uploading my raster data to the Géoplateforme
+        
+  - type: textarea
+    id: user-story
+    attributes:
+      label: 🎯 User Story
+      description: |
+        Describe precisely how the new feature behaves.
+      placeholder: |
+        - As a [user type/persona]
+        - I want to [concrete action to take]
+        - In order to [expected value/benefit]
+    validations:
+      required: true
+      
+  - type: textarea
+    id: design
+    attributes:
+      label: 🎨 Design
+      description: |
+        Describe the design elements necessary for the development of the functionality.
+      placeholder: |
+        - Composition
+        - Behavior
+        - Content
+        - Location
+        - Breakpoints
+        
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: ✅ Acceptance criteria
+      description: >
+        Describe the observable conditions that allow for the identification of the correct implementation of the US.
+      placeholder: |
+        - [ ] Example : CSV/Excel file import possible
+        - [ ] Example : The points appear correctly on the map
+        - [ ] Example : The error message is displayed if the format is not compliant
+    validations:
+      required: true
+      
+  - type: textarea
+    id: links
+    attributes:
+      label: 🔗 Links
+      description: |
+        Provide links that are useful for development.
+      placeholder: |
+        - Figma model: [link]
+        - Test data: [link]
+        - Supplementary documentation: [link]
+        
+  - type: textarea
+    id: expected-impact
+    attributes:
+      label: 📊 Expected impact
+      description: >
+        Describe what value this brings to the user, and how to measure it.
+      placeholder: >
+        - User value: [Example: Facilitating decision-making => the agent saves time and improves the reliability of their analyses]
+        - Measurement: [Example: % of successful imports without errors, average processing time saved]
+        
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 🔧 Additional context
+      description: |
+        To be completed by the technical team to ensure that the US is feasible.
