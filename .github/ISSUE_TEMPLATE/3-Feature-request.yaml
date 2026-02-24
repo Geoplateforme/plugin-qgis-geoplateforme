@@ -12,20 +12,20 @@ body:
           Describe clearly and concisely the need you are facing.
     validations:
         required: true
-        
+
   - type: textarea
     id: possible-solution
     attributes:
         label: The solution you would like
         description: |
             Describe precisely how you would like the application or new feature to behave to meet your need.
-            
+
   - type: textarea
     id: alternatives
     attributes:
       label: The alternatives you considered
       description: If possible, describe the alternative solutions you have considered. This could include other tools or a different feature.
-      
+
   - type: textarea
     id: additional-context
     attributes:

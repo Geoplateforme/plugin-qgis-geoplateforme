@@ -13,7 +13,7 @@ body:
         Describe the generic task that the user is trying to accomplish, regardless of the tool.
       placeholder: |
         Example: Uploading my raster data to the Géoplateforme
-        
+
   - type: textarea
     id: user-story
     attributes:
@@ -26,7 +26,7 @@ body:
         - In order to [expected value/benefit]
     validations:
       required: true
-      
+
   - type: textarea
     id: design
     attributes:
@@ -39,7 +39,7 @@ body:
         - Content
         - Location
         - Breakpoints
-        
+
   - type: textarea
     id: acceptance-criteria
     attributes:
@@ -52,7 +52,7 @@ body:
         - [ ] Example : The error message is displayed if the format is not compliant
     validations:
       required: true
-      
+
   - type: textarea
     id: links
     attributes:
@@ -63,7 +63,7 @@ body:
         - Figma model: [link]
         - Test data: [link]
         - Supplementary documentation: [link]
-        
+
   - type: textarea
     id: expected-impact
     attributes:
@@ -73,7 +73,7 @@ body:
       placeholder: >
         - User value: [Example: Facilitating decision-making => the agent saves time and improves the reliability of their analyses]
         - Measurement: [Example: % of successful imports without errors, average processing time saved]
-        
+
   - type: textarea
     id: additional-context
     attributes:
