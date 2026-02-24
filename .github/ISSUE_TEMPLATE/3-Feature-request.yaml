@@ -1,0 +1,34 @@
+name: 💡 Feature request
+description: Suggest an idea for an improvement or new feature for the Géoplateforme plugin
+labels: ["amélioration","nouvelle fonctionnalité"]
+projects: ["IGNF/4"]
+type: "Feature"
+body:
+  - type: textarea
+    id: need-description
+    attributes:
+        label: The need you are experiencing
+        description: |
+          Describe clearly and concisely the need you are facing.
+    validations:
+        required: true
+
+  - type: textarea
+    id: possible-solution
+    attributes:
+        label: The solution you would like
+        description: |
+            Describe precisely how you would like the application or new feature to behave to meet your need.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: The alternatives you considered
+      description: If possible, describe the alternative solutions you have considered. This could include other tools or a different feature.
+
+  - type: textarea
+    id: additional-context
+    attributes:
+        label: Additional context
+        description: |
+          Feel free to add any contextual information that you think will help the team better understand your request: screenshots, datasets, etc.
