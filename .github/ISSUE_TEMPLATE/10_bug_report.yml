@@ -13,13 +13,13 @@ body:
         If possible, include screenshots if they help to explain the issue.
     validations:
       required: true
-      
+
   - type: textarea
     id: expected-behaviour
     attributes:
       label: Expected behaviour
       description: A clear and concise description of the behavior you expect to encounter.
-      
+
   - type: textarea
     id: how-to-reproduce
     attributes:
@@ -36,7 +36,7 @@ body:
         Add pictures if needed.
     validations:
       required: true
-      
+
   - type: textarea
     id: possible-solution
     attributes:
@@ -44,7 +44,7 @@ body:
       description: |
         Optional : only if you have suggestions for how to correct the bug.
         Feel free to create a Pull Request to get a more direct response.
-        
+
   - type: textarea
     id: about-info
     attributes:
