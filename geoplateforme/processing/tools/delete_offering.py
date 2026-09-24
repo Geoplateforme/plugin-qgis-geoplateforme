@@ -117,11 +117,12 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                 self.tr("Erreur lors de la récupération de l'offre : {}").format(exc)
             ) from exc
 
-        dataset_name: Optional[str] = offering.configuration.tags.get(
-            "datasheet_name", None
-        )
+        dataset_name: Optional[str] = None
+        configuration = offering.configuration
+        if configuration is not None and configuration._tags is not None:
+            dataset_name = configuration.tags.get("datasheet_name", None)
 
-        if offering.status in (OfferingStatus.UNPUBLISHED, OfferingStatus.UNPUBLISHING):
+        if offering.status == OfferingStatus.UNPUBLISHED:
             feedback.pushInfo(self.tr("Suppression définitive de l'offre"))
             try:
                 manager_offer.delete_offering(datastore_id, offering_id)
@@ -149,6 +150,15 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                     datastore=datastore_id, offering=offering_id
                 )
                 if offering.status == OfferingStatus.UNPUBLISHED:
+                    feedback.pushInfo(self.tr("Suppression définitive de l'offre"))
+                    try:
+                        manager_offer.delete_offering(datastore_id, offering_id)
+                    except UnavailableOfferingsException as exc:
+                        raise QgsProcessingException(
+                            self.tr(
+                                "Erreur lors de la suppression définitive de l'offre : {}"
+                            ).format(exc)
+                        ) from exc
                     break
                 if offering.status != OfferingStatus.UNPUBLISHING:
                     raise QgsProcessingException(
@@ -159,16 +169,6 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
             except ReadOfferingException:
                 break
             sleep(1)
-
-        feedback.pushInfo(self.tr("Suppression définitive de l'offre"))
-        try:
-            manager_offer.delete_offering(datastore_id, offering_id)
-        except UnavailableOfferingsException as exc:
-            raise QgsProcessingException(
-                self.tr(
-                    "Erreur lors de la suppression définitive de l'offre : {}"
-                ).format(exc)
-            ) from exc
 
         # Check if configuration is associated to another offering
         try:
