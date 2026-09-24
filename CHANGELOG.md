@@ -12,6 +12,10 @@ Unreleased
 
 -->
 
+## 1.2.0 - 2026-09-24
+
+* feat(offering): add UNPUBLISHED offering lifecycle and two-step delete to keep offering IDs, permissions and statistics until final deletion
+
 ## 1.1.1 - 2026-01-09
 
 * fix(metadata): Fix metadata publication process by @Ducarouge in <https://github.com/Geoplateforme/plugin-qgis-geoplateforme/pull/491>

@@ -169,8 +169,12 @@ class ServiceDetailsWidget(QWidget):
         # Remove all available action
         self.clear_layout(self.action_layout)
 
-        # Add delete action for PUBLISHED or UNSTABLE offering
-        if status == OfferingStatus.PUBLISHED or status == OfferingStatus.UNSTABLE:
+        # Add delete action for published, unpublished or unstable offering
+        if (
+            status == OfferingStatus.PUBLISHED
+            or status == OfferingStatus.UNSTABLE
+            or status == OfferingStatus.UNPUBLISHED
+        ):
             # Data delete
             delete_action = QAction(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/icons/Supprimer.svg")),
@@ -343,6 +347,8 @@ class ServiceDetailsWidget(QWidget):
                 " You will find above technical information about processing executed and encountered "
                 "problem."
             )
+        elif status == OfferingStatus.UNPUBLISHED:
+            result = self.tr("Offre dépubliée.")
         elif status == OfferingStatus.UNSTABLE:
             result = self.tr("Publication instable.")
         else:
@@ -366,6 +372,10 @@ class ServiceDetailsWidget(QWidget):
             )
         elif status == OfferingStatus.MODIFYING:
             result = QIcon(QgsApplication.iconPath("mTaskRunning.svg")).pixmap(
+                QSize(16, 16)
+            )
+        elif status == OfferingStatus.UNPUBLISHED:
+            result = QIcon(QgsApplication.iconPath("mIconWarning.svg")).pixmap(
                 QSize(16, 16)
             )
         elif status == OfferingStatus.UNSTABLE:
