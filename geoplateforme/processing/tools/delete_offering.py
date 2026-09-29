@@ -120,9 +120,12 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
         configuration = offering.configuration
         dataset_name: Optional[str] = None
         if configuration is not None:
-            tags = getattr(configuration, "tags", None)
-            if tags is not None:
-                dataset_name = tags.get("datasheet_name", None)
+            if configuration._tags is not None:
+                dataset_name = configuration._tags.get("datasheet_name", None)
+            elif offering.status != OfferingStatus.UNPUBLISHED:
+                dataset_name = configuration.tags.get("datasheet_name", None)
+
+        should_delete_definitively = offering.status == OfferingStatus.UNPUBLISHED
 
         if offering.status not in (
             OfferingStatus.UNPUBLISHED,
@@ -147,6 +150,7 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                     datastore=datastore_id, offering=offering_id
                 )
                 if offering.status == OfferingStatus.UNPUBLISHED:
+                    should_delete_definitively = True
                     break
                 if offering.status != OfferingStatus.UNPUBLISHING:
                     raise QgsProcessingException(
@@ -164,32 +168,35 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
                 ).format(offering_id)
             )
 
-        feedback.pushInfo(self.tr("Suppression définitive de l'offre"))
-        try:
-            manager_offer.delete_offering(datastore_id, offering_id)
-        except UnavailableOfferingsException as exc:
-            raise QgsProcessingException(
-                self.tr(
-                    "Erreur lors de la suppression définitive de l'offre : {}"
-                ).format(exc)
-            ) from exc
-
-        for _ in range(300):
-            if feedback.isCanceled():
-                raise QgsProcessingException(
-                    self.tr("La suppression de l'offre a été annulée.")
-                )
+        if should_delete_definitively:
+            feedback.pushInfo(self.tr("Suppression définitive de l'offre"))
             try:
-                manager_offer.get_offering(datastore=datastore_id, offering=offering_id)
-            except ReadOfferingException:
-                break
-            sleep(1)
-        else:
-            raise QgsProcessingException(
-                self.tr(
-                    "La suppression définitive de l'offre {} n'a pas abouti dans le délai autorisé."
-                ).format(offering_id)
-            )
+                manager_offer.delete_offering(datastore_id, offering_id)
+            except UnavailableOfferingsException as exc:
+                raise QgsProcessingException(
+                    self.tr(
+                        "Erreur lors de la suppression définitive de l'offre : {}"
+                    ).format(exc)
+                ) from exc
+
+            for _ in range(300):
+                if feedback.isCanceled():
+                    raise QgsProcessingException(
+                        self.tr("La suppression de l'offre a été annulée.")
+                    )
+                try:
+                    manager_offer.get_offering(
+                        datastore=datastore_id, offering=offering_id
+                    )
+                except ReadOfferingException:
+                    break
+                sleep(1)
+            else:
+                raise QgsProcessingException(
+                    self.tr(
+                        "La suppression définitive de l'offre {} n'a pas abouti dans le délai autorisé."
+                    ).format(offering_id)
+                )
 
         # Check if configuration is associated to another offering
         try:
