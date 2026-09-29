@@ -169,8 +169,9 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
             manager_offer.delete_offering(datastore_id, offering_id)
         except UnavailableOfferingsException as exc:
             raise QgsProcessingException(
-                self.tr("Erreur lors de la suppression définitive de l'offre : {}")
-                .format(exc)
+                self.tr(
+                    "Erreur lors de la suppression définitive de l'offre : {}"
+                ).format(exc)
             ) from exc
 
         for _ in range(300):
