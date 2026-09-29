@@ -120,8 +120,9 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
         configuration = offering.configuration
         dataset_name: Optional[str] = None
         if configuration is not None:
-            if configuration._tags is not None:
-                dataset_name = configuration._tags.get("datasheet_name", None)
+            tags = getattr(configuration, "_tags", None)
+            if tags is not None:
+                dataset_name = tags.get("datasheet_name", None)
             elif offering.status != OfferingStatus.UNPUBLISHED:
                 dataset_name = configuration.tags.get("datasheet_name", None)
 
@@ -222,7 +223,7 @@ class DeleteOfferingAlgorithm(QgsProcessingAlgorithm):
 
             # Suppression des styles associés
             config_style = None
-            extra = offering.configuration.extra
+            extra = getattr(offering.configuration, "_extra", None)
             if extra is not None:
                 config_style = extra.get("styles", None)
                 if config_style:
