@@ -307,7 +307,7 @@ class ProcessingRequestManager:
         nb_value = self._get_nb_available_logs(datastore_id, exec_id)
         nb_request = math.ceil(nb_value / self.MAX_LIMIT)
         result = ""
-        for page in range(0, nb_request):
+        for page in range(nb_request):
             result += self._get_execution_logs(
                 datastore_id, exec_id, page + 1, self.MAX_LIMIT
             )

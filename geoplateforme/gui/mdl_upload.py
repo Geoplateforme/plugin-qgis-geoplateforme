@@ -49,7 +49,7 @@ class UploadListModel(QStandardItemModel):
         :rtype: int
         """
         result = -1
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             if (
                 self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole)._id
                 == upload_id

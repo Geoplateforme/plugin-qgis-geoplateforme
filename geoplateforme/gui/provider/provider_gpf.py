@@ -13,7 +13,7 @@ class ProviderGPF(QgsSourceSelectProvider):
     """
 
     def __init__(self, iface):
-        super(ProviderGPF, self).__init__()
+        super().__init__()
 
         self.iface = iface
         self.icon = QIcon(str(DIR_PLUGIN_ROOT) + "/resources/images/logo_IGN.png")

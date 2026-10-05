@@ -149,9 +149,7 @@ class AddConfigurationStyleAlgorithm(QgsProcessingAlgorithm):
             if len(style_files) != len(layer_style_names):
                 raise QgsProcessingException(
                     self.tr(
-                        "Il est nécessaire d'avoir autant de nom de couche que de fichier de style. Fournis {}, attendu {} ".format(
-                            len(layer_style_names), len(style_files)
-                        )
+                        f"Il est nécessaire d'avoir autant de nom de couche que de fichier de style. Fournis {len(layer_style_names)}, attendu {len(style_files)} "
                     )
                 )
 

@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 Main plugin module.
@@ -159,9 +159,7 @@ class GeoplateformePlugin:
             self.iface.mainWindow(),
         )
         self.action_settings.triggered.connect(
-            lambda: self.iface.showOptionsDialog(
-                currentPage="mOptionsPage{}".format(__title__)
-            )
+            lambda: self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
         )
 
         # Issue report
@@ -226,9 +224,7 @@ class GeoplateformePlugin:
         for plugin in GPF_PLUGIN_LIST:
             if plugin not in plugins:
                 self.log(
-                    "Plugin {} not available. Can't add actions for plugin.".format(
-                        plugin
-                    ),
+                    f"Plugin {plugin} not available. Can't add actions for plugin.",
                     log_level=Qgis.MessageLevel.Info,
                     push=False,
                 )
@@ -239,9 +235,7 @@ class GeoplateformePlugin:
                 )
                 if not callable(actions_list_fct):
                     self.log(
-                        "Method create_gpf_plugins_actions not available for plugin {}. Can't add actions for plugin.".format(
-                            plugin
-                        ),
+                        f"Method create_gpf_plugins_actions not available for plugin {plugin}. Can't add actions for plugin.",
                         log_level=Qgis.MessageLevel.Info,
                         push=False,
                     )
@@ -263,17 +257,13 @@ class GeoplateformePlugin:
                                 self.iface.addPluginToMenu(__title__, action)
                             else:
                                 self.log(
-                                    "Only QAction should be returned by `create_gpf_plugins_actions` for plugin : {}.".format(
-                                        plugin
-                                    ),
+                                    f"Only QAction should be returned by `create_gpf_plugins_actions` for plugin : {plugin}.",
                                     log_level=Qgis.MessageLevel.Info,
                                     push=False,
                                 )
                     except Exception as exc:
                         self.log(
-                            "Exception raised by external plugin {} when calling `create_gpf_plugins_actions` : {}.".format(
-                                plugin, exc
-                            ),
+                            f"Exception raised by external plugin {plugin} when calling `create_gpf_plugins_actions` : {exc}.",
                             log_level=Qgis.MessageLevel.Info,
                             push=False,
                         )

@@ -360,11 +360,7 @@ class ServiceDetailsWidget(QWidget):
         Returns: QPixmap
 
         """
-        if status == OfferingStatus.PUBLISHING:
-            result = QIcon(QgsApplication.iconPath("mTaskRunning.svg")).pixmap(
-                QSize(16, 16)
-            )
-        elif status == OfferingStatus.MODIFYING:
+        if status == OfferingStatus.PUBLISHING or status == OfferingStatus.MODIFYING:
             result = QIcon(QgsApplication.iconPath("mTaskRunning.svg")).pixmap(
                 QSize(16, 16)
             )
