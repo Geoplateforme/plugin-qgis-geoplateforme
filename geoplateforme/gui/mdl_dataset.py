@@ -42,7 +42,7 @@ class DatasetListModel(QStandardItemModel):
         :rtype: int
         """
         result = -1
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             if self.data(self.index(row, self.NAME_COL)) == dataset_name:
                 result = row
                 break

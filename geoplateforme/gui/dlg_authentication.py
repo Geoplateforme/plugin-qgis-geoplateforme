@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 Authentication dialog logic.
@@ -77,8 +77,8 @@ class AuthenticationDialog(QDialog):
         if not auth_created[0]:
             self.log(
                 message=self.tr(
-                    "Error while storing authentication configuration {} in QGIS "
-                    "Authentication Manager.".format(new_auth)
+                    f"Error while storing authentication configuration {new_auth} in QGIS "
+                    "Authentication Manager."
                 ),
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
@@ -107,9 +107,7 @@ class AuthenticationDialog(QDialog):
             self.accept()
         else:
             self.log(
-                message="Authentication configuration {} has been removed.".format(
-                    new_auth.id()
-                ),
+                message=f"Authentication configuration {new_auth.id()} has been removed.",
                 log_level=Qgis.MessageLevel.NoLevel,
                 push=False,
             )
@@ -146,7 +144,7 @@ class AuthenticationDialog(QDialog):
             # try to get authenticated user informations
             user = manager.get_user()
             self.log(
-                message=self.tr("Welcome {} !".format(user.email)),
+                message=self.tr(f"Welcome {user.email} !"),
                 log_level=Qgis.MessageLevel.Success,
                 push=True,
                 duration=5,
@@ -154,10 +152,8 @@ class AuthenticationDialog(QDialog):
         except InvalidOAuthConfiguration:
             self.log(
                 message=self.tr(
-                    "Invalid oAuth2 configuration ({}) loaded. "
-                    "Please check your settings.".format(
-                        qgis_auth_config.id(),
-                    )
+                    f"Invalid oAuth2 configuration ({qgis_auth_config.id()}) loaded. "
+                    "Please check your settings."
                 ),
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
@@ -182,7 +178,7 @@ class AuthenticationDialog(QDialog):
 
         except UnavailableUserException as exc:
             self.log(
-                message=self.tr("Authentication failed. Trace: {}".format(exc)),
+                message=self.tr(f"Authentication failed. Trace: {exc}"),
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
                 duration=30,
@@ -210,11 +206,8 @@ class AuthenticationDialog(QDialog):
         if oauth2cfg.redirectPort not in OAUTH_DECLARED_REDIRECT_PORTS:
             self.log(
                 InvalidOAuthPort(
-                    "Port {} is not in the list of declared ports: {}. It could lead to "
-                    "unexpect behavior.".format(
-                        oauth2cfg.redirectPort,
-                        OAUTH_DECLARED_REDIRECT_PORTS,
-                    )
+                    f"Port {oauth2cfg.redirectPort} is not in the list of declared ports: {OAUTH_DECLARED_REDIRECT_PORTS}. It could lead to "
+                    "unexpect behavior."
                 ),
                 log_level=Qgis.MessageLevel.Warning,
                 parent_location=self,
@@ -226,10 +219,8 @@ class AuthenticationDialog(QDialog):
         ):
             self.log(
                 message=self.tr(
-                    "Port {} is available and will be used to perform oAuth2 related "
-                    "operations.".format(
-                        oauth2cfg.redirectPort,
-                    )
+                    f"Port {oauth2cfg.redirectPort} is available and will be used to perform oAuth2 related "
+                    "operations."
                 ),
                 push=True,
                 duration=3,
@@ -241,10 +232,7 @@ class AuthenticationDialog(QDialog):
         # of them is available
         self.log(
             message=self.tr(
-                "Port {} is not available. Trying another port among declared ones: {}.".format(
-                    oauth2cfg.redirectPort,
-                    OAUTH_DECLARED_REDIRECT_PORTS,
-                )
+                f"Port {oauth2cfg.redirectPort} is not available. Trying another port among declared ones: {OAUTH_DECLARED_REDIRECT_PORTS}."
             ),
             log_level=Qgis.MessageLevel.Warning,
             push=True,
@@ -254,9 +242,7 @@ class AuthenticationDialog(QDialog):
         for possible_port in OAUTH_DECLARED_REDIRECT_PORTS:
             if possible_port == oauth2cfg.redirectPort:
                 self.log(
-                    message="Port {} has already been tested. Skipping.".format(
-                        possible_port
-                    ),
+                    message=f"Port {possible_port} has already been tested. Skipping.",
                     log_level=Qgis.MessageLevel.NoLevel,
                 )
                 continue

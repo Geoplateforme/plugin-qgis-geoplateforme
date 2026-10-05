@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 Perform network request.
@@ -14,9 +14,7 @@ import mimetypes
 import os
 import uuid
 from pathlib import Path
-from socket import AF_INET, SOCK_STREAM
-from socket import error as socket_error
-from socket import socket
+from socket import AF_INET, SOCK_STREAM, socket
 from typing import Any, Optional, Union
 
 # PyQGIS
@@ -79,11 +77,9 @@ class NetworkRequestsManager:
             try:
                 network_socket.bind((host, port))
                 return True
-            except socket_error as err:
+            except OSError as err:
                 PlgLogger().log(
-                    message="Port {} is already in use on {}. Trace: {}".format(
-                        port, host, err
-                    ),
+                    message=f"Port {port} is already in use on {host}. Trace: {err}",
                     log_level=Qgis.MessageLevel.Critical,
                     push=False,
                 )
@@ -245,9 +241,7 @@ class NetworkRequestsManager:
             )
         else:
             self.log(
-                message="{} response from {}. Received content size: {}".format(
-                    method, url.toString(), convert_octets(req_reply.content().size())
-                ),
+                message=f"{method} response from {url.toString()}. Received content size: {convert_octets(req_reply.content().size())}",
                 log_level=Qgis.MessageLevel.NoLevel,
                 push=False,
             )
@@ -304,9 +298,7 @@ class NetworkRequestsManager:
             raise err
         except Exception as err:
             err_msg = self.tr(
-                "GET request on URL {} (with auth config {}) failed. Trace: {}".format(
-                    url, config_id, err
-                )
+                f"GET request on URL {url} (with auth config {config_id}) failed. Trace: {err}"
             )
 
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=False)
@@ -362,9 +354,7 @@ class NetworkRequestsManager:
             raise err
         except Exception as err:
             err_msg = self.tr(
-                "DELETE request on URL {} (with auth config {}) failed. Trace: {}".format(
-                    url, config_id, err
-                )
+                f"DELETE request on URL {url} (with auth config {config_id}) failed. Trace: {err}"
             )
 
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=True)
@@ -416,9 +406,7 @@ class NetworkRequestsManager:
             raise err
         except Exception as err:
             err_msg = self.tr(
-                "POST request on URL {} (with auth config {}) failed. Trace: {}".format(
-                    url, config_id, err
-                )
+                f"POST request on URL {url} (with auth config {config_id}) failed. Trace: {err}"
             )
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=False)
 
@@ -471,9 +459,7 @@ class NetworkRequestsManager:
             raise err
         except Exception as err:
             err_msg = self.tr(
-                "PUT request on URL {} (with auth config {}) failed. Trace: {}".format(
-                    url, config_id, err
-                )
+                f"PUT request on URL {url} (with auth config {config_id}) failed. Trace: {err}"
             )
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=False)
 
@@ -551,11 +537,9 @@ class NetworkRequestsManager:
         :param value: value
         :type value: str
         """
-        body.append(f"--{boundary}\r\n".encode("utf-8"))
-        body.append(
-            f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode("utf-8")
-        )
-        body.append(f"{value}\r\n".encode("utf-8"))
+        body.append(f"--{boundary}\r\n".encode())
+        body.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode())
+        body.append(f"{value}\r\n".encode())
 
     @staticmethod
     def add_file_field(
@@ -580,13 +564,11 @@ class NetworkRequestsManager:
         """
         with open(filepath, "rb") as f:
             file_content = f.read()
-        body.append(f"--{boundary}\r\n".encode("utf-8"))
+        body.append(f"--{boundary}\r\n".encode())
         body.append(
-            f'Content-Disposition: form-data; name="{field_name}"; filename="{filepath.name}"\r\n'.encode(
-                "utf-8"
-            )
+            f'Content-Disposition: form-data; name="{field_name}"; filename="{filepath.name}"\r\n'.encode()
         )
-        body.append(f"Content-Type: {content_type}\r\n\r\n".encode("utf-8"))
+        body.append(f"Content-Type: {content_type}\r\n\r\n".encode())
         body.append(file_content)
         body.append(b"\r\n")
 
@@ -719,7 +701,7 @@ class NetworkRequestsManager:
 
         if debug_log_response:
             reply.uploadProgress.connect(
-                lambda s, t: self.log(self.tr("Uploading {}/{} bytes".format(s, t)))
+                lambda s, t: self.log(self.tr(f"Uploading {s}/{t} bytes"))
             )
 
         # Wait for request finish
@@ -796,7 +778,7 @@ class NetworkRequestsManager:
         self.add_file_field(body, boundary, "file", file_path, file_type)
 
         # Close multipart
-        body.append(f"--{boundary}--\r\n".encode("utf-8"))
+        body.append(f"--{boundary}--\r\n".encode())
 
         # Define content header with multipart/form-data and used boundary
         all_headers = {
@@ -879,9 +861,7 @@ class NetworkRequestsManager:
             raise err
         except Exception as err:
             err_msg = self.tr(
-                "PATCH request on URL {} (with auth config {}) failed. Trace: {}".format(
-                    url, config_id, err
-                )
+                f"PATCH request on URL {url} (with auth config {config_id}) failed. Trace: {err}"
             )
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=False)
 

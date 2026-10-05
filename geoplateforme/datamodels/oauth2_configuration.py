@@ -128,11 +128,7 @@ class OAuth2Configuration:
             )
             cfg_json = json.loads(cfg_map)
         except json.decoder.JSONDecodeError as err:
-            err_msg = (
-                "Configuration map ({}) could not be loaded as JSON. Error: {}".format(
-                    qgis_config_map, err
-                )
-            )
+            err_msg = f"Configuration map ({qgis_config_map}) could not be loaded as JSON. Error: {err}"
             log_hdlr.PlgLogger.log(
                 message=err_msg,
                 log_level=Qgis.MessageLevel.Critical,
@@ -183,17 +179,13 @@ class OAuth2Configuration:
             with json_filepath.open(mode="r", encoding="utf8") as my_json:
                 json_data = json.load(my_json)
             log_hdlr.PlgLogger.log(
-                message="JSON file ({}) read and data loaded successfully.".format(
-                    json_filepath
-                ),
+                message=f"JSON file ({json_filepath}) read and data loaded successfully.",
                 log_level=Qgis.MessageLevel.NoLevel,
                 push=False,
             )
         except json.decoder.JSONDecodeError as err:
             log_hdlr.PlgLogger.log(
-                message="JSON file ({}) could not be read. Error: {}".format(
-                    json_filepath, err
-                ),
+                message=f"JSON file ({json_filepath}) could not be read. Error: {err}",
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
@@ -228,9 +220,7 @@ class OAuth2Configuration:
 
         if not json_config_filepath.exists():
             log_hdlr.PlgLogger.log(
-                message="The configuration file can't be found: {}".format(
-                    json_config_filepath
-                ),
+                message=f"The configuration file can't be found: {json_config_filepath}",
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
@@ -257,7 +247,7 @@ class OAuth2Configuration:
         if missing_fields:
             log_hdlr.PlgLogger.log(
                 message="Data does not comply with the expected oAuth structure. "
-                "Following fields are missing: {}.".format(missing_fields),
+                f"Following fields are missing: {missing_fields}.",
                 log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )

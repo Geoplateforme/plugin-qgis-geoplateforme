@@ -226,7 +226,7 @@ class OfferingListModel(QStandardItemModel):
         """
         prev_editable = self.editable
         self.editable = True
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             offering = self.data(
                 self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole
             )
@@ -248,7 +248,7 @@ class OfferingListModel(QStandardItemModel):
         :rtype: int
         """
         result = -1
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             offering = self.data(
                 self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole
             )

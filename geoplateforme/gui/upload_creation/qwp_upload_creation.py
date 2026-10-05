@@ -389,9 +389,12 @@ class UploadCreationPageWizard(QWizardPage):
 
         """
         result = True
-        if not self.created_upload_id and not self.processing_failed:
-            result = False
-        elif not self.created_upload_id and not self.processing_failed:
+        if (
+            not self.created_upload_id
+            and not self.processing_failed
+            or not self.created_upload_id
+            and not self.processing_failed
+        ):
             result = False
 
         return result
