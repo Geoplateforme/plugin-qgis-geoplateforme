@@ -446,7 +446,7 @@ class Metadata:
 
     def generate_xml_from_fields(self) -> str:
         """Generate xml file from the metadata fields."""
-        env = Environment(loader=FileSystemLoader(DIR_PLUGIN_ROOT / "gui/metadata"))
+        env = Environment(autoescape=True, loader=FileSystemLoader(DIR_PLUGIN_ROOT / "gui/metadata"))
         template = env.get_template("metadata_template")
         xml = template.render(fields=self.fields)
         return xml

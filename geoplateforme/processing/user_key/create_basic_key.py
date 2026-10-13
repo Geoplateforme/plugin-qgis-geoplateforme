@@ -23,7 +23,8 @@ class CreateBasicKeyAlgorithm(QgsProcessingAlgorithm):
     USER_AGENT = "USER_AGENT"
     REFERER = "REFERER"
     LOGIN = "LOGIN"
-    PASSWORD = "PASSWORD"
+    # Is detected as a hardcoded password. False positive: it is a placeholder
+    PASSWORD = "PASSWORD" # nosec B105
 
     CREATED_KEY_ID = "CREATED_KEY_ID"
 
