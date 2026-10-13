@@ -123,6 +123,48 @@ def test_no_error(
     assert success
 
 
+def test_unpublished_offering_delete(
+    data_geopf_srv: pytest_httpserver.HTTPServer,
+):
+    """Check deletion succeeds when the offering is already UNPUBLISHED."""
+
+    datastore_id = "valid_datastore"
+    offering_id = OFFERING_ID
+    configuration_id = CONFIGURATION_ID
+
+    unpublished_offering = dict(OFFERING_JSON)
+    unpublished_offering["status"] = "UNPUBLISHED"
+
+    data_geopf_srv.expect_oneshot_request(
+        f"/api/datastores/{datastore_id}/offerings/{offering_id}", method="GET"
+    ).respond_with_json(unpublished_offering, status=200)
+
+    data_geopf_srv.expect_oneshot_request(
+        f"/api/datastores/{datastore_id}/offerings/{offering_id}", method="DELETE"
+    ).respond_with_data(status=202)
+
+    headers = {
+        "Content-Range": "0-0/0",
+    }
+    data_geopf_srv.expect_oneshot_request(
+        uri=f"/api/datastores/{datastore_id}/offerings",
+        query_string=f"limit=1&configuration={configuration_id}",
+        method="GET",
+    ).respond_with_json({}, status=202, headers=headers)
+
+    data_geopf_srv.expect_oneshot_request(
+        f"/api/datastores/{datastore_id}/configurations/{configuration_id}",
+        method="DELETE",
+    ).respond_with_data(status=202)
+
+    params = {
+        DeleteOfferingAlgorithm.DATASTORE: datastore_id,
+        DeleteOfferingAlgorithm.OFFERING: offering_id,
+    }
+    _, success = run_alg(DeleteOfferingAlgorithm().name(), params)
+    assert success
+
+
 def test_invalid_input_error(data_geopf_srv: pytest_httpserver.HTTPServer):
     """
     Check error is raised when server return invalid return code
