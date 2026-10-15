@@ -80,7 +80,7 @@ class CheckStateModel(QStandardItemModel):
             parent: parent QModelIndex
             checked: (bool) parent is checked
         """
-        for i in range(0, self.rowCount(parent)):
+        for i in range(self.rowCount(parent)):
             index = self.index(i, 0, parent)
             if index.isValid():
                 check_state = (
@@ -102,7 +102,7 @@ class CheckStateModel(QStandardItemModel):
         nb_checked = 0
         nb_unchecked = 0
 
-        for i in range(0, self.rowCount(parent)):
+        for i in range(self.rowCount(parent)):
             index = self.index(i, 0, parent)
             check_state = self.data(index, Qt.ItemDataRole.CheckStateRole)
             if check_state == Qt.CheckState.Checked:

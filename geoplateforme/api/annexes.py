@@ -105,7 +105,7 @@ class AnnexeRequestManager:
         nb_value = self._get_nb_available_annexe(datastore_id, labels)
         nb_request = math.ceil(nb_value / self.MAX_LIMIT)
         result = []
-        for page in range(0, nb_request):
+        for page in range(nb_request):
             result += self._get_annexe_list(
                 datastore_id, page + 1, self.MAX_LIMIT, labels
             )

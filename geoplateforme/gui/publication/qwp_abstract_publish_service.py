@@ -236,7 +236,6 @@ class AbstractPublishServicePage(QWizardPage):
             endpoint_id=metadata_endpoint_id,
             metadata_file_identifier=metadata.file_identifier,
         )
-        return
 
     def _on_metadata_published(
         self, exception: Optional[Exception], result=None

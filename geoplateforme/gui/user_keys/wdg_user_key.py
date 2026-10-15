@@ -214,9 +214,7 @@ class UserKeyWidget(QWidget):
                             self,
                             self.tr("Erreur lors de l'ajout des accès sur la clé."),
                             self.tr(
-                                "Les accès n'ont pas été correctement ajoutés. Veuillez vérifier la clé modifiée:\n {}".format(
-                                    feedback.textLog()
-                                )
+                                f"Les accès n'ont pas été correctement ajoutés. Veuillez vérifier la clé modifiée:\n {feedback.textLog()}"
                             ),
                         )
 

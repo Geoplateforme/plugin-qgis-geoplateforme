@@ -111,9 +111,7 @@ class DeleteStoredDataAlgorithm(QgsProcessingAlgorithm):
                 datastore_id, stored_data_id
             )
             for config_id in config_ids:
-                feedback.pushInfo(
-                    self.tr("Suppression configuration : {}".format(config_id))
-                )
+                feedback.pushInfo(self.tr(f"Suppression configuration : {config_id}"))
                 config_manager.delete_configuration(datastore_id, config_id)
 
         except UnavailableConfigurationException as exc:

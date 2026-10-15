@@ -569,7 +569,7 @@ class MetadataRequestManager:
         nb_value = self._get_nb_available_metadata(datastore_id, tags)
         nb_request = math.ceil(nb_value / self.MAX_LIMIT)
         result = []
-        for page in range(0, nb_request):
+        for page in range(nb_request):
             result += self._get_metadata_list(
                 datastore_id, page + 1, self.MAX_LIMIT, tags
             )

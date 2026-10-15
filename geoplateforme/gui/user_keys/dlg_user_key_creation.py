@@ -78,9 +78,7 @@ class UserKeyCreationDialog(QDialog):
                     self,
                     self.tr("Erreur lors de l'ajout des accès sur la clé."),
                     self.tr(
-                        "Les accès n'ont pas été correctement ajoutés. Veuillez vérifier la clé créé:\n {}".format(
-                            feedback.textLog()
-                        )
+                        f"Les accès n'ont pas été correctement ajoutés. Veuillez vérifier la clé créé:\n {feedback.textLog()}"
                     ),
                 )
 

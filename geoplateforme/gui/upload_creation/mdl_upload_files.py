@@ -37,7 +37,7 @@ class UploadFilesTreeModel(QStandardItemModel):
         :rtype: List[str]
         """
         layers = []
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             layer = self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole)
             if isinstance(layer, str):
                 layers.append(layer)
@@ -50,7 +50,7 @@ class UploadFilesTreeModel(QStandardItemModel):
         :rtype: List[QgsVectorLayer]
         """
         layers = []
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             layer = self.data(self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole)
             if isinstance(layer, QgsVectorLayer):
                 layers.append(layer)
@@ -82,7 +82,7 @@ class UploadFilesTreeModel(QStandardItemModel):
         result = ""
 
         # For all files
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             parent = self.index(row, self.NAME_COL)
 
             crs = self.data(self.index(row, self.CSR_COL))
@@ -92,7 +92,7 @@ class UploadFilesTreeModel(QStandardItemModel):
                 break
 
             # Get first defined crs
-            for layer_row in range(0, self.rowCount(parent)):
+            for layer_row in range(self.rowCount(parent)):
                 crs = self.data(self.index(layer_row, self.CSR_COL, parent))
                 if crs:
                     result = crs

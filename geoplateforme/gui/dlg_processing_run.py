@@ -78,7 +78,7 @@ class ProcessingRunDialog(QDialog):
         reply = QMessageBox.question(
             self,
             self.tr("Cancel processing"),
-            self.tr("Do you want to cancel processing {} ?".format(self.title)),
+            self.tr(f"Do you want to cancel processing {self.title} ?"),
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )
@@ -159,10 +159,8 @@ class ProcessingRunDialog(QDialog):
             self._processing_in_progress = False
             self.setEnabled(True)
             self.progress_bar.setVisible(False)
-            self._feedback.reportError(self.tr("Can't run {0}".format(alg.name())))
-            self._feedback.reportError(
-                self.tr("Invalid parameters : {0}.".format(error))
-            )
+            self._feedback.reportError(self.tr(f"Can't run {alg.name()}"))
+            self._feedback.reportError(self.tr(f"Invalid parameters : {error}."))
             self.te_logs_processing.setVisible(True)
 
     def reject(self) -> None:

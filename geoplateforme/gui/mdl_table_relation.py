@@ -91,11 +91,11 @@ class TableRelationTreeModel(CheckStateModel):
 
         """
         result = {}
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             table_index = self.index(row, self.NAME_COL)
             table = self.data(table_index)
             result[table] = []
-            for table_attribute in range(0, self.rowCount(table_index)):
+            for table_attribute in range(self.rowCount(table_index)):
                 attribute_index = self.index(
                     table_attribute, self.NAME_COL, table_index
                 )

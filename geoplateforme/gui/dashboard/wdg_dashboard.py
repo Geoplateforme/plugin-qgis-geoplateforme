@@ -388,9 +388,7 @@ class DashboardWidget(QWidget):
                 self,
                 self.tr("Suppression impossible"),
                 self.tr(
-                    "Impossible de récupérer les configurations et offres associées au dataset : {}".format(
-                        exc
-                    )
+                    f"Impossible de récupérer les configurations et offres associées au dataset : {exc}"
                 ),
             )
             return
@@ -399,9 +397,7 @@ class DashboardWidget(QWidget):
                 self,
                 self.tr("Suppression impossible"),
                 self.tr(
-                    "Impossible de récupérer les données stockées associées au dataset : {}".format(
-                        exc
-                    )
+                    f"Impossible de récupérer les données stockées associées au dataset : {exc}"
                 ),
             )
             return
@@ -410,9 +406,7 @@ class DashboardWidget(QWidget):
                 self,
                 self.tr("Suppression impossible"),
                 self.tr(
-                    "Impossible de récupérer les livraisons associées au dataset : {}".format(
-                        exc
-                    )
+                    f"Impossible de récupérer les livraisons associées au dataset : {exc}"
                 ),
             )
             return
@@ -421,9 +415,7 @@ class DashboardWidget(QWidget):
                 self,
                 self.tr("Suppression impossible"),
                 self.tr(
-                    "Impossible de récupérer les métadatas associées au dataset : {}".format(
-                        exc
-                    )
+                    f"Impossible de récupérer les métadatas associées au dataset : {exc}"
                 ),
             )
             return
@@ -434,27 +426,25 @@ class DashboardWidget(QWidget):
         # Offering
         nb_offer = len(offering_list)
         if nb_offer != 0:
-            message += self.tr("\n{} Offre(s)".format(nb_offer))
+            message += self.tr(f"\n{nb_offer} Offre(s)")
         # Stored data
         nb_stored_data = len(stored_data_list)
         if nb_stored_data != 0:
-            message += self.tr("\n{} Données stockées(s)".format(nb_stored_data))
+            message += self.tr(f"\n{nb_stored_data} Données stockées(s)")
         # Upload
         nb_upload = len(upload_list)
         if nb_upload != 0:
-            message += self.tr("\n{} Livraison(s)".format(nb_upload))
+            message += self.tr(f"\n{nb_upload} Livraison(s)")
         # Metadata
         nb_metadata = len(metadata_list)
         if nb_metadata != 0:
             message += self.tr(
-                "\n La métadonnée associée ({})".format(
-                    metadata_list[0].file_identifier
-                )
+                f"\n La métadonnée associée ({metadata_list[0].file_identifier})"
             )
 
         reply = QMessageBox.question(
             self,
-            self.tr("Suppression dataset {}".format(dataset_name)),
+            self.tr(f"Suppression dataset {dataset_name}"),
             message,
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
@@ -722,7 +712,7 @@ class DashboardWidget(QWidget):
                 QMessageBox.critical(
                     self,
                     self.tr("Suppression impossible"),
-                    self.tr("Une metadata n'a pas pu être supprimée : {}".format(exc)),
+                    self.tr(f"Une metadata n'a pas pu être supprimée : {exc}"),
                 )
                 return False
         return True

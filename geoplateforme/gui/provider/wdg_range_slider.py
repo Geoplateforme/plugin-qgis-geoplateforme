@@ -292,7 +292,7 @@ class QtRangeSlider(QWidget):
         tick_step = (canvas_width - 2 * self.TRACK_PADDING) // ticks_count
         y1 = self.__get_track_y_position() - self.TICK_PADDING
         y2 = y1 - self.THUMB_HEIGHT // 2
-        for x in range(0, ticks_count + 1):
+        for x in range(ticks_count + 1):
             x = x * tick_step + self.TRACK_PADDING
             painter.drawLine(x, y1, x, y2)
 

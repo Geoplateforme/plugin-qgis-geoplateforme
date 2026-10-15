@@ -33,7 +33,7 @@ class DatastoreListModel(QStandardItemModel):
 
         """
         result = -1
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             if self.data(self.index(row, self.ID_COL)) == datastore_id:
                 result = row
                 break

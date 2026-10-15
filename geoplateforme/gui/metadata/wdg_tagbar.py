@@ -14,7 +14,7 @@ from qgis.PyQt.QtWidgets import (
 
 class TagBarWidget(QWidget):
     def __init__(self):
-        super(TagBarWidget, self).__init__()
+        super().__init__()
         self.tags = []
         self.h_layout = QHBoxLayout()
         self.h_layout.setSpacing(4)
@@ -83,7 +83,7 @@ class TagBarWidget(QWidget):
 
 class DictTagBarWidget(TagBarWidget):
     def __init__(self, items: dict):
-        super(DictTagBarWidget, self).__init__()
+        super().__init__()
 
         # Sort items by value
         self.items = dict(sorted(items.items(), key=lambda item: item[1]))
@@ -121,7 +121,7 @@ class DictTagBarWidget(TagBarWidget):
 
 class ListTagBarWidget(TagBarWidget):
     def __init__(self, items: list):
-        super(ListTagBarWidget, self).__init__()
+        super().__init__()
         self.items = items
         self.combobox.addItems(self.items)
         self.combobox.setCurrentIndex(-1)

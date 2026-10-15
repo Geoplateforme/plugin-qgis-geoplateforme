@@ -54,7 +54,7 @@ class ProviderDialog(QgsAbstractDataSourceWidget):
         Args:
             iface: iface
         """
-        super(ProviderDialog, self).__init__()
+        super().__init__()
 
         self.iface = iface
         uic.loadUi(

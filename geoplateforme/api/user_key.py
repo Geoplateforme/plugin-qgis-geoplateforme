@@ -220,7 +220,7 @@ class UserKeyRequestManager:
         nb_value = self._get_nb_available_user_key()
         nb_request = math.ceil(nb_value / self.MAX_LIMIT)
         result = []
-        for page in range(0, nb_request):
+        for page in range(nb_request):
             result += self._get_user_key_list(page + 1, self.MAX_LIMIT)
         return result
 

@@ -85,9 +85,7 @@ class TileGenerationFieldsSelectionPageWizard(QWizardPage):
                 QMessageBox.warning(
                     self,
                     self.tr("No attribute selected."),
-                    self.tr(
-                        "Please select one or more attributes for table {}.".format(key)
-                    ),
+                    self.tr(f"Please select one or more attributes for table {key}."),
                 )
 
         return valid

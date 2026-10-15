@@ -48,7 +48,7 @@ class StoredDataListModel(QStandardItemModel):
         :rtype: int
         """
         result = -1
-        for row in range(0, self.rowCount()):
+        for row in range(self.rowCount()):
             stored_data = self.data(
                 self.index(row, self.NAME_COL), Qt.ItemDataRole.UserRole
             )

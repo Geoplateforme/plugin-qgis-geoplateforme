@@ -116,9 +116,7 @@ class SldDowngradeAlgorithm(QgsProcessingAlgorithm):
             if not sld11.validate(sour_doc):
                 raise QgsProcessingException(
                     self.tr(
-                        "Fichier {} n'est pas conforme à la norme SLD 1.1.0 : {}".format(
-                            file_path, sld11.error_log.last_error
-                        )
+                        f"Fichier {file_path} n'est pas conforme à la norme SLD 1.1.0 : {sld11.error_log.last_error}"
                     )
                 )
 
@@ -133,9 +131,7 @@ class SldDowngradeAlgorithm(QgsProcessingAlgorithm):
             if not sld10.validate(dest_doc):
                 raise QgsProcessingException(
                     self.tr(
-                        "Le résultat de la transformation n'est pas conforme à la norme SLD 1.1.0 : {}".format(
-                            file_path,
-                        )
+                        f"Le résultat de la transformation n'est pas conforme à la norme SLD 1.1.0 : {file_path}"
                     )
                 )
 
